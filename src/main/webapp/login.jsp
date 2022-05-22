@@ -3,15 +3,15 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Faculty</title>
 </head>
 <body>
     <h2>Login</h2>
     <form action="login" method="post">
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="login"><br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="password"><br>
+        <label for="login">Login:</label><br>
+        <input type="text" id="login" name="login"><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="password" name="password"><br>
         <input type="submit" value="Submit">
     </form>
 </body>

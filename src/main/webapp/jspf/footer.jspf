@@ -1,0 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<footer>
+    <p>Author: Stanislav Prokhorovych</p>
+    <p>Email: stas.prokhorovych@gmail.com</p>
+    <p>Copyright: © Faculty 2022</p>
+</footer>

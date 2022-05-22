@@ -1,12 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>Faculty</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
 </head>
 <body>
-    <h1>Here we are</h1>
-    <a href="login.jsp">Login</a>
-    <br>
-    <a href="signup.jsp">Sign up</a>
+    <%@include file="/jspf/header.jspf"%>
+
+
+    <h1>Welcome to Faculty cite</h1>
+
+    <%@include file="/jspf/footer.jspf"%>
 </body>
 </html>

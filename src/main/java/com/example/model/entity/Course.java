@@ -1,40 +1,49 @@
 package com.example.model.entity;
 
 public class Course {
-    private int idCourse;
-    private String nameCourse;
-    private int idTheme;
-    private int idLecturer;
+    private int id;
+    private String name;
+    private String theme;
+    private int durationInDays;
+    private int lecturer;
 
-    public int getIdCourse() {
-        return idCourse;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCourse(int idCourse) {
-        this.idCourse = idCourse;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getNameCourse() {
-        return nameCourse;
+    public String getName() {
+        return name;
     }
 
-    public void setNameCourse(String nameCourse) {
-        this.nameCourse = nameCourse;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getIdTheme() {
-        return idTheme;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setIdTheme(int idTheme) {
-        this.idTheme = idTheme;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
-    public int getIdLecturer() {
-        return idLecturer;
+    public int getDurationInDays() {
+        return durationInDays;
     }
 
-    public void setIdLecturer(int idLecturer) {
-        this.idLecturer = idLecturer;
+    public void setDurationInDays(int durationInDays) {
+        this.durationInDays = durationInDays;
+    }
+
+    public int getLecturer() {
+        return lecturer;
+    }
+
+    public void setLecturer(int lecturer) {
+        this.lecturer = lecturer;
     }
 }
