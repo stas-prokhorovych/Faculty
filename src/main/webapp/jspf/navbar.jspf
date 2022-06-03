@@ -1,0 +1,34 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+</head>
+<nav>
+    <ul class="menu">
+        <c:choose>
+            <c:when test="${sessionScope.login != null}">
+                <li><a class="button left" href="profile.jsp">Profile</a></li>
+            </c:when>
+        </c:choose>
+        <li><a class="button left" href="index.jsp">Home</a></li>
+        <li><a class="button left" href="about.jsp">About</a></li>
+        <li><a class="button left" href="contacts.jsp">Contact Us</a></li>
+        <li><a class="button left" href="find-themes">Look at our courses</a></li>
+        <li><a class="button left" href="find-teachers">Look at our teachers</a></li>
+        <c:choose>
+            <c:when test="${sessionScope.role == 'Admin'}">
+                <li><a class="button left" href="addCourse.jsp">Add course</a></li>
+            </c:when>
+        </c:choose>
+        <c:choose>
+            <c:when test="${sessionScope.login == null}">
+                <li><a class="button right" href="signup.jsp">Sign up</a></li>
+                <li><a class="button right" href="login.jsp">Login</a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a class="button right" href="logout">Log out</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+</nav>
+

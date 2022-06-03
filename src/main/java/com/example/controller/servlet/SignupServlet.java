@@ -23,6 +23,7 @@ public class SignupServlet extends HttpServlet {
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
         String phone = request.getParameter("phone");
+        String userAccess = request.getParameter("user-access");
 
         User user = new User();
         user.setLogin(login);
@@ -32,6 +33,7 @@ public class SignupServlet extends HttpServlet {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setPhoneNumber(phone);
+        user.setUserAccess(Boolean.parseBoolean(userAccess));
 
         UserDAO.addUser(user);
     }

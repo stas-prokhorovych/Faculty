@@ -2,32 +2,33 @@ package com.example.model.dao;
 
 import com.example.model.db.DataSource;
 import com.example.model.entity.Course;
+import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.model.query.Query.CourseQuery.*;
+
+
 public class CourseDAO {
-    private static final String SQL_FIND_ALL_COURSES = "SELECT * FROM course";
-    private static final String SQL_ADD_COURSE = "INSERT INTO course(name, theme, duration_in_days, id_lecturer) VALUES(?,?,?,?)";
-    private static final String SQL_DELETE_COURSE = "DELETE FROM course WHERE id=?";
-    private static final String SQL_UPDATE_COURSE = "UPDATE course SET name=? WHERE id=?";
-    private static final String SQL_FIND_COURSE_NAME = "SELECT name FROM course WHERE id=?";
-
-    public static List<Course> findAllCourses() {
+    public static List<Course> findAllCoursesByTheme(String theme) {
         List<Course> courses = new ArrayList<>();
-
         try (Connection con = DataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery(SQL_FIND_ALL_COURSES)) {
-            while (rs.next()) {
-                Course course = new Course();
-                course.setId(rs.getInt("id"));
-                course.setName(rs.getString("name"));
-                course.setTheme(rs.getString("theme"));
-                course.setDurationInDays(rs.getInt("duration_in_days"));
-                course.setLecturer(rs.getInt("id_lecturer"));
-                courses.add(course);
+             PreparedStatement statement = con.prepareStatement(SELECT_COURSES_BY_THEME)) {
+            statement.setString(1, theme);
+            try(ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = new Course();
+                    course.setId(rs.getInt("id"));
+                    course.setName(rs.getString("name"));
+                    course.setTheme(rs.getString("theme"));
+                    course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
+                    course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
+                    course.setLecturer(rs.getInt("id_lecturer"));
+                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    courses.add(course);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -37,7 +38,7 @@ public class CourseDAO {
 
     public static void deleteCourse(int id) {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SQL_DELETE_COURSE)) {
+             PreparedStatement statement = con.prepareStatement(DELETE_COURSE)) {
             statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
@@ -47,11 +48,13 @@ public class CourseDAO {
 
     public static void addCourse(Course course) {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SQL_ADD_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = con.prepareStatement(CREATE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, course.getName());
             statement.setString(2, course.getTheme());
-            statement.setInt(3, course.getDurationInDays());
-            statement.setInt(4, course.getLecturer());
+            statement.setTimestamp(3, Timestamp.valueOf(course.getStartDate()));
+            statement.setTimestamp(4, Timestamp.valueOf(course.getEndDate()));
+            statement.setInt(5, course.getLecturer());
+            statement.setString(6, course.getCourseStatus().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -60,7 +63,7 @@ public class CourseDAO {
 
     public static void updateCourse(String name, int id) {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SQL_UPDATE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = con.prepareStatement(UPDATE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, name);
             statement.setInt(2, id);
             statement.execute();
@@ -72,7 +75,7 @@ public class CourseDAO {
     public static String findName(int id) {
         String name = "";
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SQL_FIND_COURSE_NAME, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = con.prepareStatement(FIND_COURSE_BY_ID, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, id);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
@@ -85,4 +88,22 @@ public class CourseDAO {
         }
         return name;
     }
+
+    public static List<String> findThemes() {
+        List<String> themes = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet rs = statement.executeQuery(FIND_THEMES)) {
+            while (rs.next()) {
+                themes.add(rs.getString("theme"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return themes;
+    }
+
+//    public  static List<Course> findCourseByTeacherID(int id) {
+//
+//    }
 }

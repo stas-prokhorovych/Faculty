@@ -1,13 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+<%@include file="/jspf/header.jspf"%>
+
 <html>
 <head>
     <title>Faculty</title>
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+    <%@include file="/jspf/head.jspf"%>
 </head>
 <body>
-    <%@include file="/jspf/header.jspf"%>
-
+    <%@include file="/jspf/navbar.jspf"%>
 
     <h1>Welcome to Faculty cite</h1>
 

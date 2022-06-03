@@ -1,7 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/jspf/header.jspf"%>
+
 <html>
     <head>
         <title>Faculty</title>
+        <%@include file="/jspf/head.jspf"%>
     </head>
     <body>
 
@@ -27,7 +29,10 @@
             <label for="phone">Enter phone:</label><br>
             <input type="text" id="phone" name="phone"><br>
 
-            <input type="submit" value="Submit">
+            <button type="reset">Reset</button>
+            <button type="submit">Submit</button>
         </form>
+
+        <%@include file="/jspf/footer.jspf"%>
     </body>
 </html>

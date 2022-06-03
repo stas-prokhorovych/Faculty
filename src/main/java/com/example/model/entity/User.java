@@ -9,6 +9,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private boolean userAccess;
 
     public int getId() {
         return id;
@@ -74,12 +75,28 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public boolean isUserAccess() {
+        return userAccess;
+    }
+
+    public void setUserAccess(boolean userAccess) {
+        this.userAccess = userAccess;
+    }
+
     public enum Role {
-        STUDENT, TEACHER, ADMIN;
+        STUDENT("Student"),
+        TEACHER("Teacher"),
+        ADMIN("Admin");
+
+        private final String name;
+
+        Role(String name) {
+            this.name = name;
+        }
 
         @Override
         public String toString() {
-            return super.toString().toLowerCase();
+            return name;
         }
     }
 }

@@ -1,8 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/jspf/header.jspf"%>
 
 <html>
 <head>
     <title>Error</title>
+    <%@include file="/jspf/head.jspf"%>
 </head>
 <body>
     <p><%=request.getAttribute("error")%></p>
