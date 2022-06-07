@@ -4,7 +4,7 @@
 <head>
 	<title>Faculty</title>
 	<%@include file="/jspf/head.jspf"%>
-	<link rel="stylesheet" href="css/styles.css"/>
+	<link rel="stylesheet" href="css/common.css"/>
 </head>
 <body>
 	<%@include file="/jspf/navbar.jspf"%>
@@ -18,7 +18,5 @@
 		<p>Kyiv</p>
 		<hr/>
 	</div>
-
-	<%@include file="/jspf/footer.jspf"%>
 </body>
 </html>

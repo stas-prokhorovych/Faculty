@@ -1,28 +1,52 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/jspf/header.jspf" %>
 
 <html>
 <head>
-    <title>Faculty</title>
-    <%@include file="/jspf/head.jspf"%>
+    <title><fmt:message key="page.login.title"/></title>
+    <%@include file="/jspf/head.jspf" %>
     <script defer src="js/login.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
 </head>
-<body>
-    <h2><fmt:message key="page.login.title"/></h2>
-        <form id="form" action="login" method="post">
-            <div>
-                <label for="login">Login:</label>
-                <input id="login" name="login" type="text" placeholder="login">
-                <div id="login-error" class="error"></div>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input id="password" name="password" type="password" placeholder="password">
-                <div id="password-error" class="error"></div>
-            </div>
-            <button type="submit">Submit</button>
-    </form>
 
-    <%@include file="/jspf/footer.jspf"%>
+<body class="form-page">
+<%@include file="/jspf/navbar.jspf" %>
+
+<form id="form" action="login" method="post">
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <h3 class="mb-4"><fmt:message key="page.login.title"/></h3>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="login"><strong><fmt:message key="page.login.title"/></strong></label>
+                                <input type="text" id="login" name="login" class="form-control form-control-lg"/>
+                                <div id="login-error" class="error"></div>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="password"><strong><fmt:message key="page.login.password.title"/></strong></label>
+                                <input type="password" id="password" name="password" class="form-control form-control-lg"/>
+                                <div id="password-error" class="error"></div>
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit"><fmt:message key="page.login.title"/></button>
+
+                            <hr class="my-4">
+                            <div class="col">
+                                <a href="forgotPassword.jsp">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+<%@include file="/jspf/bootstrapScripts.jspf" %>
 </body>
 </html>

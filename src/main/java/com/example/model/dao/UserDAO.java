@@ -2,17 +2,14 @@ package com.example.model.dao;
 
 import com.example.model.db.DataSource;
 import com.example.model.entity.User;
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.model.query.Query.CourseQuery.FIND_THEMES;
-import static com.example.model.query.Query.UserQuery.*;
+import static com.example.model.query.Query.*;
 
 public class UserDAO {
-
 
     public static User findUserByLogin(String login) {
         User user = null;
@@ -61,6 +58,10 @@ public class UserDAO {
         }
         return teachers;
     }
+
+//    public static String findUserPassword(String) {
+//
+//    }
 
     private static User mapResultSet(ResultSet rs) {
         User user = null;

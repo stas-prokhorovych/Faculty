@@ -1,4 +1,4 @@
-package com.example.controller.servlet.admin;
+package com.example.controller.servlet;
 
 import com.example.model.dao.CourseDAO;
 import com.example.model.entity.Course;
@@ -11,14 +11,9 @@ import java.time.LocalDateTime;
 
 @WebServlet(name = "AddCourseServlet", value = "/add-course")
 public class AddCourseServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/courses").forward(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         String theme = request.getParameter("theme");
         String startDate = request.getParameter("start-date");
@@ -36,6 +31,6 @@ public class AddCourseServlet extends HttpServlet {
 
         CourseDAO.addCourse(course);
 
-        doGet(request, response);
+        request.getRequestDispatcher("/courses").forward(request, response);
     }
 }

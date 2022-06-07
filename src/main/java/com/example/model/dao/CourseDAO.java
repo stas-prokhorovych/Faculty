@@ -2,16 +2,55 @@ package com.example.model.dao;
 
 import com.example.model.db.DataSource;
 import com.example.model.entity.Course;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.model.query.Query.CourseQuery.*;
+import static com.example.model.query.Query.*;
 
 
 public class CourseDAO {
+    public static List<Course> findAllCoursesByPage(int offset, int noOfRecords) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(SELECT_COURSES_BY_THEME_LIMIT)) {
+            statement.setInt(1, offset);
+            statement.setInt(2, noOfRecords);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = new Course();
+                    course.setId(rs.getInt("id"));
+                    course.setName(rs.getString("name"));
+                    course.setTheme(rs.getString("theme"));
+                    course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
+                    course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
+                    course.setLecturer(rs.getInt("id_lecturer"));
+                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    courses.add(course);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    public static int findNumberOfRecords() {
+        int numberOfRecords = 0;
+        try (Connection con = DataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet rs = statement.executeQuery(FIND_NUMBER_OF_RECORDS)) {
+            if (rs.next()) {
+                numberOfRecords = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return numberOfRecords;
+    }
+
+
     public static List<Course> findAllCoursesByTheme(String theme) {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();

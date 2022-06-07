@@ -16,6 +16,5 @@
         <label><input type="text" name="id-lecturer"></label>Lecturer id<br>
         <input type="submit" value="Ok" name="Ok"><br>
     </form>
-    <%@include file="/jspf/footer.jspf"%>
 </body>
 </html>

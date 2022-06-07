@@ -1,19 +1,35 @@
 
-b
-2src/main/java/com/example/model/db/DataSource.java,4\2\42ca9cbe6a3d0f45de68332e33d6bc1bbc565353
-O
-src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
-{
-Ksrc/main/java/com/example/controller/servlet/admin/DeleteCourseServlet.java,0\b\0bbf4e5d9329261520eaaa1ee44ec22cfa6decd7
 r
 Bsrc/main/java/com/example/controller/listener/ContextListener.java,3\6\3694063e62aefeaf5eb3387c54a415b765d92f54
 K
 src/main/webapp/js/login.js,1\9\19241706d266f801bf2aad2bf0f1805a05206a32
-x
-Hsrc/main/java/com/example/controller/servlet/admin/AddCourseServlet.java,a\8\a8d0dd5024844aba1bcc0ad6d1b2215b6f81644b
 c
 3src/main/java/com/example/model/entity/Journal.java,0\7\07713babe1c9632dea7240fc7a2a0c5b59344d20
 i
 9src/main/java/com/example/model/dao/CourseStudentDAO.java,d\6\d60d1f932ed4f542bae72ab70a056490189a6dba
 c
 3src/main/java/com/example/model/dao/JournalDAO.java,8\4\843b0c41bc74241f12395985dafbd5f17ba82453
+I
+src/main/webapp/error.jsp,c\b\cba3df22242d379bdb72d00919d2e8d49101d1bf
+J
+src/main/webapp/update.jsp,7\7\77d4e17d17d3223c427fb1981a95cbd350bbd29b
+M
+src/main/webapp/addCourse.jsp,f\1\f17f792f4ddd9a8aa213736d5bc4c67046ec6353
+b
+2src/main/java/com/example/model/entity/Course.java,9\5\954df65b1debef32a8075e0e078ea9be58e5c400
+f
+6src/main/java/com/example/model/security/Security.java,1\2\126954ee32551e43b399da1e079e69313f537e24
+i
+9src/main/java/com/example/model/entity/CourseStudent.java,3\d\3d6c6b2fca6adcff1b350451ef267f802114274b
+`
+0src/main/java/com/example/model/entity/User.java,1\2\12b1790118fe2d75e19d14e982097238c41ba2cd
+b
+2src/main/java/com/example/model/db/DataSource.java,4\2\42ca9cbe6a3d0f45de68332e33d6bc1bbc565353
+Z
+*src/main/webapp/jspf/bootstrapScripts.jspf,e\4\e435e88ebe060caaed1a8977e9613e115c0a7437
+K
+src/main/webapp/profile.jsp,3\9\3932b6a22a1db264677b40c5b9307e011739496b
+P
+ src/main/webapp/jspf/header.jspf,a\7\a7a52d6e33fb6445b655e7d80a1fb31ce1064d2b
+b
+2src/main/java/com/example/model/dao/CourseDAO.java,a\7\a701c02376ee276d22dd8cb0a6f9ff83cbbc4e0e

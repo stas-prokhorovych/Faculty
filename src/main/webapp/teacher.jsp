@@ -7,17 +7,14 @@
 </head>
 <body>
 <%@include file="/jspf/navbar.jspf"%>
-<h1>Please choose teacher</h1>
-<form action="teacher-courses">
-    <label for="teacher">Choose teacher:</label>
-    <select name="teacher" id="teacher">
+    <div class="center">
+        <h3>Our teachers</h3>
+
         <c:forEach items="${teachers}" var="teacher">
-            <option value="${teacher.firstName}${' '}${teacher.lastName}">${teacher.firstName}${' '}${teacher.lastName}</option>
+            <p>${teacher.firstName}${' '}${teacher.lastName}</p>
         </c:forEach>
-    </select>
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
-<%@include file="/jspf/footer.jspf"%>
+    </div>
+
+    <%@include file="/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.example.controller.servlet.admin;
+package com.example.controller.servlet;
 
 import com.example.model.dao.CourseDAO;
 import com.example.model.entity.Course;
@@ -13,7 +13,6 @@ public class UpdateCourseServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
         final String id = req.getParameter("id");
         final String name = req.getParameter("name");
         CourseDAO.updateCourse(name, Integer.parseInt(id));
@@ -22,7 +21,6 @@ public class UpdateCourseServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String name = CourseDAO.findName(Integer.parseInt(id));
 
