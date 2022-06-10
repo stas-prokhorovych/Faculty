@@ -1,13 +1,12 @@
 package com.example.controller.servlet;
 
-import com.example.model.dao.CourseDAO;
 import com.example.model.dao.UserDAO;
 import com.example.model.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @WebServlet(name = "TeacherCoursesServlet", value = "/find-teachers")

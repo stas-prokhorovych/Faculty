@@ -1,4 +1,4 @@
-package com.example.model.security;
+package com.example.model.utils;
 
 public class Security {
     private Security() {

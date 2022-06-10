@@ -4,13 +4,12 @@
 <head>
     <title><fmt:message key="page.login.title"/></title>
     <%@include file="/jspf/head.jspf" %>
-    <script defer src="js/login.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script defer src="js/validation.js"></script>
+
 </head>
 
 <body class="form-page">
 <%@include file="/jspf/navbar.jspf" %>
-
 <form id="form" action="login" method="post">
     <section class="vh-100">
         <div class="container py-5 h-100">

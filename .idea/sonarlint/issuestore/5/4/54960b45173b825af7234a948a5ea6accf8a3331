@@ -1,0 +1,14 @@
+
+d
+java:S1192"HDefine a constant instead of duplicating this literal "courses" 4 times.(Çá£18ê“Ô½”0
+c
+java:S1192"FDefine a constant instead of duplicating this literal "theme" 3 times.(ŞÇü¯8ê“Ô½”0
+v
+java:S1989"YHandle the following exception that could be thrown by "parseInt": NumberFormatException.(İÜúö8‰À€½”0
+ƒ
+java:S1989&"aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(’şĞúÿÿÿÿ8‹À€½”0
+v
+java:S1989,"YHandle the following exception that could be thrown by "parseInt": NumberFormatException.(İÜúö8ú“Ô½”0
+ƒ
+java:S19898"aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(’şĞúÿÿÿÿ8ú“Ô½”0
+V	java:S125;"<This block of commented-out lines of code should be removed.(†Â·¡øÿÿÿÿ

@@ -19,9 +19,6 @@
                 <a class="nav-link" href="index.jsp">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="contacts.jsp">Contacts</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="list">Courses</a>
             </li>
             <li class="nav-item">
@@ -35,6 +32,7 @@
                 </c:when>
             </c:choose>
         </ul>
+
     </div>
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
@@ -55,6 +53,13 @@
                 </c:otherwise>
             </c:choose>
         </ul>
-    </div>
 
+        <form action="">
+            <select id="language" class="language-choose" name="language" onchange="submit()">
+                <option value="en">en</option>
+                <option value="uk">uk</option>
+            </select>
+        </form>
+
+    </div>
 </nav>

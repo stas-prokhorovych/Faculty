@@ -14,7 +14,7 @@ public class CourseDAO {
     public static List<Course> findAllCoursesByPage(int offset, int noOfRecords) {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SELECT_COURSES_BY_THEME_LIMIT)) {
+             PreparedStatement statement = con.prepareStatement(SELECT_COURSES_LIMIT)) {
             statement.setInt(1, offset);
             statement.setInt(2, noOfRecords);
             try (ResultSet rs = statement.executeQuery()) {
@@ -49,6 +49,55 @@ public class CourseDAO {
         }
         return numberOfRecords;
     }
+
+    public static List<Course> findAllCoursesByThemeByPage(String theme, int offset, int noOfRecords) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(SELECT_COURSES_BY_THEME_LIMIT)) {
+            statement.setString(1, theme);
+            statement.setInt(2, offset);
+            statement.setInt(3, noOfRecords);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = new Course();
+                    course.setId(rs.getInt("id"));
+                    course.setName(rs.getString("name"));
+                    course.setTheme(rs.getString("theme"));
+                    course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
+                    course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
+                    course.setLecturer(rs.getInt("id_lecturer"));
+                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    courses.add(course);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    public static int findNumberOfRecordsByTheme(String theme) {
+        int numberOfRecords = 0;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_NUMBER_OF_RECORDS_BY_THEME);
+             ) {
+            statement.setString(1, theme);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    numberOfRecords = rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return numberOfRecords;
+    }
+
+
+
+
+
 
 
     public static List<Course> findAllCoursesByTheme(String theme) {

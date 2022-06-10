@@ -2,7 +2,7 @@ package com.example.controller.servlet;
 
 import com.example.model.dao.UserDAO;
 import com.example.model.entity.User;
-import com.example.model.security.Security;
+import com.example.model.utils.Security;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

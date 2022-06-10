@@ -16,7 +16,11 @@ form.addEventListener('submit', (e) => {
     }
 
     let passwordError = []
-    if(password.value.length <= 2) {
+    if(password.value === '' || password.value == null) {
+        passwordError.push('*password is required')
+    }
+
+    if(password.value.length === 2 || password.value.length === 1) {
         passwordError.push('*password must be longer than 2 characters')
     }
 
