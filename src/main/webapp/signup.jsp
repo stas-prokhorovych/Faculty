@@ -8,7 +8,7 @@
 <body class="form-page">
 <%@include file="/jspf/navbar.jspf" %>
 
-<form id="form" action="login" method="post">
+<form id="form" action="controller?command=REGISTER" method="post">
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">

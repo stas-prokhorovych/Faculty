@@ -1,0 +1,70 @@
+
+q
+java:S1104"[Make ADD_COURSE_PAGE a static final constant or non-public and provide accessors if needed.(Í±ş•
+|
+java:S1104"aMake COURSE_CATALOGUE_PAGE a static final constant or non-public and provide accessors if needed.(»ÌßÀøÿÿÿÿ
+q
+java:S1104	"VMake ERROR_PAGE a static final constant or non-public and provide accessors if needed.(Ô”öœıÿÿÿÿ
+v
+java:S1104
+"`Make FORGOT_PASSWORD_PAGE a static final constant or non-public and provide accessors if needed.(äòïƒ
+j
+java:S1104"UMake HOME_PAGE a static final constant or non-public and provide accessors if needed.(‹’Öt
+q
+java:S1104"VMake LOGIN_PAGE a static final constant or non-public and provide accessors if needed.(öğøóøÿÿÿÿ
+z
+java:S1104"_Make PAGE_NOT_FOUND_PAGE a static final constant or non-public and provide accessors if needed.(ó¹–üÿÿÿÿ
+s
+java:S1104"XMake PROFILE_PAGE a static final constant or non-public and provide accessors if needed.(°ËËüÿÿÿÿ
+r
+java:S1104"WMake SIGNUP_PAGE a static final constant or non-public and provide accessors if needed.(«Èúÿÿÿÿ
+s
+java:S1104"XMake TEACHER_PAGE a static final constant or non-public and provide accessors if needed.(‚µ±Åüÿÿÿÿ
+y
+java:S1104"^Make UPDATE_COURSE_PAGE a static final constant or non-public and provide accessors if needed.(¿§Ó²ıÿÿÿÿ
+K
+java:S1444"5Make this "public static ADD_COURSE_PAGE" field final(Í±ş•
+V
+java:S1444";Make this "public static COURSE_CATALOGUE_PAGE" field final(»ÌßÀøÿÿÿÿ
+K
+java:S1444	"0Make this "public static ERROR_PAGE" field final(Ô”öœıÿÿÿÿ
+P
+java:S1444
+":Make this "public static FORGOT_PASSWORD_PAGE" field final(äòïƒ
+D
+java:S1444"/Make this "public static HOME_PAGE" field final(‹’Öt
+K
+java:S1444"0Make this "public static LOGIN_PAGE" field final(öğøóøÿÿÿÿ
+T
+java:S1444"9Make this "public static PAGE_NOT_FOUND_PAGE" field final(ó¹–üÿÿÿÿ
+M
+java:S1444"2Make this "public static PROFILE_PAGE" field final(°ËËüÿÿÿÿ
+L
+java:S1444"1Make this "public static SIGNUP_PAGE" field final(«Èúÿÿÿÿ
+M
+java:S1444"2Make this "public static TEACHER_PAGE" field final(‚µ±Åüÿÿÿÿ
+S
+java:S1444"8Make this "public static UPDATE_COURSE_PAGE" field final(¿§Ó²ıÿÿÿÿ
+p
+java:S3008"ZRename this field "ADD_COURSE_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í±ş•
+{
+java:S3008"`Rename this field "COURSE_CATALOGUE_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ÌßÀøÿÿÿÿ
+p
+java:S3008	"URename this field "ERROR_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ô”öœıÿÿÿÿ
+u
+java:S3008
+"_Rename this field "FORGOT_PASSWORD_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äòïƒ
+i
+java:S3008"TRename this field "HOME_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹’Öt
+p
+java:S3008"URename this field "LOGIN_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öğøóøÿÿÿÿ
+y
+java:S3008"^Rename this field "PAGE_NOT_FOUND_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ó¹–üÿÿÿÿ
+r
+java:S3008"WRename this field "PROFILE_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°ËËüÿÿÿÿ
+q
+java:S3008"VRename this field "SIGNUP_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«Èúÿÿÿÿ
+r
+java:S3008"WRename this field "TEACHER_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚µ±Åüÿÿÿÿ
+x
+java:S3008"]Rename this field "UPDATE_COURSE_PAGE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿§Ó²ıÿÿÿÿ

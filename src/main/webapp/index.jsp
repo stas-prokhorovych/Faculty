@@ -4,6 +4,9 @@
 <head>
     <title>Faculty</title>
     <%@include file="/jspf/head.jspf"%>
+    <style>
+        body {background-color: #5b4627;;}
+    </style>
 </head>
 <body class="main-page">
     <%@include file="/jspf/navbar.jspf"%>
@@ -20,6 +23,7 @@
 
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="col-md-5 p-lg-5 mx-auto my-5"></div>
+        <div class="col-md-5 p-lg-3 mx-auto my-5"></div>
         <div class="product-device shadow-sm d-none d-md-block"></div>
         <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
     </div>

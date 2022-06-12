@@ -1,4 +1,4 @@
 package com.example.model.dao;
 
-public class JournalDAO {
+public interface JournalDAO {
 }

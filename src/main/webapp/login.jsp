@@ -4,13 +4,18 @@
 <head>
     <title><fmt:message key="page.login.title"/></title>
     <%@include file="/jspf/head.jspf" %>
-    <script defer src="js/validation.js"></script>
-
+<%--    <script defer src="js/validation.js"></script>--%>
+    <style>
+        .error {
+            color: red;
+            font-size: smaller;
+        }
+    </style>
 </head>
 
 <body class="form-page">
 <%@include file="/jspf/navbar.jspf" %>
-<form id="form" action="login" method="post">
+<form id="form" action="controller?command=LOGIN" method="post">
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -23,13 +28,21 @@
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="login"><strong><fmt:message key="page.login.title"/></strong></label>
                                 <input type="text" id="login" name="login" class="form-control form-control-lg"/>
-                                <div id="login-error" class="error"></div>
+                                <c:choose>
+                                    <c:when test="${loginError != null}">
+                                        <div id="login-error" class="error">${loginError}</div>
+                                    </c:when>
+                                </c:choose>
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="password"><strong><fmt:message key="page.login.password.title"/></strong></label>
                                 <input type="password" id="password" name="password" class="form-control form-control-lg"/>
-                                <div id="password-error" class="error"></div>
+                                <c:choose>
+                                    <c:when test="${passwordError != null}">
+                                        <div id="login-error" class="error">${passwordError}</div>
+                                    </c:when>
+                                </c:choose>
                             </div>
 
                             <button class="btn btn-primary btn-lg btn-block" type="submit"><fmt:message key="page.login.title"/></button>

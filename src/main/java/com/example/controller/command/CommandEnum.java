@@ -1,13 +1,16 @@
 package com.example.controller.command;
 
-import com.example.controller.command.impl.get.ErrorPageCommand;
-import com.example.controller.command.impl.get.LoginPageCommand;
-import com.example.controller.command.impl.get.UsersPageCommand;
+import com.example.controller.command.impl.*;
 
 public enum CommandEnum {
-    LOGIN_PAGE(new LoginPageCommand()),
-    USERS_PAGE(new UsersPageCommand()),
-    ERROR_PAGE(new ErrorPageCommand());
+    UNKNOWN(new UnknownCommand()),
+    LOGOUT(new LogoutCommand()),
+    LOGIN(new LoginCommand()),
+    CREATE_COURSE(new CreateCourseCommand()),
+    REGISTER(new RegistrationCommand()),
+    DELETE_COURSE(new DeleteCourseCommand()),
+    UPDATE_COURSE(new UpdateCourseCommand()),
+    COURSE_CATALOGUE(new CourseCatalogueCommand());
 
     private Command command;
 
