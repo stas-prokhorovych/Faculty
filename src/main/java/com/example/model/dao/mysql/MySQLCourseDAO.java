@@ -18,8 +18,9 @@ public class MySQLCourseDAO implements CourseDAO {
     static {
         daoFactory = DaoFactory.getDaoFactory("MYSQL");
     }
+
     public static CourseDAO getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MySQLCourseDAO();
         }
         return instance;
@@ -33,14 +34,7 @@ public class MySQLCourseDAO implements CourseDAO {
             statement.setInt(2, noOfRecords);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    Course course = new Course();
-                    course.setId(rs.getInt("id"));
-                    course.setName(rs.getString("name"));
-                    course.setTheme(rs.getString("theme"));
-                    course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
-                    course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
-                    course.setLecturer(rs.getInt("id_lecturer"));
-                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    Course course = mapResultSet(rs);
                     courses.add(course);
                 }
             }
@@ -73,14 +67,7 @@ public class MySQLCourseDAO implements CourseDAO {
             statement.setInt(3, noOfRecords);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    Course course = new Course();
-                    course.setId(rs.getInt("id"));
-                    course.setName(rs.getString("name"));
-                    course.setTheme(rs.getString("theme"));
-                    course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
-                    course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
-                    course.setLecturer(rs.getInt("id_lecturer"));
-                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    Course course = mapResultSet(rs);
                     courses.add(course);
                 }
             }
@@ -94,7 +81,7 @@ public class MySQLCourseDAO implements CourseDAO {
         int numberOfRecords = 0;
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(FIND_NUMBER_OF_RECORDS_BY_THEME);
-             ) {
+        ) {
             statement.setString(1, theme);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
@@ -113,16 +100,9 @@ public class MySQLCourseDAO implements CourseDAO {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(SELECT_COURSES_BY_THEME)) {
             statement.setString(1, theme);
-            try(ResultSet rs = statement.executeQuery()) {
+            try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    Course course = new Course();
-                    course.setId(rs.getInt("id"));
-                    course.setName(rs.getString("name"));
-                    course.setTheme(rs.getString("theme"));
-                    course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
-                    course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
-                    course.setLecturer(rs.getInt("id_lecturer"));
-                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    Course course = mapResultSet(rs);
                     courses.add(course);
                 }
             }
@@ -197,5 +177,109 @@ public class MySQLCourseDAO implements CourseDAO {
             throw new RuntimeException(e);
         }
         return themes;
+    }
+
+    @Override
+    public List<Course> getNoTeacherCourses() {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet rs = statement.executeQuery(FIND_NO_TEACHER_COURSES)) {
+            while (rs.next()) {
+                Course course = mapResultSet(rs);
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    @Override
+    public List<Integer> findUserEnrolled(List<Course> courses) {
+        List<Integer> result = new ArrayList<>();
+        try (Connection connection = DataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            for (Course course : courses) {
+                try (PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_ENROLLED)) {
+                    statement.setInt(1, course.getId());
+                    try (ResultSet rs = statement.executeQuery()) {
+                        if (rs.next()) {
+                            result.add(rs.getInt(1));
+                        }
+                    }
+                }
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Course> findAllCoursesByTeacherByPage(Integer teacher, int offset, int noOfRecords) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(SELECT_COURSES_BY_TEACHER_LIMIT)) {
+            statement.setInt(1, teacher);
+            statement.setInt(2, offset);
+            statement.setInt(3, noOfRecords);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = mapResultSet(rs);
+                    courses.add(course);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    @Override
+    public int findNumberOfRecordsByTeacher(Integer teacher) {
+        int numberOfRecords = 0;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_NUMBER_OF_RECORDS_BY_TEACHER);
+        ) {
+            statement.setInt(1, teacher);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    numberOfRecords = rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return numberOfRecords;
+    }
+
+    private void rollback(Connection connection) {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private Course mapResultSet(ResultSet rs) {
+        Course course;
+        try {
+            course = new Course();
+            course.setId(rs.getInt("id"));
+            course.setName(rs.getString("name"));
+            course.setTheme(rs.getString("theme"));
+            course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
+            course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
+            course.setLecturer(rs.getInt("id_lecturer"));
+            course.setCourseStatus(Course.CourseStatus.OPENED);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return course;
     }
 }

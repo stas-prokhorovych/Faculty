@@ -32,11 +32,11 @@ public class LoginCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        userService.getUser();
+
 
         User user;
         try {
-            user = new MySqlUserService().getUser(login, password);
+            user = userService.getUser(login, password);
         } catch (ServiceWrongLoginException e) {
             request.setAttribute("loginError", e.getMessage());
             return LOGIN_PAGE;
@@ -48,8 +48,8 @@ public class LoginCommand implements Command {
             return LOGIN_PAGE;
         }
 
-
         HttpSession session = request.getSession(true);
+        session.setAttribute("id", user.getId());
         session.setAttribute("login", user.getLogin());
         session.setAttribute("email", user.getEmail());
         session.setAttribute("role", user.getRole().toString());

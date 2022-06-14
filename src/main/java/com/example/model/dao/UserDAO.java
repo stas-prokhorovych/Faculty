@@ -1,13 +1,9 @@
 package com.example.model.dao;
 
-import com.example.model.db.DataSource;
+import com.example.model.entity.Course;
 import com.example.model.entity.User;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.model.constants.Query.*;
 
 public interface UserDAO {
 
@@ -16,4 +12,10 @@ public interface UserDAO {
     void addUser(User user);
 
     List<User> findTeachers();
+
+    List<User> findStudents();
+
+    List<User> findTeacherByCourse(List<Course> courses);
+
+    void enrollStudentOnCourse(Integer studentId, Integer courseId);
 }

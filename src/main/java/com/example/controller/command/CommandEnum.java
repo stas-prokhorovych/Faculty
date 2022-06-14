@@ -10,7 +10,10 @@ public enum CommandEnum {
     REGISTER(new RegistrationCommand()),
     DELETE_COURSE(new DeleteCourseCommand()),
     UPDATE_COURSE(new UpdateCourseCommand()),
-    COURSE_CATALOGUE(new CourseCatalogueCommand());
+    COURSE_CATALOGUE(new CourseCatalogueCommand()),
+    USER_CATALOGUE(new UserCatalogueCommand()),
+    ADD_TEACHER(new AddTeacherCommand()),
+    ENROLL_ON_COURSE(new EnrollOnCourse());
 
     private Command command;
 

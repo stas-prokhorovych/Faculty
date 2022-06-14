@@ -27,6 +27,8 @@
             </c:when>
         </c:choose>
     </div>
+    <br><br>
+<%--    <h3>Courses you registered but not started yet</h3>--%>
 </body>
 </html>
 

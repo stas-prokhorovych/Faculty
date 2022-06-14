@@ -4,9 +4,6 @@
 <head>
     <title>Faculty</title>
     <%@include file="/jspf/head.jspf"%>
-    <style>
-        body {background-color: #5b4627;;}
-    </style>
 </head>
 <body class="main-page">
     <%@include file="/jspf/navbar.jspf"%>

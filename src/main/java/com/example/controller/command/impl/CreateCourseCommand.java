@@ -1,8 +1,9 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.model.dao.mysql.MySQLCourseDAO;
 import com.example.model.entity.Course;
+import com.example.model.service.CourseService;
+import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import static com.example.model.constants.Pages.ADD_COURSE_PAGE;
+
 public class CreateCourseCommand implements Command {
+    private static ServiceFactory serviceFactory;
+    private static CourseService courseService;
+
+    static {
+        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+        courseService = serviceFactory.getCourseService();
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -28,8 +39,8 @@ public class CreateCourseCommand implements Command {
         course.setLecturer(Integer.parseInt(idLecturer));
         course.setCourseStatus(Course.CourseStatus.CLOSED);
 
-        MySQLCourseDAO.addCourse(course);
+        courseService.addCourse(course);
 
-        return "courses.jsp";
+        return ADD_COURSE_PAGE;
     }
 }

@@ -77,10 +77,10 @@ public class Course {
     }
 
     public enum CourseStatus {
-        OPENED("Opened"),
+        OPENED("Opened for registration"),
         IN_PROGRESS("In progress"),
-        CLOSED("Closed"),
-        FINISHED("Finished");
+        FINISHED("Finished"),
+        CLOSED("Closed, no teacher assigned yet");
 
         private final String description;
 
@@ -93,4 +93,5 @@ public class Course {
             return description;
         }
     }
+
 }

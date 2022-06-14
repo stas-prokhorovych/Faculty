@@ -4,9 +4,6 @@ import com.example.model.entity.Course;
 
 import java.util.List;
 
-import static com.example.model.constants.Query.*;
-
-
 public interface CourseDAO {
 
 
@@ -30,4 +27,12 @@ public interface CourseDAO {
     String findName(int id);
 
     List<String> findThemes();
+
+    List<Course> getNoTeacherCourses();
+
+    List<Integer> findUserEnrolled(List<Course> courses);
+
+    List<Course> findAllCoursesByTeacherByPage(Integer teacher, int offset, int noOfRecords);
+
+    int findNumberOfRecordsByTeacher(Integer teacher);
 }

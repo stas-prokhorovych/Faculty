@@ -21,18 +21,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="controller?command=COURSE_CATALOGUE">Courses</a>
             </li>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link" href="find-teachers">Teachers</a>--%>
-<%--            </li>--%>
             <c:choose>
                 <c:when test="${sessionScope.role == 'Admin'}">
                     <li class="nav-item">
                         <a class="nav-link" href="addCourse.jsp">Add course</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=ADD_TEACHER">Add teacher</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=USER_CATALOGUE">Users</a>
+                    </li>
                 </c:when>
             </c:choose>
         </ul>
-
     </div>
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
@@ -60,6 +62,5 @@
                 <option value="uk">uk</option>
             </select>
         </form>
-
     </div>
 </nav>

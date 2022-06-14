@@ -5,9 +5,11 @@ import com.example.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.example.model.constants.Pages.PAGE_NOT_FOUND_PAGE;
+
 public class UnknownCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return "/pageNotFound.jsp";
+        return PAGE_NOT_FOUND_PAGE;
     }
 }

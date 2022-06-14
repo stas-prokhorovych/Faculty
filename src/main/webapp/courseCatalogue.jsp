@@ -4,44 +4,65 @@
 <head>
     <title>Faculty</title>
     <%@include file="/jspf/head.jspf"%>
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <%@include file="/jspf/navbar.jspf"%>
     <br>
     <br>
 
-    <div>
+    <div class="center">
         <h3>Filter</h3>
-        <form action="list">
-            <label for="theme">Theme:</label>
+        <form action="controller">
+
+            <input type="hidden" name="command" value="COURSE_CATALOGUE">
+            <h6><label for="theme">Theme:</label></h6>
             <select name="theme" id="theme">
-                <option value="All">All</option>
-                <c:forEach items="${themes}" var="theme">
+                <option value="" selected disabled hidden>Choose here</option>
+                <c:forEach items="${themesForForm}" var="theme">
                     ${theme}<br>
                     <option value="${theme}">${theme}</option>
                 </c:forEach>
             </select>
-            <br>
-            <label for="sort">Sort by:</label>
-            <select name="sort" id="sort">
-                <option value="sort-name">Name</option>
-                <option value="sort-duration">Duration</option>
-                <option value="sort-student-enrolled">Student enrolled</option>
+            <br><br>
+
+            <h6><label for="teacher">Teacher:</label></h6>
+            <select name="teacher" id="teacher">
+                <option value="" selected disabled hidden>Choose here</option>
+                <c:forEach items="${teacherForForm}" var="teacher">
+                    ${teacher}<br>
+                    <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
+                </c:forEach>
             </select>
-            <br>
-            <label for="order">Order by:</label>
-            <select name="order" id="order">
-                <option value="ascending">Ascending</option>
-                <option value="descending">Descending</option>
-            </select>
-            <br>
-            <%--        <input type="hidden" name="theme" value="${theme}">&ndash;%&gt;--%>
+            <br><br>
+
+            <h6>Sort by:</h6>
+            <input type="radio" id="sort-name" name="sort" value="sort-name">
+            <label for="sort-name">Name</label><br>
+            <input type="radio" id="sort-duration" name="sort" value="sort-duration">
+            <label for="sort-duration">Duration</label><br>
+            <input type="radio" id="sort-student-enrolled" name="sort" value="sort-student-enrolled">
+            <label for="sort-student-enrolled">Student enrolled</label><br>
+
+            <h6>Order by:</h6>
+            <input type="radio" id="ascending" name="order" value="ascending">
+            <label for="ascending">Ascending</label><br>
+            <input type="radio" id="descending" name="order" value="descending">
+            <label for="descending">Descending</label><br>
+
             <input type="submit" value="Apply">
         </form>
-    </div>
+    <br><br>
 
     <h3>Courses</h3>
-    <div class="row col-md-6">
+    </div>
+
+    <div class="row justify-content-center">
+    <div class="row col-md-8">
         <table class="table table-bordered table-sm">
             <thead class="thead-light">
             <tr>
@@ -51,6 +72,13 @@
                 <th>Start date</th>
                 <th>End date</th>
                 <th>Duration in days</th>
+                <th>Teacher</th>
+                <th>Student enrolled</th>
+                <c:choose>
+                    <c:when test="${sessionScope.role == 'Student'}">
+                        <th>Student option</th>
+                    </c:when>
+                </c:choose>
                 <c:choose>
                     <c:when test="${sessionScope.role == 'Admin'}">
                         <th>Admin option</th>
@@ -59,7 +87,10 @@
             </tr>
             </thead>
             <tbody>
+            <c:set var="index" value="0"/>
+
             <c:forEach var="course" items="${courses}">
+
                 <tr>
                     <td>${course.id}</td>
                     <td>${course.name}</td>
@@ -68,21 +99,47 @@
                     <td>${course.endDate}</td>
                     <td>${course.durationInDays}</td>
                     <td>
+                        <c:forEach var="teacher" items="${teachers}" varStatus="loop">
+                            <c:if test="${loop.index eq index}">${teacher.firstName}  ${teacher.lastName}</c:if>
+                        </c:forEach>
+                    </td>
+                    <td>
+                         <c:forEach var="stud" items="${nuOfStudents}" varStatus="loop">
+                             <c:if test="${loop.index eq index}">${stud}</c:if>
+                         </c:forEach>
+                    </td>
+                    <c:choose>
+                        <c:when test="${sessionScope.role == 'Student'}">
+                            <td>
+                                <form method="post" action="<c:url value='/controller'/>">
+                                    <input type="hidden" name="command" value="ENROLL_ON_COURSE">
+                                    <input type="number" hidden name="student-id" value="${sessionScope.id}"/>
+                                    <input type="number" hidden name="course-id" value="${course.id}"/>
+                                    <input type="submit" name="enroll" value="Enroll"/>
+                                </form>
+                            </td>
+                        </c:when>
+                    </c:choose>
                         <c:choose>
                             <c:when test="${sessionScope.role == 'Admin'}">
-                                <form method="post" action="<c:url value='/controller?command=DELETE_COURSE'/>">
+                                <td>
+                                <form method="post" action="<c:url value='/controller'/>">
+                                    <input type="hidden" name="command" value="DELETE_COURSE">
                                     <input type="number" hidden name="id" value="${course.id}"/>
                                     <input type="submit" name="delete" value="Delete"/>
                                 </form>
 
-                                <form method="get" action="<c:url value='/update-course'/>">
+                                <form method="get" action="<c:url value='/updateCourse.jsp'/>">
+                                    <input type="hidden" name="command" value="UPDATE_COURSE">
                                     <input type="number" hidden name="id" value="${course.id}"/>
+                                    <input type="text" hidden name="name" value="${course.name}"/>
                                     <input type="submit" value="Update"/>
                                 </form>
+                                </td>
                             </c:when>
                         </c:choose>
-                    </td>
                 </tr>
+                <c:set var="index" value="${index + 1}"/>
             </c:forEach>
             </tbody>
         </table>
@@ -91,7 +148,10 @@
             <ul class="pagination">
                 <c:if test="${currentPage != 1}">
                     <li class="page-item">
-                        <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${currentPage - 1}<c:if test="${theme != null}">&theme=${theme}</c:if>">Previous</a>
+                        <a class="page-link"
+                            href="controller?command=COURSE_CATALOGUE&page=${currentPage - 1}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">
+                            Previous
+                        </a>
                     </li>
                 </c:if>
 
@@ -99,13 +159,12 @@
                     <c:choose>
                         <c:when test="${currentPage eq i}">
                             <li class="page-item">
-                                    <%--                        ${i}--%>
-                                <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${i}<c:if test="${theme != null}">&theme=${theme}</c:if>">${i}</a>
+                                <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${i}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">${i}</a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="page-item">
-                                <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${i}<c:if test="${theme != null}">&theme=${theme}</c:if>">${i}</a>
+                                <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${i}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">${i}</a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -113,13 +172,14 @@
 
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${currentPage + 1}<c:if test="${theme != null}">&theme=${theme}</c:if>">
+                        <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${currentPage + 1}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">
                             Next
                         </a>
                     </li>
                 </c:if>
             </ul>
         </nav>
+    </div>
     </div>
 
     <%@include file="/jspf/bootstrapScripts.jspf"%>

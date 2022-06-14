@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.example.model.constants.Pages.HOME_PAGE;
+
 public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -17,6 +19,6 @@ public class LogoutCommand implements Command {
             session.invalidate();
         }
 
-        return "index.jsp";
+        return HOME_PAGE;
     }
 }

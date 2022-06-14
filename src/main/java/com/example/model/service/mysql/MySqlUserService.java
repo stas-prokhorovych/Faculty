@@ -1,16 +1,16 @@
 package com.example.model.service.mysql;
 
-import com.example.model.dao.JournalDAO;
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.factory.DaoFactory;
-import com.example.model.dao.mysql.MySQLUserDAO;
+import com.example.model.entity.Course;
 import com.example.model.entity.User;
 import com.example.model.exception.ServiceException;
 import com.example.model.exception.ServiceWrongLoginException;
 import com.example.model.exception.ServiceWrongPasswordException;
-import com.example.model.service.JournalService;
 import com.example.model.service.UserService;
 import com.example.model.utils.Validator;
+
+import java.util.List;
 
 public class MySqlUserService implements UserService {
 
@@ -43,6 +43,7 @@ public class MySqlUserService implements UserService {
      * @throws ServiceException in case of error occurred with a data source
      *                          or validation of data
      */
+    @Override
     public User getUser(String login, String password) throws ServiceException {
         if (!Validator.isLoginValid(login)) {
             throw new ServiceWrongLoginException("login is not valid");
@@ -61,5 +62,30 @@ public class MySqlUserService implements UserService {
         }
 
         return user;
+    }
+
+    @Override
+    public void addUser(User user) {
+        userDAO.addUser(user);
+    }
+
+    @Override
+    public List<User> getAllStudents() {
+        return userDAO.findStudents();
+    }
+
+    @Override
+    public List<User> getAllTeachers() {
+        return userDAO.findTeachers();
+    }
+
+    @Override
+    public List<User> findTeacherByCourse(List<Course> courses) {
+        return userDAO.findTeacherByCourse(courses);
+    }
+
+    @Override
+    public void enrollStudentOnCourse(Integer studentId, Integer courseId) {
+        userDAO.enrollStudentOnCourse(studentId, courseId);
     }
 }
