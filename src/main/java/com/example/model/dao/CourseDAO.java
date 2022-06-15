@@ -35,4 +35,6 @@ public interface CourseDAO {
     List<Course> findAllCoursesByTeacherByPage(Integer teacher, int offset, int noOfRecords);
 
     int findNumberOfRecordsByTeacher(Integer teacher);
+
+    List<Course> findAllFinishedCoursesByTeacherId(int teacherId);
 }

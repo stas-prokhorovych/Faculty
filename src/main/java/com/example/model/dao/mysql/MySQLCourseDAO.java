@@ -257,6 +257,26 @@ public class MySQLCourseDAO implements CourseDAO {
         return numberOfRecords;
     }
 
+    @Override
+    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_ALL_FINISHED_COURSES_BY_TEACHER_ID);
+        ) {
+            statement.setInt(1, teacherId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = mapResultSet(rs);
+                    courses.add(course);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
     private void rollback(Connection connection) {
         try {
             connection.rollback();

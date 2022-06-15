@@ -7,6 +7,4 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="resources"/>
 
-<!DOCTYPE html>
-
 <%--<html lang="${requestScope.lang}" class="h-100">--%>

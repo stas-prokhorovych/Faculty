@@ -1,7 +1,6 @@
 package com.example.model.service;
 
 import com.example.model.entity.Course;
-import com.example.model.entity.User;
 
 import java.util.List;
 
@@ -21,4 +20,6 @@ public interface CourseService {
     List<Course> getNoTeacherCourses();
 
     List<Integer> findUserEnrolled(List<Course> courses);
+
+    List<Course> findAllFinishedCoursesByTeacherId(int teacherId);
 }

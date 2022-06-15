@@ -4,9 +4,7 @@ import com.example.model.dao.UserDAO;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.entity.Course;
 import com.example.model.entity.User;
-import com.example.model.exception.ServiceException;
-import com.example.model.exception.ServiceWrongLoginException;
-import com.example.model.exception.ServiceWrongPasswordException;
+import com.example.model.exception.UserServiceException;
 import com.example.model.service.UserService;
 import com.example.model.utils.Validator;
 
@@ -40,25 +38,19 @@ public class MySqlUserService implements UserService {
      * @param login    a login of user
      * @param password a password of the user
      * @return a user
-     * @throws ServiceException in case of error occurred with a data source
+     * @throws UserServiceException in case of error occurred with a data source
      *                          or validation of data
      */
     @Override
-    public User getUser(String login, String password) throws ServiceException {
-        if (!Validator.isLoginValid(login)) {
-            throw new ServiceWrongLoginException("login is not valid");
-        }
-        if (!Validator.isPasswordValid(password)) {
-            throw new ServiceWrongPasswordException("password is not valid");
-        }
+    public User getUser(String login, String password) throws UserServiceException {
 
         User user = userDAO.findUserByLogin(login);
 
         if (user == null) {
-            throw new ServiceWrongLoginException("no user with specified login");
+            throw new UserServiceException("no user with specified login");
         }
         if (!Validator.isPasswordCorrect(password, user.getPassword())) {
-            throw new ServiceWrongPasswordException("password is not correct");
+            throw new UserServiceException("password is not correct");
         }
 
         return user;

@@ -5,14 +5,8 @@
     <title>Faculty</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <%@include file="/jspf/head.jspf"%>
-    <style>
-        body {background-color: darkgrey;}
-        .center {
-            text-align: center;
-        }
-    </style>
 </head>
-<body>
+<body class="profile-background">
     <%@include file="/jspf/navbar.jspf"%>
     <div class="center">
         <h1>User information</h1>
@@ -28,7 +22,11 @@
         </c:choose>
     </div>
     <br><br>
-<%--    <h3>Courses you registered but not started yet</h3>--%>
+    <h3>Courses you registered but not started yet</h3>
+
+    <h3>Courses in progress</h3>
+
+    <h3>Courses you finish</h3>
 </body>
 </html>
 

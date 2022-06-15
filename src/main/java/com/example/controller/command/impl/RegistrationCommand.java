@@ -9,6 +9,7 @@ import com.example.model.service.factory.ServiceFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class RegistrationCommand implements Command {
@@ -41,6 +42,15 @@ public class RegistrationCommand implements Command {
         user.setUserAccess(Boolean.parseBoolean(userAccess));
 
         userService.addUser(user);
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("id", user.getId());
+        session.setAttribute("login", user.getLogin());
+        session.setAttribute("email", user.getEmail());
+        session.setAttribute("role", user.getRole().toString());
+        session.setAttribute("name", user.getFirstName());
+        session.setAttribute("surname", user.getLastName());
+        session.setAttribute("phone", user.getPhoneNumber());
 
         return "profile.jsp";
     }

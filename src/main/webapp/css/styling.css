@@ -1,0 +1,24 @@
+.form-page {
+    background-color: #2F4F4F;
+}
+
+.center {
+    text-align: center;
+}
+
+.main-page {
+    background-color: #3f2d1b;
+}
+
+.error {
+    color: red;
+    font-size: smaller;
+}
+
+.data-error {
+    color: red;
+}
+
+.profile-background {
+    background-color: #9b9b78;
+}

@@ -27,4 +27,5 @@ public final class Query {
     public static final String FIND_NO_TEACHER_COURSES = "SELECT * FROM course WHERE course_status = 'Closed, no teacher assigned yet'";
     public static final String FIND_STUDENTS_ENROLLED = "SELECT COUNT(id) FROM course_student WHERE id_course=?";
     public static final String FIND_TEACHER_BY_COURSE = "SELECT * FROM user WHERE user.id = ?";
+    public static final String FIND_ALL_FINISHED_COURSES_BY_TEACHER_ID = "SELECT * FROM course WHERE id_lecturer=? AND course_status = 'Finished'";
 }

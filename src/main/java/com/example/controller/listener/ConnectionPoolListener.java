@@ -21,11 +21,11 @@ public class ConnectionPoolListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         DataSource.shutdown();
-        LOG.info("Pool successfully initialized");
+//        LOG.info("Pool successfully initialized");
     }
     @Override
     public void contextInitialized(ServletContextEvent event) {
         DataSource.getInstance();
-        LOG.info("Pool successfully destroyed");
+//        LOG.info("Pool successfully destroyed");
     }
 }

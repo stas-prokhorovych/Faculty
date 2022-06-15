@@ -2,12 +2,12 @@ package com.example.model.service;
 
 import com.example.model.entity.Course;
 import com.example.model.entity.User;
-import com.example.model.exception.ServiceException;
+import com.example.model.exception.UserServiceException;
 
 import java.util.List;
 
 public interface UserService {
-    User getUser(String login, String password) throws ServiceException;
+    User getUser(String login, String password) throws UserServiceException;
 
     void addUser(User user);
 

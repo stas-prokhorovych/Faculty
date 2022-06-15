@@ -2,18 +2,17 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.User;
-import com.example.model.exception.ServiceException;
-import com.example.model.exception.ServiceWrongLoginException;
-import com.example.model.exception.ServiceWrongPasswordException;
+import com.example.model.exception.UserServiceException;
 import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
-import com.example.model.service.mysql.MySqlUserService;
+import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 import static com.example.model.constants.Pages.LOGIN_PAGE;
 import static com.example.model.constants.Pages.PROFILE_PAGE;
@@ -31,20 +30,21 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        Map<String, String> inputErrors = Validator.checkLoginForm(login, password);
+        if(!inputErrors.isEmpty()) {
+            for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
+                request.setAttribute(entry.getKey(), entry.getValue());
+            }
+            return LOGIN_PAGE;
+        }
 
-
+        request.setAttribute("validLogin", login);
 
         User user;
         try {
             user = userService.getUser(login, password);
-        } catch (ServiceWrongLoginException e) {
-            request.setAttribute("loginError", e.getMessage());
-            return LOGIN_PAGE;
-        } catch (ServiceWrongPasswordException e) {
-            request.setAttribute("passwordError", e.getMessage());
-            return LOGIN_PAGE;
-        } catch (ServiceException e){
-            request.setAttribute("common-error", e.getMessage());
+        } catch (UserServiceException e){
+            request.setAttribute("dataError", e.getMessage());
             return LOGIN_PAGE;
         }
 
@@ -56,7 +56,6 @@ public class LoginCommand implements Command {
         session.setAttribute("name", user.getFirstName());
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
-
         return PROFILE_PAGE;
     }
 }

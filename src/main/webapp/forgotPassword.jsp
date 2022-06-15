@@ -4,7 +4,7 @@
 <head>
     <title>Title</title>
     <%@include file="/jspf/head.jspf"%>
-    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/styling.css">
 </head>
 <body  class="form-page">
     <%@include file="/jspf/navbar.jspf"%>

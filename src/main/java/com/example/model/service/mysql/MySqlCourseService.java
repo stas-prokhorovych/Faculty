@@ -88,5 +88,10 @@ public class MySqlCourseService implements CourseService {
         return courseDAO.findUserEnrolled(courses);
     }
 
+    @Override
+    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) {
+        return courseDAO.findAllFinishedCoursesByTeacherId(teacherId);
+    }
+
 
 }

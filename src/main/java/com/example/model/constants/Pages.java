@@ -17,4 +17,5 @@ public final class Pages {
     public static final String UPDATE_COURSE_PAGE = "updateCourse.jsp";
     public static final String USER_CATALOGUE_PAGE = "userCatalogue.jsp";
     public static final String ADD_TEACHER_PAGE = "addTeacher.jsp";
+    public static final String SHOW_JOURNAL_PAGE = "journal.jsp";
 }
