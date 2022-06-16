@@ -8,20 +8,15 @@
 <body>
     <%@include file="/jspf/navbar.jspf"%>
 
-<%--    <h3>Opened for registration</h3>--%>
+    <h3>In progress</h3>
 
-<%--    <h3>In progress</h3>--%>
-
-    <h3>Finished</h3>
-
-    <c:forEach items="${finishedCourses}" var="finishedCourse">
-        Course name: ${finishedCourse.name}
-        Course theme: ${finishedCourse.theme}
-        Course start date: ${finishedCourse.startDate}
-        Course end date: ${finishedCourse.endDate}
-        Course status: ${finishedCourse.courseStatus}
+    <c:forEach items="${inProgressCourses}" var="course">
+        Course name: ${course.name}
+        Course theme: ${course.theme}
+        Course start date: ${course.startDate}
+        Course end date: ${course.endDate}
+        Course status: ${course.courseStatus}
     </c:forEach>
-
     <br>
 
 

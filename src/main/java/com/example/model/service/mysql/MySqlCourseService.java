@@ -93,5 +93,20 @@ public class MySqlCourseService implements CourseService {
         return courseDAO.findAllFinishedCoursesByTeacherId(teacherId);
     }
 
+    @Override
+    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) {
+        return courseDAO.findRegisteredCoursesByStudentId(studentId);
+    }
+
+    @Override
+    public List<Course> findInProgressCoursesByStudentId(Integer studentId) {
+        return courseDAO.findInProgressCoursesByStudentId(studentId);
+    }
+
+    @Override
+    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) {
+        return courseDAO.findAllInProgressCoursesByTeacherId(teacherId);
+    }
+
 
 }

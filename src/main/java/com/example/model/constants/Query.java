@@ -10,6 +10,7 @@ public final class Query {
     public static final String FIND_TEACHERS = "SELECT * FROM user WHERE role = 'Teacher'";
     public static final String FIND_STUDENTS = "SELECT * FROM user WHERE role = 'Student'";
     public static final String CREATE_STUDENT_ON_COURSE = "INSERT INTO course_student(id_user, id_course) VALUES (?, ?)";
+    public static final String BLOCK_USER = "UPDATE user SET user_access = false WHERE id=?";
 
     // Course queries
     public static final String SELECT_COURSES_LIMIT = "SELECT  *  FROM course LIMIT ?, ?";
@@ -28,4 +29,7 @@ public final class Query {
     public static final String FIND_STUDENTS_ENROLLED = "SELECT COUNT(id) FROM course_student WHERE id_course=?";
     public static final String FIND_TEACHER_BY_COURSE = "SELECT * FROM user WHERE user.id = ?";
     public static final String FIND_ALL_FINISHED_COURSES_BY_TEACHER_ID = "SELECT * FROM course WHERE id_lecturer=? AND course_status = 'Finished'";
+    public static final String FIND_ALL_IN_PROGRESS_COURSES_BY_TEACHER_ID = "SELECT * FROM course WHERE id_lecturer=? AND course_status = 'In progress'";
+    public static final String SELECT_STUDENT_REGISTERED_COURSES = "SELECT * FROM course WHERE course_status='Opened for registration' AND id IN ( SELECT id_course FROM course_student WHERE id_user=?)";
+    public static final String SELECT_STUDENT_IN_PROGRESS_COURSES = "SELECT * FROM course WHERE course_status='In progress' AND id IN ( SELECT id_course FROM course_student WHERE id_user=?)";
 }

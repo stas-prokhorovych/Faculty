@@ -14,7 +14,10 @@ public enum CommandEnum {
     USER_CATALOGUE(new UserCatalogueCommand()),
     ADD_TEACHER(new AddTeacherCommand()),
     ENROLL_ON_COURSE(new EnrollOnCourse()),
-    SHOW_JOURNAL(new ShowJournalCommand());
+    SHOW_JOURNAL(new ShowJournalCommand()),
+    PDF_REPORT(new PdfReportCommand()),
+    YOUR_COURSES(new StudentCourses()),
+    BLOCK_USER(new BlockUser());
 
     private Command command;
 

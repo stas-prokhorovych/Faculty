@@ -80,4 +80,9 @@ public class MySqlUserService implements UserService {
     public void enrollStudentOnCourse(Integer studentId, Integer courseId) {
         userDAO.enrollStudentOnCourse(studentId, courseId);
     }
+
+    @Override
+    public void blockUser(String studentId) {
+        userDAO.blockUser(studentId);
+    }
 }

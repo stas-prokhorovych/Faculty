@@ -5,12 +5,16 @@ import com.example.model.dao.mysql.MySQLUserDAO;
 import com.example.model.entity.User;
 import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
+import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
+
+import static com.example.model.constants.Pages.*;
 
 public class RegistrationCommand implements Command {
     private static ServiceFactory serviceFactory;
@@ -25,11 +29,20 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        String passwordRepeat = request.getParameter("password-repeat");
         String email = request.getParameter("email");
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
         String phone = request.getParameter("phone");
         String userAccess = request.getParameter("user-access");
+
+        Map<String, String> inputErrors = Validator.checkSignupForm(login, password, passwordRepeat, email, firstName, lastName, phone);
+        if(!inputErrors.isEmpty()) {
+            for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
+                request.setAttribute(entry.getKey(), entry.getValue());
+            }
+            return SIGNUP_PAGE;
+        }
 
         User user = new User();
         user.setLogin(login);
@@ -52,6 +65,6 @@ public class RegistrationCommand implements Command {
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
 
-        return "profile.jsp";
+        return PROFILE_PAGE;
     }
 }

@@ -258,6 +258,26 @@ public class MySQLCourseDAO implements CourseDAO {
     }
 
     @Override
+    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_ALL_IN_PROGRESS_COURSES_BY_TEACHER_ID);
+        ) {
+            statement.setInt(1, teacherId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = mapResultSet(rs);
+                    courses.add(course);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    @Override
     public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
@@ -276,6 +296,47 @@ public class MySQLCourseDAO implements CourseDAO {
         }
         return courses;
     }
+
+    @Override
+    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(SELECT_STUDENT_REGISTERED_COURSES);
+        ) {
+            statement.setInt(1, studentId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = mapResultSet(rs);
+                    courses.add(course);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    @Override
+    public List<Course> findInProgressCoursesByStudentId(Integer studentId) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(SELECT_STUDENT_IN_PROGRESS_COURSES);
+        ) {
+            statement.setInt(1, studentId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = mapResultSet(rs);
+                    courses.add(course);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
 
     private void rollback(Connection connection) {
         try {

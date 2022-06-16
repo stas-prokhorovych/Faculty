@@ -129,6 +129,17 @@ public class MySQLUserDAO implements UserDAO {
         }
     }
 
+    @Override
+    public void blockUser(String studentId) {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(BLOCK_USER)) {
+            pst.setString(1, studentId);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private User mapResultSet(ResultSet rs) {
         User user;
         try {

@@ -22,6 +22,13 @@
                 <a class="nav-link" href="controller?command=COURSE_CATALOGUE">Courses</a>
             </li>
             <c:choose>
+                <c:when test="${sessionScope.role == 'Student'}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=YOUR_COURSES">Your courses</a>
+                    </li>
+                </c:when>
+            </c:choose>
+            <c:choose>
                 <c:when test="${sessionScope.role == 'Teacher'}">
                     <li class="nav-item">
                         <a class="nav-link" href="controller?command=SHOW_JOURNAL">Journal</a>
@@ -31,13 +38,13 @@
             <c:choose>
                 <c:when test="${sessionScope.role == 'Admin'}">
                     <li class="nav-item">
+                        <a class="nav-link" href="controller?command=USER_CATALOGUE">Users</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="addCourse.jsp">Add course</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="controller?command=ADD_TEACHER">Add teacher</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="controller?command=USER_CATALOGUE">Users</a>
                     </li>
                 </c:when>
             </c:choose>

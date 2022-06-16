@@ -21,12 +21,6 @@
             </c:when>
         </c:choose>
     </div>
-    <br><br>
-    <h3>Courses you registered but not started yet</h3>
-
-    <h3>Courses in progress</h3>
-
-    <h3>Courses you finish</h3>
 </body>
 </html>
 

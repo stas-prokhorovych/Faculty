@@ -34,11 +34,13 @@ public class ShowJournalCommand implements Command {
         Integer teacherId = (Integer) request.getSession(false).getAttribute("id");
 
         List<Course> finishedCourses =  courseService.findAllFinishedCoursesByTeacherId(teacherId);
+        List<Course> inProgressCourses = courseService.findAllInProgressCoursesByTeacherId(teacherId);
+        for(Course course: inProgressCourses) {
+            System.out.println(course.getName());
+        }
 
 
-//        List<User> studentFinishedCourse;
-//        Integer[] marks;
-
+        request.setAttribute("inProgressCourses", inProgressCourses);
 
 //        request.setAttribute("finishedCourses", finishedCourses);
 //        request.setAttribute("studentFinishedCourse", studentFinishedCourse);

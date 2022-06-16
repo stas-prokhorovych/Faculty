@@ -18,4 +18,6 @@ public interface UserService {
     List<User> findTeacherByCourse(List<Course> courses);
 
     void enrollStudentOnCourse(Integer studentId, Integer courseId);
+
+    void blockUser(String studentId);
 }

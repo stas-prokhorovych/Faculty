@@ -1,6 +1,4 @@
 
-P
- src/main/webapp/js/validation.js,2\4\2434a10445f3dc3cba2de0f97f3587b821393bb3
 Z
 *src/main/webapp/jspf/bootstrapScripts.jspf,e\4\e435e88ebe060caaed1a8977e9613e115c0a7437
 c
@@ -17,8 +15,6 @@ c
 3src/main/java/com/example/model/dao/JournalDAO.java,8\4\843b0c41bc74241f12395985dafbd5f17ba82453
 k
 ;src/main/java/com/example/model/dao/factory/DaoFactory.java,9\6\9619095ba6b5a86bdc7614f173451ad0df9fa493
-v
-Fsrc/main/java/com/example/model/dao/mysql/factory/MySqlDaoFactory.java,3\0\307e95bccbdb74ada8aeff503084d5a530354cca
 s
 Csrc/main/java/com/example/model/service/factory/ServiceFactory.java,a\3\a383968b8c73b77b4513ea8fce798964da0f1473
 ~
@@ -39,10 +35,6 @@ Jsrc/main/java/com/example/controller/command/impl/CreateCourseCommand.java,7\c
 Ksrc/main/java/com/example/controller/command/impl/UserCatalogueCommand.java,b\f\bf618b4356fea282664778f15df324b7bdcd4542
 z
 Jsrc/main/java/com/example/controller/command/impl/DeleteCourseCommand.java,c\3\c33cb62789fbaddceed01ddb9ab51c0210b686c9
-`
-0src/main/java/com/example/model/dao/UserDAO.java,0\4\0432b4c70dc2a855871e67a4d8e6b895c60f06bd
-k
-;src/main/java/com/example/model/dao/mysql/MySQLUserDAO.java,e\e\ee854cc49466369ddce937b644628e5ebc60cd43
 u
 Esrc/main/java/com/example/controller/command/impl/UnknownCommand.java,0\6\061cdf293e247b71f7e85f2c68d9a346e312bf4e
 M
@@ -55,8 +47,6 @@ R
 "src/main/webapp/forgotPassword.jsp,8\3\838fcf9f49e34c23479c4b97e829635d1a031400
 P
  src/main/webapp/pageNotFound.jsp,d\2\d22749877c0fcf2769e07b49f101d5f45a254683
-Q
-!src/main/webapp/userCatalogue.jsp,4\e\4ee996cecf83fbe509ba5f986ad1b4c452a781ae
 N
 src/main/webapp/jspf/head.jspf,0\4\04535e1d05cce7ad52068eb440a601ee9c2df208
 I
@@ -65,35 +55,31 @@ u
 Esrc/main/java/com/example/controller/command/impl/EnrollOnCourse.java,0\f\0f95cb3676bf78abab5b4338ae4041dbab0585e2
 }
 Msrc/main/java/com/example/controller/command/impl/CourseCatalogueCommand.java,f\0\f0abe62d9f02a5550f451e9f14994ef6fd9f0112
-S
-#src/main/webapp/courseCatalogue.jsp,7\6\76a4c092595bd2de7ef46db18e90c3d75a1cd039
-j
-:src/main/java/com/example/model/service/CourseService.java,e\d\edbb2acc52299dc96d44ae8f4ccd31a339908dc8
-b
-2src/main/java/com/example/model/dao/CourseDAO.java,a\7\a701c02376ee276d22dd8cb0a6f9ff83cbbc4e0e
 v
 Fsrc/main/java/com/example/model/service/mysql/MySqlJournalService.java,a\4\a421b3c4f03ae317f3f6f6e5e3fc04e5931167ef
-u
-Esrc/main/java/com/example/model/service/mysql/MySqlCourseService.java,5\b\5b71924905c96aa9acf5c51a9f7950f523f7bca4
-m
-=src/main/java/com/example/model/dao/mysql/MySQLCourseDAO.java,6\8\6849f02bce6fa1582ad38d0dcbf99a3eb93c3259
 `
 0src/main/java/com/example/model/entity/User.java,1\2\12b1790118fe2d75e19d14e982097238c41ba2cd
-b
-2src/main/java/com/example/model/entity/Course.java,9\5\954df65b1debef32a8075e0e078ea9be58e5c400
-K
-src/main/webapp/journal.jsp,3\3\33a010f44046c0206bf64a71187abdd0bc86a06b
-K
-src/main/webapp/profile.jsp,3\9\3932b6a22a1db264677b40c5b9307e011739496b
-y
-Isrc/main/java/com/example/controller/command/impl/ShowJournalCommand.java,d\f\df3b167861c1d537b4e108f895e98e5532d4adc3
 P
  src/main/webapp/jspf/header.jspf,a\7\a7a52d6e33fb6445b655e7d80a1fb31ce1064d2b
-P
- src/main/webapp/jspf/navbar.jspf,0\a\0a4d461fb4f083216b1bcb6213f8ee9f8c40a755
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 H
 sql/db-create-insert.sql,2\9\29a937544a9255e87dbdfa862c267b39ce418bd0
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+o
+?src/main/java/com/example/controller/filter/SecurityFilter.java,a\c\ac0dfc95f074e54bc07d64c4df35da8e5e8eaf86
+s
+Csrc/main/java/com/example/model/exception/UserServiceException.java,7\d\7db9de518d86c8e311f48fbb044d57b64b76c39e
+I
+src/main/webapp/login.jsp,8\5\85ee523d01e5e19376db640e846c91bbcb0a1c22
+P
+ src/main/webapp/js/validation.js,2\4\2434a10445f3dc3cba2de0f97f3587b821393bb3
+R
+"src/main/webapp/js/captchaCheck.js,e\5\e59473564c1881daa267d44ba5882367c01785b6
+d
+4src/main/java/com/example/model/utils/Validator.java,4\5\45bf341ef03a46b5e45bb1e7f73afaaa9d94003e
+J
+src/main/webapp/signup.jsp,e\5\e5522cd3d0b3598d3702de2bf21f10cd7b094ad8
+s
+Csrc/main/java/com/example/controller/command/impl/LoginCommand.java,a\8\a849ac29cae19b5c6ac70d9138a8fc1ce58e13b2
+z
+Jsrc/main/java/com/example/controller/command/impl/RegistrationCommand.java,4\e\4e75fb2465657eca8629111fa4eb9dfd51d72364

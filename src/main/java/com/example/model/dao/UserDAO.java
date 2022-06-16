@@ -18,4 +18,6 @@ public interface UserDAO {
     List<User> findTeacherByCourse(List<Course> courses);
 
     void enrollStudentOnCourse(Integer studentId, Integer courseId);
+
+    void blockUser(String studentId);
 }

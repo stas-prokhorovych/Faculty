@@ -22,4 +22,10 @@ public interface CourseService {
     List<Integer> findUserEnrolled(List<Course> courses);
 
     List<Course> findAllFinishedCoursesByTeacherId(int teacherId);
+
+    List<Course> findRegisteredCoursesByStudentId(Integer studentId);
+
+    List<Course> findInProgressCoursesByStudentId(Integer studentId);
+
+    List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId);
 }
