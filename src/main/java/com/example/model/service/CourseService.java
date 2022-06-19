@@ -1,13 +1,15 @@
 package com.example.model.service;
 
 import com.example.model.entity.Course;
+import com.example.model.exception.CourseServiceException;
+import com.example.model.exception.UserServiceException;
 
 import java.util.List;
 
 public interface CourseService {
     void deleteCourse(int id);
 
-    void addCourse(Course course);
+    void addCourse(Course course) throws CourseServiceException;
 
     List<String> findThemes();
 
@@ -28,4 +30,8 @@ public interface CourseService {
     List<Course> findInProgressCoursesByStudentId(Integer studentId);
 
     List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId);
+
+    List<Course> findFinishedCoursesByStudentId(Integer studentId);
+
+    Course findCourseById(String id);
 }

@@ -1,7 +1,6 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
 
@@ -12,9 +11,9 @@ import java.io.IOException;
 
 import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
 
-public class BlockUser implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
+public class BlockUserCommand implements Command {
+    private static final ServiceFactory serviceFactory;
+    private static final UserService userService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -24,9 +23,7 @@ public class BlockUser implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String studentId = request.getParameter("id");
-
         userService.blockUser(studentId);
-
-        return USER_CATALOGUE_PAGE;
+        return new UserCatalogueCommand().execute(request, response);
     }
 }

@@ -8,16 +8,14 @@ public class Validator {
     }
 
     public static boolean isLoginValid(final String login) {
-        return login != null && login.matches("^[a-z\\d_-]{2,16}$");
+        return login.matches("^[a-z\\d_-]{2,16}$");
     }
 
     public static boolean isPasswordValid(final String password) {
-        return password != null && password.length() >= 2 && password.length() <= 64;
+        return password.length() >= 2 && password.length() <= 64;
     }
 
     public static boolean isPasswordCorrect(final String givenPassword, final String realPassword) {
-        if (givenPassword == null || realPassword == null)
-            return false;
         return givenPassword.equals(realPassword);
     }
 
@@ -26,18 +24,26 @@ public class Validator {
     }
 
     public static boolean isEmailValid(final String email) {
-        return email != null && email.matches("^(.+)@(\\S+)$");
+        return email.matches("^(.+)@(\\S+)$");
     }
 
     public static boolean isFirstNameValid(final String firstName) {
-        return true;
+        return firstName.matches("[A-Z][a-z]{1,20}");
     }
 
     public static boolean isLastNameValid(final String lastName) {
-        return true;
+        return lastName.matches("[A-Z][a-z]{1,20}");
     }
 
     public static boolean isPhoneValid(final String phone) {
+        return true;
+    }
+
+    public static boolean isCourseNameValid(final String courseName) {
+        return true;
+    }
+
+    public static boolean isCourseThemeValid(final String courseTheme) {
         return true;
     }
 
@@ -72,8 +78,6 @@ public class Validator {
         return errors;
     }
 
-
-
     public static Map<String, String> checkSignupForm(String login, String password, String repeatPassword,
                                                       String email, String firstName, String lastName, String phone) {
         boolean errorOccur = false;
@@ -105,9 +109,9 @@ public class Validator {
             errors.put("repeatPasswordError", "Password repeat is empty, please input your information");
         } else if (!isPasswordsMatch(password, repeatPassword)) {
             errorOccur = true;
-            errors.put("repeatPasswordError", "Password in not valid");
+            errors.put("repeatPasswordError", "Repeat password didn't match");
         } else {
-            validInputs.put("validRepeatPassword", password);
+            validInputs.put("validRepeatPassword", repeatPassword);
         }
 
         if (email == null || email.equals("")) {
@@ -117,15 +121,87 @@ public class Validator {
             errorOccur = true;
             errors.put("emailError", "Email in not valid");
         } else {
-            validInputs.put("validEmail", password);
+            validInputs.put("validEmail", email);
         }
 
+        if (firstName == null || firstName.equals("")) {
+            errorOccur = true;
+            errors.put("firstNameError", "First Name is empty, please input your information");
+        } else if (!isFirstNameValid(firstName)) {
+            errorOccur = true;
+            errors.put("firstNameError", "Email in not valid");
+        } else {
+            validInputs.put("validFirstName", firstName);
+        }
 
+        if (lastName == null || lastName.equals("")) {
+            errorOccur = true;
+            errors.put("lastNameError", "Last Name is empty, please input your information");
+        } else if (!isLastNameValid(lastName)) {
+            errorOccur = true;
+            errors.put("lastNameError", "Last Name in not valid");
+        } else {
+            validInputs.put("validLastName", firstName);
+        }
+
+        if (phone == null || phone.equals("")) {
+            if(!isPhoneValid(phone)) {
+                errorOccur = true;
+                errors.put("phoneError", "Last Name in not valid");
+            }
+        } else {
+            validInputs.put("validPhone", firstName);
+        }
 
         if (errorOccur) {
             errors.putAll(validInputs);
         }
 
+        return errors;
+    }
+
+    public static Map<String, String> checkAddCourseForm(String name, String theme, String startDate, String endDate) {
+        boolean errorOccur = false;
+        Map<String, String> validInputs = new HashMap<>();
+        Map<String, String> errors = new HashMap<>();
+
+        if (name == null || name.equals("")) {
+            errorOccur = true;
+            errors.put("nameError", "Name is empty, please input your information");
+        } else if (!isCourseNameValid(name)) {
+            errorOccur = true;
+            errors.put("nameError", "Course name in not valid");
+        } else {
+            validInputs.put("validName", name);
+        }
+
+        if (theme == null || theme.equals("")) {
+            errorOccur = true;
+            errors.put("themeError", "Course theme is empty, please input your information");
+        } else if (!isCourseThemeValid(theme)) {
+            errorOccur = true;
+            errors.put("themeError", "Course theme in not valid");
+        } else {
+            validInputs.put("validTheme", theme);
+        }
+
+        if (startDate == null || startDate.equals("")) {
+            errorOccur = true;
+            errors.put("startDateError", "Course start date is empty, please input your information");
+        } else {
+            validInputs.put("validStartDate", startDate);
+        }
+
+        if (endDate == null || endDate.equals("")) {
+            errorOccur = true;
+            errors.put("endDateError", "Course end date is empty, please input your information");
+        } else {
+            validInputs.put("validEndDate", endDate);
+        }
+
+        if (errorOccur) {
+            errors.putAll(validInputs);
+        }
         return errors;
     }
 }

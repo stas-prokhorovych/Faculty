@@ -14,8 +14,8 @@ import java.util.List;
 import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
 
 public class UserCatalogueCommand implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
+    private static final ServiceFactory serviceFactory;
+    private static final UserService userService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");

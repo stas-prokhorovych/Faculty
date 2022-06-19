@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Forgot Password</title>
     <%@include file="/jspf/head.jspf"%>
     <link rel="stylesheet" type="text/css" href="css/styling.css">
 </head>

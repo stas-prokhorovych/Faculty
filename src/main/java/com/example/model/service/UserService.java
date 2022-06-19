@@ -20,4 +20,10 @@ public interface UserService {
     void enrollStudentOnCourse(Integer studentId, Integer courseId);
 
     void blockUser(String studentId);
+
+    List<User> findAllGraduates(Integer courseId);
+
+    void unblockUser(String studentId);
+
+    void findUserByLogin(String login) throws UserServiceException;
 }

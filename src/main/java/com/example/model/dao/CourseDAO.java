@@ -43,4 +43,10 @@ public interface CourseDAO {
     List<Course> findInProgressCoursesByStudentId(Integer studentId);
 
     List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId);
+
+    List<Course> findFinishedCoursesByStudentId(Integer studentId);
+
+    Course findCourseById(String id);
+
+    Course findCourseByName(String name);
 }

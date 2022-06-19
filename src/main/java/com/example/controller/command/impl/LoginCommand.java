@@ -18,8 +18,8 @@ import static com.example.model.constants.Pages.LOGIN_PAGE;
 import static com.example.model.constants.Pages.PROFILE_PAGE;
 
 public class LoginCommand implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
+    private static final ServiceFactory serviceFactory;
+    private static final UserService userService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -30,6 +30,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+
         Map<String, String> inputErrors = Validator.checkLoginForm(login, password);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {

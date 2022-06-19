@@ -1,8 +1,8 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.model.dao.mysql.MySQLUserDAO;
 import com.example.model.entity.User;
+import com.example.model.exception.UserServiceException;
 import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.Validator;
@@ -17,8 +17,8 @@ import java.util.Map;
 import static com.example.model.constants.Pages.*;
 
 public class RegistrationCommand implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
+    private static final ServiceFactory serviceFactory;
+    private static final UserService userService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -34,13 +34,31 @@ public class RegistrationCommand implements Command {
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
         String phone = request.getParameter("phone");
-        String userAccess = request.getParameter("user-access");
 
         Map<String, String> inputErrors = Validator.checkSignupForm(login, password, passwordRepeat, email, firstName, lastName, phone);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+            return SIGNUP_PAGE;
+        }
+
+        request.setAttribute("validLogin", login);
+        request.setAttribute("validPassword", password);
+        request.setAttribute("validPasswordRepeat", passwordRepeat);
+        request.setAttribute("validEmail", email);
+        request.setAttribute("validFirstName", firstName);
+        request.setAttribute("validLastName", lastName);
+        request.setAttribute("validPhone", phone);
+
+
+
+
+
+        try {
+            userService.findUserByLogin(login);
+        } catch (UserServiceException e){
+            request.setAttribute("dataError", e.getMessage());
             return SIGNUP_PAGE;
         }
 
@@ -52,7 +70,7 @@ public class RegistrationCommand implements Command {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setPhoneNumber(phone);
-        user.setUserAccess(Boolean.parseBoolean(userAccess));
+        user.setUserAccess(true);
 
         userService.addUser(user);
 

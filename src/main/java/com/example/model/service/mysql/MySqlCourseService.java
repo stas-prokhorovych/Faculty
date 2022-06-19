@@ -3,6 +3,8 @@ package com.example.model.service.mysql;
 import com.example.model.dao.CourseDAO;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.entity.Course;
+import com.example.model.exception.CourseServiceException;
+import com.example.model.exception.UserServiceException;
 import com.example.model.service.CourseService;
 import com.example.model.utils.Utils;
 
@@ -29,14 +31,22 @@ public class MySqlCourseService implements CourseService {
         return instance;
     }
 
-
     @Override
     public void deleteCourse(int id) {
         courseDAO.deleteCourse(id);
     }
 
     @Override
-    public void addCourse(Course course) {
+    public void addCourse(Course course) throws CourseServiceException {
+        Course courseWithThisName = courseDAO.findCourseByName(course.getName());
+        if(courseWithThisName != null) {
+            throw new CourseServiceException("course with such name already exist");
+        }
+        if(course.getStartDate().isAfter(course.getEndDate())) {
+            throw new CourseServiceException("start date must be before end date");
+        }
+
+        System.out.println("here");
         courseDAO.addCourse(course);
     }
 
@@ -106,6 +116,16 @@ public class MySqlCourseService implements CourseService {
     @Override
     public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) {
         return courseDAO.findAllInProgressCoursesByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<Course> findFinishedCoursesByStudentId(Integer studentId) {
+        return courseDAO.findFinishedCoursesByStudentId(studentId);
+    }
+
+    @Override
+    public Course findCourseById(String id) {
+        return courseDAO.findCourseById(id);
     }
 
 

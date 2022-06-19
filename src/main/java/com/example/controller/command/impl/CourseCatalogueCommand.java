@@ -19,9 +19,10 @@ import java.util.Map;
 import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
 
 public class CourseCatalogueCommand implements Command {
-    private static ServiceFactory serviceFactory;
-    private static CourseService courseService;
-    private static UserService userService;
+    private static final ServiceFactory serviceFactory;
+    private static final CourseService courseService;
+    private static final UserService userService;
+    private static final int DEFAULT_RECORDS_PER_PAGE = 5;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -36,20 +37,32 @@ public class CourseCatalogueCommand implements Command {
         request.setAttribute("themesForForm", themesForForm);
         request.setAttribute("teacherForForm", teacherForForm);
 
+
         String theme = request.getParameter("theme");
+
         Integer teacherId = null;
         if(request.getParameter("teacher") != null) {
             teacherId = Integer.parseInt(request.getParameter("teacher"));
         }
-
         String sort = request.getParameter("sort");
+        if(sort != null) {
+            request.setAttribute("sort", sort);
+        }
         String order = request.getParameter("order");
+        if(order != null) {
+            request.setAttribute("order", order);
+        }
+
 
         int page = 1;
-        int recordsPerPage = 5;
         if(request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
+        }
 
+        int recordsPerPage = DEFAULT_RECORDS_PER_PAGE;
+        if(request.getParameter("recordsPerPage") != null) {
+            recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
+            request.setAttribute("recordsPerPage", recordsPerPage);
         }
 
         List<Course> courses = courseService.findAllCoursesByPage((page-1)*recordsPerPage, recordsPerPage, theme, teacherId, sort, order);

@@ -85,4 +85,22 @@ public class MySqlUserService implements UserService {
     public void blockUser(String studentId) {
         userDAO.blockUser(studentId);
     }
+
+    @Override
+    public List<User> findAllGraduates(Integer courseId) {
+        return userDAO.findAllGraduates(courseId);
+    }
+
+    @Override
+    public void unblockUser(String studentId) {
+        userDAO.unblockUser(studentId);
+    }
+
+    @Override
+    public void findUserByLogin(String login) throws UserServiceException {
+        User user = userDAO.findUserByLogin(login);
+        if (user != null) {
+            throw new UserServiceException("user with such login already exist");
+        }
+    }
 }

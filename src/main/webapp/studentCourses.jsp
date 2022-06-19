@@ -68,6 +68,37 @@
         </div>
     </div>
 
+    <h2 class="center">Finished courses</h2>
+    <div class="row justify-content-center">
+        <div class="row col-md-8">
+            <table class="table table-bordered table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Theme</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th>Duration in days</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="course" items="${finishedCourses}">
+                    <tr>
+                        <td>${course.id}</td>
+                        <td>${course.name}</td>
+                        <td>${course.theme}</td>
+                        <td>${course.startDate}</td>
+                        <td>${course.endDate}</td>
+                        <td>${course.durationInDays}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
     <%@include file="/jspf/bootstrapScripts.jspf" %>
 </body>
 </html>

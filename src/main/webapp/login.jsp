@@ -19,7 +19,7 @@
 
                             <h3 class="mb-4"><fmt:message key="login.login"/></h3>
                             <c:if test="${dataError != null}">
-                                <div id="commonError" class="data-error">${dataError}</div>
+                                <div id="dataError" class="data-error">${dataError}</div>
                                 <br>
                             </c:if>
 

@@ -1,16 +1,10 @@
 <%@include file="/jspf/header.jspf"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <html>
 <head>
     <title>User Catalogue</title>
     <%@include file="/jspf/head.jspf"%>
-    <style>
-        .image {
-            width: 50px;
-            height: 50px;
-        }
-
-    </style>
 </head>
 <body>
     <%@include file="/jspf/navbar.jspf"%>
@@ -38,17 +32,33 @@
                 <tbody>
                 <c:forEach var="student" items="${students}">
                     <tr>
-                        <td>${student.login}</td>
-                        <td>${student.email}</td>
-                        <td>${student.firstName}</td>
-                        <td>${student.lastName}</td>
-                        <td>
-                            <form method="post" action="<c:url value='/controller'/>">
-                                <input type="hidden" name="command" value="BLOCK_USER">
-                                <input type="number" hidden name="id" value="${student.id}"/>
-                                <input type="submit" name="block" value="Block"/>
-                            </form>
-                        </td>
+                        <tags:userInfoTable
+                                login="${student.login}"
+                                email="${student.email}"
+                                firstName="${student.firstName}"
+                                lastName="${student.lastName}"
+                        />
+                        <c:choose>
+                            <c:when test="${student.userAccess == true}">
+                                <td>
+                                    <form method="post" action="<c:url value='/controller'/>">
+                                        <input type="hidden" name="command" value="BLOCK_USER">
+                                        <input type="number" hidden name="id" value="${student.id}"/>
+                                        <input type="submit" name="block" value="Block"/>
+                                    </form>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>
+                                    <form method="post" action="<c:url value='/controller'/>">
+                                        <input type="hidden" name="command" value="UNBLOCK_USER">
+                                        <input type="number" hidden name="id" value="${student.id}"/>
+                                        <input type="submit" name="block" value="Unblock"/>
+                                    </form>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
+
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -78,16 +88,20 @@
                 <tbody>
                 <c:forEach var="teacher" items="${teachers}">
                     <tr>
-                        <td>${teacher.login}</td>
-                        <td>${teacher.email}</td>
-                        <td>${teacher.firstName}</td>
-                        <td>${teacher.lastName}</td>
+                        <tags:userInfoTable
+                                login="${teacher.login}"
+                                email="${teacher.email}"
+                                firstName="${teacher.firstName}"
+                                lastName="${teacher.lastName}"
+                        />
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+
         </div>
     </div>
+
 
     <%@include file="/jspf/bootstrapScripts.jspf"%>
 </body>

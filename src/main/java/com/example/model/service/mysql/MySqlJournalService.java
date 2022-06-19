@@ -24,4 +24,9 @@ public class MySqlJournalService implements JournalService {
         }
         return instance;
     }
+
+    @Override
+    public void endCourse(String courseId, String[] studentIds, String[] studentMarks) {
+        journalDAO.endCourse(courseId, studentIds, studentMarks);
+    }
 }

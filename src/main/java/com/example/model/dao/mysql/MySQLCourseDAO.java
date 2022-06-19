@@ -123,14 +123,25 @@ public class MySQLCourseDAO implements CourseDAO {
     }
 
     public void addCourse(Course course) {
+        String query;
+
+        if(course.getLecturer() == 0) {
+            query = CREATE_COURSE_NO_TEACHER;
+        } else {
+            query = CREATE_COURSE_WITH_TEACHER;
+        }
+
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(CREATE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, course.getName());
-            statement.setString(2, course.getTheme());
-            statement.setTimestamp(3, Timestamp.valueOf(course.getStartDate()));
-            statement.setTimestamp(4, Timestamp.valueOf(course.getEndDate()));
-            statement.setInt(5, course.getLecturer());
-            statement.setString(6, course.getCourseStatus().toString());
+             PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            int i = 1;
+            statement.setString(i++, course.getName());
+            statement.setString(i++, course.getTheme());
+            statement.setTimestamp(i++, Timestamp.valueOf(course.getStartDate()));
+            statement.setTimestamp(i++, Timestamp.valueOf(course.getEndDate()));
+            if(course.getLecturer() != 0) {
+                statement.setInt(i++, course.getLecturer());
+            }
+            statement.setString(i++, course.getCourseStatus().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -275,6 +286,62 @@ public class MySQLCourseDAO implements CourseDAO {
             throw new RuntimeException(e);
         }
         return courses;
+    }
+
+    @Override
+    public List<Course> findFinishedCoursesByStudentId(Integer studentId) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(SELECT_STUDENT_FINISHED_COURSES);
+        ) {
+            statement.setInt(1, studentId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Course course = mapResultSet(rs);
+                    courses.add(course);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    @Override
+    public Course findCourseById(String id) {
+        Course course = null;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_ALL_COURSE_BY_ID)) {
+            statement.setInt(1, Integer.parseInt(id));
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    course = mapResultSet(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return course;
+    }
+
+    @Override
+    public Course findCourseByName(String name) {
+        Course course = null;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_COURSE_BY_NAME)) {
+            statement.setString(1, name);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    course = mapResultSet(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return course;
     }
 
     @Override

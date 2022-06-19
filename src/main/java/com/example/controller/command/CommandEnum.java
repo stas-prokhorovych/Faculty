@@ -17,7 +17,12 @@ public enum CommandEnum {
     SHOW_JOURNAL(new ShowJournalCommand()),
     PDF_REPORT(new PdfReportCommand()),
     YOUR_COURSES(new StudentCourses()),
-    BLOCK_USER(new BlockUser());
+    BLOCK_USER(new BlockUserCommand()),
+    UNBLOCK_USER(new UnblockUserCommand()),
+    SHOW_GRADUATES(new ShowGraduatesCommand()),
+    END_COURSE(new EndCourseCommand()),
+    SHOW_TEACHERS(new ShowTeachersCommand()),
+    SHOW_COURSE_INFO(new ShowCourseInfoCommand());
 
     private Command command;
 

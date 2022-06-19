@@ -41,7 +41,7 @@
                         <a class="nav-link" href="controller?command=USER_CATALOGUE">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="addCourse.jsp">Add course</a>
+                        <a class="nav-link" href="controller?command=SHOW_TEACHERS">Add course</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="controller?command=ADD_TEACHER">Add teacher</a>

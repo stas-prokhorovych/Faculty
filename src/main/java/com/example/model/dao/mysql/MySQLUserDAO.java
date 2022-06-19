@@ -140,6 +140,39 @@ public class MySQLUserDAO implements UserDAO {
         }
     }
 
+    @Override
+    public void unblockUser(String studentId) {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(UNBLOCK_USER)) {
+            pst.setString(1, studentId);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<User> findAllGraduates(Integer courseId) {
+        List<User> graduates = new ArrayList<>();
+
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(FIND_GRADUATES)) {
+            statement.setInt(1, courseId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    User user = mapResultSet(rs);
+                    graduates.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return graduates;
+    }
+
+
+
     private User mapResultSet(ResultSet rs) {
         User user;
         try {

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class EnrollOnCourse implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
+    private static final ServiceFactory serviceFactory;
+    private static final UserService userService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");

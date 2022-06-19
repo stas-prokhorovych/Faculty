@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Faculty</title>
+    <title>Profile</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <%@include file="/jspf/head.jspf"%>
 </head>

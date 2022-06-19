@@ -1,8 +1,9 @@
 <%@include file="/jspf/header.jspf"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <html>
 <head>
-    <title>Faculty</title>
+    <title>Course Catalogue</title>
     <%@include file="/jspf/head.jspf"%>
 </head>
 <body>
@@ -10,24 +11,57 @@
 <br>
 <br>
 
-    <h3 class="center">Filter</h3>
+<c:set var="path" value="controller?command=COURSE_CATALOGUE"/>
 
+<c:set var="themeAttr" value=""/>
+<c:if test="${theme != null}">
+    <c:set var="themeAttr" value="&theme=${theme}"/>
+</c:if>
+
+<c:set var="sortAttr" value=""/>
+<c:if test="${sort != null}">
+    <c:set var="sortAttr" value="&sort=${sort}"/>
+</c:if>
+
+<c:set var="orderAttr" value=""/>
+<c:if test="${order != null}">
+    <c:set var="orderAttr" value="&order=${order}"/>
+</c:if>
+
+<c:set var="recordsPerPageAttr" value=""/>
+<c:if test="${recordsPerPage != null}">
+    <c:set var="recordsPerPageAttr" value="&recordsPerPage=${recordsPerPage}"/>
+</c:if>
+
+    <h3 class="center">Filter</h3>
     <div class="row justify-content-center">
     <form action="controller">
         <input type="hidden" name="command" value="COURSE_CATALOGUE">
 
-        <div class="row col-md-8">
+        <div class="row col-md-13">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <tr>
+                        <th>Type</th>
                         <th>Theme</th>
                         <th>Teacher</th>
                         <th>Sort</th>
                         <th>Order</th>
+                        <th>Records</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>
+                            <input type="checkbox" id="openForRegistration" name="openForRegistration" value="openForRegistration">
+                            <label for="openForRegistration">Open for registration</label><br>
+                            <input type="checkbox" id="Finished" name="Finished" value="Finished">
+                            <label for="Finished">Finished</label><br>
+                            <input type="checkbox" id="inProgress" name="inProgress" value="inProgress">
+                            <label for="inProgress">In Progress</label><br>
+                            <input type="checkbox" id="noTeacher" name="noTeacher" value="noTeacher">
+                            <label for="noTeacher">No teacher</label><br>
+                        </td>
                         <td>
                             <label for="theme"></label>
                             <select name="theme" id="theme">
@@ -62,14 +96,30 @@
                             <input type="radio" id="descending" name="order" value="descending">
                             <label for="descending">Descending</label><br>
                         </td>
+                        <td>
+                            <input type="radio" id="2" name="recordsPerPage" value="2">
+                            <label for="ascending">2</label><br>
+                            <input type="radio" id="5" name="recordsPerPage" value="5">
+                            <label for="descending">5</label><br>
+                            <input type="radio" id="10" name="recordsPerPage" value="10">
+                            <label for="ascending">10</label><br>
+                            <input type="radio" id="25" name="recordsPerPage" value="25">
+                            <label for="descending">25</label><br>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
         <input type="submit" value="Apply">
     </form>
     </div>
+
+
+
+
+
+
+
 
 <br><br>
     <h3 class="center">Courses</h3>
@@ -87,6 +137,7 @@
                 <th>End date</th>
                 <th>Duration in days</th>
                 <th>Teacher</th>
+                <th>Course status</th>
                 <th>Student enrolled</th>
                 <c:choose>
                     <c:when test="${sessionScope.role == 'Student'}">
@@ -109,14 +160,15 @@
                     <td>${course.id}</td>
                     <td>${course.name}</td>
                     <td>${course.theme}</td>
-                    <td>${course.startDate}</td>
-                    <td>${course.endDate}</td>
+                    <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                    <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                     <td>${course.durationInDays}</td>
                     <td>
                         <c:forEach var="teacher" items="${teachers}" varStatus="loop">
                             <c:if test="${loop.index eq index}">${teacher.firstName}  ${teacher.lastName}</c:if>
                         </c:forEach>
                     </td>
+                    <td>${course.courseStatus}</td>
                     <td>
                         <c:forEach var="stud" items="${nuOfStudents}" varStatus="loop">
                             <c:if test="${loop.index eq index}">${stud}</c:if>
@@ -143,8 +195,8 @@
                                     <input type="submit" name="delete" value="Delete"/>
                                 </form>
 
-                                <form method="get" action="<c:url value='/updateCourse.jsp'/>">
-                                    <input type="hidden" name="command" value="UPDATE_COURSE">
+                                <form method="get" action="<c:url value='/controller'/>">
+                                    <input type="hidden" name="command" value="SHOW_COURSE_INFO">
                                     <input type="number" hidden name="id" value="${course.id}"/>
                                     <input type="text" hidden name="name" value="${course.name}"/>
                                     <input type="submit" value="Update"/>
@@ -163,7 +215,7 @@
                 <c:if test="${currentPage != 1}">
                     <li class="page-item">
                         <a class="page-link"
-                           href="controller?command=COURSE_CATALOGUE&page=${currentPage - 1}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">
+                           href="${path}&page=${currentPage - 1}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">
                             Previous
                         </a>
                     </li>
@@ -173,12 +225,16 @@
                     <c:choose>
                         <c:when test="${currentPage eq i}">
                             <li class="page-item">
-                                <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${i}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">${i}</a>
+                                <a class="page-link"
+                                   href="${path}&page=${i}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">${i}
+                                </a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="page-item">
-                                <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${i}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">${i}</a>
+                                <a class="page-link"
+                                   href="${path}&page=${i}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">${i}
+                                </a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -186,7 +242,8 @@
 
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="controller?command=COURSE_CATALOGUE&page=${currentPage + 1}<c:if test="${theme != null}">&theme=${theme}</c:if><c:if test="${sort != null}">&sort=${sort}</c:if><c:if test="${order != null}">&order=${order}</c:if>">
+                        <a class="page-link"
+                           href="${path}&page=${currentPage + 1}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">
                             Next
                         </a>
                     </li>

@@ -14,12 +14,11 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.example.model.constants.Pages.ADD_TEACHER_PAGE;
-import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
 
 public class AddTeacherCommand implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
-    private static CourseService courseService;
+    private static final ServiceFactory serviceFactory;
+    private static final UserService userService;
+    private static final CourseService courseService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -32,15 +31,15 @@ public class AddTeacherCommand implements Command {
         String student = request.getParameter("students");
         String course = request.getParameter("courses");
 
-        if(student == null || course == null) {
+        if (student == null || course == null) {
             List<User> students = userService.getAllStudents();
             List<Course> courses = courseService.getNoTeacherCourses();
+            List<User> teachers = userService.getAllTeachers();
             request.setAttribute("students", students);
             request.setAttribute("courses", courses);
+            request.setAttribute("teachers", teachers);
             return ADD_TEACHER_PAGE;
         }
-
-//        userService.registerTeacher();
 
         return new UserCatalogueCommand().execute(request, response);
     }

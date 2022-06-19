@@ -3,7 +3,6 @@ package com.example.controller.command.impl;
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
 import com.example.model.service.CourseService;
-import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -15,9 +14,8 @@ import java.util.List;
 import static com.example.model.constants.Pages.STUDENT_COURSES;
 
 public class StudentCourses implements Command {
-    private static ServiceFactory serviceFactory;
-    private static UserService userService;
-    private static CourseService courseService;
+    private static final ServiceFactory serviceFactory;
+    private static final CourseService courseService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -30,13 +28,11 @@ public class StudentCourses implements Command {
 
         List<Course> registeredCourses = courseService.findRegisteredCoursesByStudentId(studentId);
         List<Course> inProgressCourses = courseService.findInProgressCoursesByStudentId(studentId);
+        List<Course> finishedCourses = courseService.findFinishedCoursesByStudentId(studentId);
 
         request.setAttribute("registeredCourses", registeredCourses);
         request.setAttribute("inProgressCourses", inProgressCourses);
-
-
-        List<Course> finishedCourses;
-
+        request.setAttribute("finishedCourses", finishedCourses);
 
         return STUDENT_COURSES;
     }

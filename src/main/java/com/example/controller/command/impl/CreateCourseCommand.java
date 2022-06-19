@@ -2,20 +2,24 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
+import com.example.model.exception.CourseServiceException;
+import com.example.model.exception.UserServiceException;
 import com.example.model.service.CourseService;
 import com.example.model.service.factory.ServiceFactory;
+import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 
-import static com.example.model.constants.Pages.ADD_COURSE_PAGE;
+import static com.example.model.constants.Pages.*;
 
 public class CreateCourseCommand implements Command {
-    private static ServiceFactory serviceFactory;
-    private static CourseService courseService;
+    private static final ServiceFactory serviceFactory;
+    private static final CourseService courseService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
@@ -30,17 +34,40 @@ public class CreateCourseCommand implements Command {
         String endDate = request.getParameter("end-date");
         String idLecturer = request.getParameter("id-lecturer");
 
+        Map<String, String> inputErrors = Validator.checkAddCourseForm(name, theme, startDate, endDate);
+        if(!inputErrors.isEmpty()) {
+            for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
+                request.setAttribute(entry.getKey(), entry.getValue());
+            }
+            return ADD_COURSE_PAGE;
+        }
+
+        request.setAttribute("validName", name);
+        request.setAttribute("validTheme", theme);
+        request.setAttribute("validStartDate", startDate);
+        request.setAttribute("validEndDate", endDate);
+
         Course course = new Course();
-        course.setId(0);
         course.setName(name);
         course.setTheme(theme);
         course.setStartDate(LocalDateTime.parse(startDate));
         course.setEndDate(LocalDateTime.parse(endDate));
-        course.setLecturer(Integer.parseInt(idLecturer));
-        course.setCourseStatus(Course.CourseStatus.CLOSED);
 
-        courseService.addCourse(course);
+        if(idLecturer == null || idLecturer.equals("")) {
+            course.setLecturer(0);
+            course.setCourseStatus(Course.CourseStatus.CLOSED);
+        } else {
+            course.setLecturer(Integer.parseInt(idLecturer));
+            course.setCourseStatus(Course.CourseStatus.OPENED);
+        }
 
-        return ADD_COURSE_PAGE;
+        try {
+            courseService.addCourse(course);
+        } catch (CourseServiceException e) {
+            request.setAttribute("dataError", e.getMessage());
+            return ADD_COURSE_PAGE;
+        }
+
+        return new CourseCatalogueCommand().execute(request, response);
     }
 }
