@@ -1,10 +1,8 @@
 package com.example.model.dao.mysql;
 
-import com.example.model.dao.CourseDAO;
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
-import com.example.model.entity.Course;
 import com.example.model.entity.User;
 
 import java.sql.*;
@@ -92,32 +90,6 @@ public class MySQLUserDAO implements UserDAO {
     }
 
     @Override
-    public List<User> findTeacherByCourse(List<Course> courses) {
-        List<User> result = new ArrayList<>();
-
-        try (Connection con = DataSource.getConnection()) {
-            con.setAutoCommit(false);
-            for (Course course : courses) {
-                try (PreparedStatement pst = con.prepareStatement(FIND_TEACHER_BY_COURSE)) {
-                    pst.setInt(1, course.getLecturer());
-                    try (ResultSet rs = pst.executeQuery()) {
-                        if (rs.next()) {
-                            User user = mapResultSet(rs);
-                            result.add(user);
-                        }
-                    }
-                }
-            }
-            con.commit();
-            con.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-    @Override
     public void enrollStudentOnCourse(Integer studentId, Integer courseId) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(CREATE_STUDENT_ON_COURSE, Statement.RETURN_GENERATED_KEYS)) {
@@ -170,8 +142,6 @@ public class MySQLUserDAO implements UserDAO {
 
         return graduates;
     }
-
-
 
     private User mapResultSet(ResultSet rs) {
         User user;

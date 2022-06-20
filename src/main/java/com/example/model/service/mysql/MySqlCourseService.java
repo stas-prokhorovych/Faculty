@@ -4,9 +4,8 @@ import com.example.model.dao.CourseDAO;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.entity.Course;
 import com.example.model.exception.CourseServiceException;
-import com.example.model.exception.UserServiceException;
 import com.example.model.service.CourseService;
-import com.example.model.utils.Utils;
+import com.example.model.utils.pagination.CourseCatalogueInfo;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class MySqlCourseService implements CourseService {
     private static MySqlCourseService instance;
 
     private MySqlCourseService() {
-        try{
+        try {
             daoFactory = DaoFactory.getDaoFactory("MYSQL");
             courseDAO = daoFactory.getCourseDAO();
         } catch (IllegalArgumentException e) {
@@ -25,7 +24,7 @@ public class MySqlCourseService implements CourseService {
     }
 
     public static CourseService getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MySqlCourseService();
         }
         return instance;
@@ -39,10 +38,10 @@ public class MySqlCourseService implements CourseService {
     @Override
     public void addCourse(Course course) throws CourseServiceException {
         Course courseWithThisName = courseDAO.findCourseByName(course.getName());
-        if(courseWithThisName != null) {
+        if (courseWithThisName != null) {
             throw new CourseServiceException("course with such name already exist");
         }
-        if(course.getStartDate().isAfter(course.getEndDate())) {
+        if (course.getStartDate().isAfter(course.getEndDate())) {
             throw new CourseServiceException("start date must be before end date");
         }
 
@@ -56,28 +55,10 @@ public class MySqlCourseService implements CourseService {
     }
 
     @Override
-    public List<Course> findAllCoursesByPage(int offset, int noOfRecords, String theme, Integer teacher, String sort, String order) {
-        List<Course> courses;
-        if(theme != null) {
-            courses = courseDAO.findAllCoursesByThemeByPage(theme, offset, noOfRecords);
-        } else if(teacher != null) {
-            courses = courseDAO.findAllCoursesByTeacherByPage(teacher, offset, noOfRecords);
-        } else {
-            courses = courseDAO.findAllCoursesByPage(offset, noOfRecords);
-        }
-
-        if(sort != null && order != null) {
-            courses = Utils.sortCourses(courses, sort, order);
-        }
-
-        return courses;
-    }
-
-    @Override
     public int findNumberOfRecords(String theme, Integer teacher) {
-        if(theme != null) {
+        if (theme != null) {
             return courseDAO.findNumberOfRecordsByTheme(theme);
-        } else if(teacher != null) {
+        } else if (teacher != null) {
             return courseDAO.findNumberOfRecordsByTeacher(teacher);
         }
         return courseDAO.findNumberOfRecords();
@@ -93,10 +74,6 @@ public class MySqlCourseService implements CourseService {
         return courseDAO.getNoTeacherCourses();
     }
 
-    @Override
-    public List<Integer> findUserEnrolled(List<Course> courses) {
-        return courseDAO.findUserEnrolled(courses);
-    }
 
     @Override
     public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) {
@@ -126,6 +103,11 @@ public class MySqlCourseService implements CourseService {
     @Override
     public Course findCourseById(String id) {
         return courseDAO.findCourseById(id);
+    }
+
+    @Override
+    public CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order) {
+        return courseDAO.findCoursesByPage(offset, recordsPerPage, type, theme, teacherId, sort, order);
     }
 
 

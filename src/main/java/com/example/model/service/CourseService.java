@@ -2,7 +2,7 @@ package com.example.model.service;
 
 import com.example.model.entity.Course;
 import com.example.model.exception.CourseServiceException;
-import com.example.model.exception.UserServiceException;
+import com.example.model.utils.pagination.CourseCatalogueInfo;
 
 import java.util.List;
 
@@ -13,15 +13,11 @@ public interface CourseService {
 
     List<String> findThemes();
 
-    List<Course> findAllCoursesByPage(int offset, int noOfRecords, String theme, Integer teacher, String sort, String order);
-
     int findNumberOfRecords(String theme, Integer teacher);
 
     void updateCourse(String name, int id);
 
     List<Course> getNoTeacherCourses();
-
-    List<Integer> findUserEnrolled(List<Course> courses);
 
     List<Course> findAllFinishedCoursesByTeacherId(int teacherId);
 
@@ -34,4 +30,6 @@ public interface CourseService {
     List<Course> findFinishedCoursesByStudentId(Integer studentId);
 
     Course findCourseById(String id);
+
+    CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order);
 }

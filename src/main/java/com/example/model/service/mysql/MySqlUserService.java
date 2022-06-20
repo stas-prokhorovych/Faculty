@@ -2,7 +2,6 @@ package com.example.model.service.mysql;
 
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.factory.DaoFactory;
-import com.example.model.entity.Course;
 import com.example.model.entity.User;
 import com.example.model.exception.UserServiceException;
 import com.example.model.service.UserService;
@@ -17,7 +16,7 @@ public class MySqlUserService implements UserService {
     private static MySqlUserService instance;
 
     private MySqlUserService() {
-        try{
+        try {
             daoFactory = DaoFactory.getDaoFactory("MYSQL");
             userDAO = daoFactory.getUserDAO();
         } catch (IllegalArgumentException e) {
@@ -26,7 +25,7 @@ public class MySqlUserService implements UserService {
     }
 
     public static UserService getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MySqlUserService();
         }
         return instance;
@@ -39,7 +38,7 @@ public class MySqlUserService implements UserService {
      * @param password a password of the user
      * @return a user
      * @throws UserServiceException in case of error occurred with a data source
-     *                          or validation of data
+     *                              or validation of data
      */
     @Override
     public User getUser(String login, String password) throws UserServiceException {
@@ -69,11 +68,6 @@ public class MySqlUserService implements UserService {
     @Override
     public List<User> getAllTeachers() {
         return userDAO.findTeachers();
-    }
-
-    @Override
-    public List<User> findTeacherByCourse(List<Course> courses) {
-        return userDAO.findTeacherByCourse(courses);
     }
 
     @Override

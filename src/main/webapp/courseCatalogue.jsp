@@ -42,7 +42,7 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <tr>
-                        <th>Type</th>
+<%--                        <th>Type</th>--%>
                         <th>Theme</th>
                         <th>Teacher</th>
                         <th>Sort</th>
@@ -52,20 +52,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <input type="checkbox" id="openForRegistration" name="openForRegistration" value="openForRegistration">
-                            <label for="openForRegistration">Open for registration</label><br>
-                            <input type="checkbox" id="Finished" name="Finished" value="Finished">
-                            <label for="Finished">Finished</label><br>
-                            <input type="checkbox" id="inProgress" name="inProgress" value="inProgress">
-                            <label for="inProgress">In Progress</label><br>
-                            <input type="checkbox" id="noTeacher" name="noTeacher" value="noTeacher">
-                            <label for="noTeacher">No teacher</label><br>
-                        </td>
+<%--                        <td>--%>
+<%--                            <label for="type"></label>--%>
+<%--                            <select name="type" id="type">--%>
+<%--                                <option value="" selected disabled hidden>All</option>--%>
+<%--                                <option value="openForRegistration">Open for registration</option>--%>
+<%--                                <option value="finished">Finished</option>--%>
+<%--                                <option value="inProgress">In progress</option>--%>
+<%--                                <option value="noTeacher">No Teacher</option>--%>
+<%--                            </select>--%>
+<%--                        </td>--%>
                         <td>
                             <label for="theme"></label>
                             <select name="theme" id="theme">
-                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="" selected disabled hidden>All</option>
                                 <c:forEach items="${themesForForm}" var="theme">
                                     ${theme}<br>
                                     <option value="${theme}">${theme}</option>
@@ -75,7 +75,7 @@
                         <td>
                             <label for="teacher"></label>
                             <select name="teacher" id="teacher">
-                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="" selected disabled hidden>All</option>
                                 <c:forEach items="${teacherForForm}" var="teacher">
                                     ${teacher}<br>
                                     <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
@@ -83,12 +83,12 @@
                             </select>
                         </td>
                         <td>
-                            <input type="radio" id="sort-name" name="sort" value="sort-name">
-                            <label for="sort-name">Name</label><br>
-                            <input type="radio" id="sort-duration" name="sort" value="sort-duration">
-                            <label for="sort-duration">Duration</label><br>
-                            <input type="radio" id="sort-student-enrolled" name="sort" value="sort-student-enrolled">
-                            <label for="sort-student-enrolled">Student enrolled</label><br>
+                            <input type="radio" id="name" name="sort" value="course.name">
+                            <label for="name">Name</label><br>
+                            <input type="radio" id="start_date" name="sort" value="DATEDIFF(end_date, start_date)">
+                            <label for="start_date">Duration</label><br>
+                            <input type="radio" id="student_enrolled" name="sort" value="student_enrolled">
+                            <label for="student_enrolled">Student enrolled</label><br>
                         </td>
                         <td>
                             <input type="radio" id="ascending" name="order" value="ascending">
@@ -130,7 +130,6 @@
         <table class="table table-bordered table-sm">
             <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Theme</th>
                 <th>Start date</th>
@@ -157,7 +156,6 @@
             <c:forEach var="course" items="${courses}">
 
                 <tr>
-                    <td>${course.id}</td>
                     <td>${course.name}</td>
                     <td>${course.theme}</td>
                     <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>

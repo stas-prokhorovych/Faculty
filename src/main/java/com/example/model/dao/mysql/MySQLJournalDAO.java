@@ -3,7 +3,6 @@ package com.example.model.dao.mysql;
 import com.example.model.dao.JournalDAO;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
-import com.example.model.entity.Course;
 
 import java.sql.*;
 

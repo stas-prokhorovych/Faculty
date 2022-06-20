@@ -1,6 +1,5 @@
 package com.example.model.service;
 
-import com.example.model.entity.Course;
 import com.example.model.entity.User;
 import com.example.model.exception.UserServiceException;
 
@@ -14,8 +13,6 @@ public interface UserService {
     List<User> getAllStudents();
 
     List<User> getAllTeachers();
-
-    List<User> findTeacherByCourse(List<Course> courses);
 
     void enrollStudentOnCourse(Integer studentId, Integer courseId);
 

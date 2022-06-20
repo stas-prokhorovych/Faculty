@@ -1,22 +1,14 @@
 package com.example.model.dao;
 
 import com.example.model.entity.Course;
+import com.example.model.utils.pagination.CourseCatalogueInfo;
 
 import java.util.List;
 
 public interface CourseDAO {
-
-
-    List<Course> findAllCoursesByPage(int offset, int noOfRecords);
-
     int findNumberOfRecords();
 
-    List<Course> findAllCoursesByThemeByPage(String theme, int offset, int noOfRecords);
-
     int findNumberOfRecordsByTheme(String theme);
-
-    List<Course> findAllCoursesByTheme(String theme);
-
 
     void deleteCourse(int id);
 
@@ -24,15 +16,9 @@ public interface CourseDAO {
 
     void updateCourse(String name, int id);
 
-    String findName(int id);
-
     List<String> findThemes();
 
     List<Course> getNoTeacherCourses();
-
-    List<Integer> findUserEnrolled(List<Course> courses);
-
-    List<Course> findAllCoursesByTeacherByPage(Integer teacher, int offset, int noOfRecords);
 
     int findNumberOfRecordsByTeacher(Integer teacher);
 
@@ -49,4 +35,6 @@ public interface CourseDAO {
     Course findCourseById(String id);
 
     Course findCourseByName(String name);
+
+    CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order);
 }
