@@ -14,7 +14,6 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Theme</th>
                     <th>Start date</th>
@@ -25,11 +24,10 @@
                 <tbody>
                     <c:forEach var="course" items="${registeredCourses}">
                         <tr>
-                            <td>${course.id}</td>
                             <td>${course.name}</td>
                             <td>${course.theme}</td>
-                            <td>${course.startDate}</td>
-                            <td>${course.endDate}</td>
+                            <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                            <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                             <td>${course.durationInDays}</td>
                         </tr>
                     </c:forEach>
@@ -44,7 +42,6 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Theme</th>
                     <th>Start date</th>
@@ -55,11 +52,10 @@
                 <tbody>
                 <c:forEach var="course" items="${inProgressCourses}">
                     <tr>
-                        <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
-                        <td>${course.startDate}</td>
-                        <td>${course.endDate}</td>
+                        <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                        <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
                     </tr>
                 </c:forEach>
@@ -74,24 +70,34 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Theme</th>
                     <th>Start date</th>
                     <th>End date</th>
                     <th>Duration in days</th>
+                    <th>Mark points</th>
+                    <th>Mark code</th>
+                    <th>Mark explanation</th>
                 </tr>
                 </thead>
                 <tbody>
+                <c:set var="index" value="0"/>
                 <c:forEach var="course" items="${finishedCourses}">
                     <tr>
-                        <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
-                        <td>${course.startDate}</td>
-                        <td>${course.endDate}</td>
+                        <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                        <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
+                        <c:forEach var="journal" items="${journalInfo}" varStatus="loop">
+                            <c:if test="${loop.index eq index}">
+                                <td>${journal.markPoints}</td>
+                                <td>${journal.markCode}</td>
+                                <td>${journal.markExplanation}</td>
+                            </c:if>
+                        </c:forEach>
                     </tr>
+                    <c:set var="index" value="${index + 1}"/>
                 </c:forEach>
                 </tbody>
             </table>

@@ -1,6 +1,6 @@
-package com.example.model.exception;
+package com.example.model.service.exception;
 
-public class CourseServiceException extends Exception {
+public class CourseServiceException extends ServiceException {
     public CourseServiceException(){
         super();
     }

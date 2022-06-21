@@ -1,40 +1,40 @@
 package com.example.model.dao;
 
+import com.example.model.dao.exception.DAOException;
 import com.example.model.entity.Course;
 import com.example.model.utils.pagination.CourseCatalogueInfo;
 
 import java.util.List;
 
 public interface CourseDAO {
-    int findNumberOfRecords();
 
-    int findNumberOfRecordsByTheme(String theme);
+    void deleteCourse(int id) throws DAOException;
 
-    void deleteCourse(int id);
+    void addCourse(Course course) throws DAOException;
 
-    void addCourse(Course course);
+    void updateCourse(String name, int id) throws DAOException;
 
-    void updateCourse(String name, int id);
+    List<String> findThemes() throws DAOException;
 
-    List<String> findThemes();
+    List<Course> getNoTeacherCourses() throws DAOException;
 
-    List<Course> getNoTeacherCourses();
+    List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws DAOException;
 
-    int findNumberOfRecordsByTeacher(Integer teacher);
+    List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws DAOException;
 
-    List<Course> findAllFinishedCoursesByTeacherId(int teacherId);
+    List<Course> findInProgressCoursesByStudentId(Integer studentId) throws DAOException;
 
-    List<Course> findRegisteredCoursesByStudentId(Integer studentId);
+    List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws DAOException;
 
-    List<Course> findInProgressCoursesByStudentId(Integer studentId);
+    List<Course> findFinishedCoursesByStudentId(Integer studentId) throws DAOException;
 
-    List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId);
+    Course findCourseById(String id) throws DAOException;
 
-    List<Course> findFinishedCoursesByStudentId(Integer studentId);
+    Course findCourseByName(String name) throws DAOException;
 
-    Course findCourseById(String id);
+    CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order) throws DAOException;
 
-    Course findCourseByName(String name);
+    int numberOfRecords(String role, String theme, Integer teacherId) throws DAOException;
 
-    CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order);
+    List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws DAOException;
 }

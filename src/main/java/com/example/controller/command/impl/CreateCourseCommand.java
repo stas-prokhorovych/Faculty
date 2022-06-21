@@ -2,9 +2,9 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
-import com.example.model.exception.CourseServiceException;
-import com.example.model.exception.UserServiceException;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.Validator;
 
@@ -27,7 +27,7 @@ public class CreateCourseCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String name = request.getParameter("name");
         String theme = request.getParameter("theme");
         String startDate = request.getParameter("start-date");

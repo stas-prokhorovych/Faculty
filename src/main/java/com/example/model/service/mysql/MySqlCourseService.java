@@ -1,10 +1,12 @@
 package com.example.model.service.mysql;
 
 import com.example.model.dao.CourseDAO;
+import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.entity.Course;
-import com.example.model.exception.CourseServiceException;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.utils.pagination.CourseCatalogueInfo;
 
 import java.util.List;
@@ -31,13 +33,23 @@ public class MySqlCourseService implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id) {
-        courseDAO.deleteCourse(id);
+    public void deleteCourse(int id) throws ServiceException {
+        try {
+            courseDAO.deleteCourse(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public void addCourse(Course course) throws CourseServiceException {
-        Course courseWithThisName = courseDAO.findCourseByName(course.getName());
+    public void addCourse(Course course) throws ServiceException {
+        Course courseWithThisName;
+        try {
+            courseWithThisName = courseDAO.findCourseByName(course.getName());
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
         if (courseWithThisName != null) {
             throw new CourseServiceException("course with such name already exist");
         }
@@ -45,70 +57,119 @@ public class MySqlCourseService implements CourseService {
             throw new CourseServiceException("start date must be before end date");
         }
 
-        System.out.println("here");
-        courseDAO.addCourse(course);
-    }
-
-    @Override
-    public List<String> findThemes() {
-        return courseDAO.findThemes();
-    }
-
-    @Override
-    public int findNumberOfRecords(String theme, Integer teacher) {
-        if (theme != null) {
-            return courseDAO.findNumberOfRecordsByTheme(theme);
-        } else if (teacher != null) {
-            return courseDAO.findNumberOfRecordsByTeacher(teacher);
+        try {
+            courseDAO.addCourse(course);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
-        return courseDAO.findNumberOfRecords();
     }
 
     @Override
-    public void updateCourse(String name, int id) {
-        courseDAO.updateCourse(name, id);
+    public List<String> findThemes() throws ServiceException {
+        try {
+            return courseDAO.findThemes();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<Course> getNoTeacherCourses() {
-        return courseDAO.getNoTeacherCourses();
+    public void updateCourse(String name, int id) throws ServiceException {
+        try {
+            courseDAO.updateCourse(name, id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Course> getNoTeacherCourses() throws ServiceException {
+        try {
+            return courseDAO.getNoTeacherCourses();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
 
     @Override
-    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) {
-        return courseDAO.findAllFinishedCoursesByTeacherId(teacherId);
+    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws ServiceException {
+        try {
+            return courseDAO.findAllFinishedCoursesByTeacherId(teacherId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) {
-        return courseDAO.findRegisteredCoursesByStudentId(studentId);
+    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws ServiceException {
+        try {
+            return courseDAO.findRegisteredCoursesByStudentId(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<Course> findInProgressCoursesByStudentId(Integer studentId) {
-        return courseDAO.findInProgressCoursesByStudentId(studentId);
+    public List<Course> findInProgressCoursesByStudentId(Integer studentId) throws ServiceException {
+        try {
+            return courseDAO.findInProgressCoursesByStudentId(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) {
-        return courseDAO.findAllInProgressCoursesByTeacherId(teacherId);
+    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws ServiceException {
+        try {
+            return courseDAO.findAllInProgressCoursesByTeacherId(teacherId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<Course> findFinishedCoursesByStudentId(Integer studentId) {
-        return courseDAO.findFinishedCoursesByStudentId(studentId);
+    public List<Course> findFinishedCoursesByStudentId(Integer studentId) throws ServiceException {
+        try {
+            return courseDAO.findFinishedCoursesByStudentId(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Course findCourseById(String id) {
-        return courseDAO.findCourseById(id);
+    public Course findCourseById(String id) throws ServiceException {
+        try {
+            return courseDAO.findCourseById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order) {
-        return courseDAO.findCoursesByPage(offset, recordsPerPage, type, theme, teacherId, sort, order);
+    public CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order) throws ServiceException {
+        try {
+            return courseDAO.findCoursesByPage(offset, recordsPerPage, type, theme, teacherId, sort, order);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
+    @Override
+    public int numberOfRecords(String role, String theme, Integer teacherId) throws ServiceException {
+        try {
+            return courseDAO.numberOfRecords(role, theme, teacherId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 
+    @Override
+    public List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws ServiceException {
+        try {
+            return courseDAO.courseAlreadySelected(courses, studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

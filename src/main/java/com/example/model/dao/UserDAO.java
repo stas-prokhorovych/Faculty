@@ -1,24 +1,25 @@
 package com.example.model.dao;
 
+import com.example.model.dao.exception.DAOException;
 import com.example.model.entity.User;
 
 import java.util.List;
 
 public interface UserDAO {
 
-    User findUserByLogin(String login);
+    User findUserByLogin(String login) throws DAOException;
 
-    void addUser(User user);
+    void addUser(User user) throws DAOException;
 
-    List<User> findTeachers();
+    List<User> findTeachers() throws DAOException;
 
-    List<User> findStudents();
+    List<User> findStudents() throws DAOException;
 
-    void enrollStudentOnCourse(Integer studentId, Integer courseId);
+    void enrollStudentOnCourse(Integer studentId, Integer courseId) throws DAOException;
 
-    void blockUser(String studentId);
+    void blockUser(String studentId) throws DAOException;
 
-    List<User> findAllGraduates(Integer courseId);
+    List<User> findAllGraduates(Integer courseId) throws DAOException;
 
-    void unblockUser(String studentId);
+    void unblockUser(String studentId) throws DAOException;
 }

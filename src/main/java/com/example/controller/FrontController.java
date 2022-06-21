@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.controller.command.Command;
 import com.example.controller.command.CommandFactory;
+import com.example.model.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.example.model.constants.Pages.ERROR_PAGE;
 
 /**
  * Front-controller of the whole web-application.
@@ -51,7 +54,12 @@ public class FrontController extends HttpServlet {
      */
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandFactory.getCommand(request);
-        String page = command.execute(request, response);
+        String page = null;
+        try {
+            page = command.execute(request, response);
+        } catch (ServiceException e) {
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+        }
         request.getRequestDispatcher(page).forward(request, response);
     }
 }

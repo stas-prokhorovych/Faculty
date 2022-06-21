@@ -2,6 +2,7 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ public class DeleteCourseCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String id = request.getParameter("id");
         courseService.deleteCourse(Integer.parseInt(id));
         return new CourseCatalogueCommand().execute(request, response);

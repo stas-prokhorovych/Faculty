@@ -1,6 +1,8 @@
 package com.example.model.dao.mysql;
 
+import com.example.model.dao.GenericDAO;
 import com.example.model.dao.UserDAO;
+import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
 import com.example.model.entity.User;
@@ -11,7 +13,7 @@ import java.util.List;
 
 import static com.example.model.constants.Query.*;
 
-public class MySQLUserDAO implements UserDAO {
+public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
     private static MySQLUserDAO instance;
     private static DaoFactory daoFactory;
 
@@ -26,24 +28,11 @@ public class MySQLUserDAO implements UserDAO {
         return instance;
     }
 
-    public User findUserByLogin(String login) {
-        User user = null;
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(SELECT_USER_BY_LOGIN)) {
-            pst.setString(1, login);
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    user = mapResultSet(rs);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return user;
+    public User findUserByLogin(String login) throws DAOException {
+        return findEntityByField(SELECT_USER_BY_LOGIN, login);
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, user.getLogin());
@@ -56,94 +45,80 @@ public class MySQLUserDAO implements UserDAO {
             pst.setBoolean(8, user.isUserAccess());
             pst.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
-    public List<User> findTeachers() {
+    public List<User> findTeachers() throws DAOException {
         List<User> teachers = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement statement = con.createStatement();
              ResultSet rs = statement.executeQuery(FIND_TEACHERS)) {
             while (rs.next()) {
-                teachers.add(mapResultSet(rs));
+                teachers.add(mapToEntity(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return teachers;
     }
 
     @Override
-    public List<User> findStudents() {
+    public List<User> findStudents() throws DAOException {
         List<User> students = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement statement = con.createStatement();
              ResultSet rs = statement.executeQuery(FIND_STUDENTS)) {
             while (rs.next()) {
-                students.add(mapResultSet(rs));
+                students.add(mapToEntity(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return students;
     }
 
     @Override
-    public void enrollStudentOnCourse(Integer studentId, Integer courseId) {
+    public void enrollStudentOnCourse(Integer studentId, Integer courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(CREATE_STUDENT_ON_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             pst.setInt(1, studentId);
             pst.setInt(2, courseId);
             pst.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void blockUser(String studentId) {
+    public void blockUser(String studentId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(BLOCK_USER)) {
             pst.setString(1, studentId);
             pst.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void unblockUser(String studentId) {
+    public void unblockUser(String studentId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(UNBLOCK_USER)) {
             pst.setString(1, studentId);
             pst.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public List<User> findAllGraduates(Integer courseId) {
-        List<User> graduates = new ArrayList<>();
-
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_GRADUATES)) {
-            statement.setInt(1, courseId);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    User user = mapResultSet(rs);
-                    graduates.add(user);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return graduates;
+    public List<User> findAllGraduates(Integer courseId) throws DAOException {
+        return findEntitiesByField(FIND_GRADUATES, courseId);
     }
 
-    private User mapResultSet(ResultSet rs) {
+    @Override
+    protected User mapToEntity(ResultSet rs) throws DAOException {
         User user;
         try {
             user = new User();
@@ -151,21 +126,24 @@ public class MySQLUserDAO implements UserDAO {
             user.setLogin(rs.getString("login"));
             user.setPassword(rs.getString("password"));
             user.setEmail(rs.getString("email"));
-
-            if (rs.getString("role").equals("Admin")) {
-                user.setRole(User.Role.ADMIN);
-            } else if (rs.getString("role").equals("Teacher")) {
-                user.setRole(User.Role.TEACHER);
-            } else {
-                user.setRole(User.Role.STUDENT);
+            String role = rs.getString("role");
+            switch (role) {
+                case "Admin":
+                    user.setRole(User.Role.ADMIN);
+                    break;
+                case "Teacher":
+                    user.setRole(User.Role.TEACHER);
+                    break;
+                default:
+                    user.setRole(User.Role.STUDENT);
+                    break;
             }
-
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
             user.setPhoneNumber(rs.getString("phone_number"));
             user.setUserAccess(rs.getBoolean("user_access"));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return user;
     }

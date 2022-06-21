@@ -2,13 +2,18 @@ package com.example.model.utils.pagination;
 
 import java.util.StringJoiner;
 
-import static com.example.model.constants.Query.SELECT_COURSES_LIMIT_HEAD;
-import static com.example.model.constants.Query.SELECT_COURSES_LIMIT_TAIL;
+import static com.example.model.constants.Query.*;
 
 public class PaginationQueue {
-    public static String makeQueue(String type, String theme, Integer teacher, String sort, String order) {
+    public static String numberOfPages(String role, String theme, Integer teacher) {
+        return FIND_NUMBER_OF_RECORDS_HEAD + addWhereClause(role, theme, teacher);
+    }
+
+
+
+    public static String makeQueue(String role, String theme, Integer teacher, String sort, String order) {
         return addHead() +
-                addWhereClause(type, theme, teacher) +
+                addWhereClause(role, theme, teacher) +
                 addSort(sort, order) +
                 addTail();
     }
@@ -17,16 +22,24 @@ public class PaginationQueue {
         return SELECT_COURSES_LIMIT_HEAD;
     }
 
-    private static String addWhereClause(String type, String theme, Integer teacher) {
-        if (type == null && theme == null && teacher == null) {
-            return "";
+    private static String addWhereClause(String role, String theme, Integer teacher) {
+        StringJoiner sj = null;
+
+        if(role == null || role.equals("Teacher") || role.equals("Student")) {
+            sj = new StringJoiner(" AND ", "", " ");
+            sj.add(" WHERE course_status='Opened for registration'");
+            if (role == null && theme == null && teacher == null) {
+                return sj.toString();
+            }
+        } else {
+            if (theme == null && teacher == null) {
+                return "";
+            }
+
+            sj = new StringJoiner(" AND ", "WHERE ", " ");
+
         }
 
-        StringJoiner sj = new StringJoiner(" AND ", "WHERE ", " ");
-
-        if (type != null) {
-            sj.add("course_status=?");
-        }
         if (theme != null) {
             sj.add("theme=?");
         }

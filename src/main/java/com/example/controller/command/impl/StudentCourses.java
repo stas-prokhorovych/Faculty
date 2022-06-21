@@ -2,7 +2,10 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
+import com.example.model.entity.Journal;
 import com.example.model.service.CourseService;
+import com.example.model.service.JournalService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -16,23 +19,27 @@ import static com.example.model.constants.Pages.STUDENT_COURSES;
 public class StudentCourses implements Command {
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;
+    private static final JournalService journalService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
+        journalService = serviceFactory.getJournalService();
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer studentId = (Integer) request.getSession(false).getAttribute("id");
-
         List<Course> registeredCourses = courseService.findRegisteredCoursesByStudentId(studentId);
         List<Course> inProgressCourses = courseService.findInProgressCoursesByStudentId(studentId);
+
         List<Course> finishedCourses = courseService.findFinishedCoursesByStudentId(studentId);
+        List<Journal> journalInfo = journalService.findJournalInfo(finishedCourses, studentId);
 
         request.setAttribute("registeredCourses", registeredCourses);
         request.setAttribute("inProgressCourses", inProgressCourses);
         request.setAttribute("finishedCourses", finishedCourses);
+        request.setAttribute("journalInfo", journalInfo);
 
         return STUDENT_COURSES;
     }

@@ -1,5 +1,7 @@
 package com.example.controller.command;
 
+import com.example.model.service.exception.ServiceException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,5 +17,5 @@ public interface Command {
      *
      * @return Address to go once the command is executed.
      */
-    String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException;
 }

@@ -1,26 +1,26 @@
 package com.example.model.service;
 
 import com.example.model.entity.User;
-import com.example.model.exception.UserServiceException;
+import com.example.model.service.exception.ServiceException;
 
 import java.util.List;
 
 public interface UserService {
-    User getUser(String login, String password) throws UserServiceException;
+    User getUser(String login, String password) throws ServiceException;
 
-    void addUser(User user);
+    void addUser(User user) throws ServiceException;
 
-    List<User> getAllStudents();
+    List<User> getAllStudents() throws ServiceException;
 
-    List<User> getAllTeachers();
+    List<User> getAllTeachers() throws ServiceException;
 
-    void enrollStudentOnCourse(Integer studentId, Integer courseId);
+    void enrollStudentOnCourse(Integer studentId, Integer courseId) throws ServiceException;
 
-    void blockUser(String studentId);
+    void blockUser(String studentId) throws ServiceException;
 
-    List<User> findAllGraduates(Integer courseId);
+    List<User> findAllGraduates(Integer courseId) throws ServiceException;
 
-    void unblockUser(String studentId);
+    void unblockUser(String studentId) throws ServiceException;
 
-    void findUserByLogin(String login) throws UserServiceException;
+    void findUserByLogin(String login) throws ServiceException;
 }

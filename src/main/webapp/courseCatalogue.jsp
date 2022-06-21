@@ -42,7 +42,6 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <tr>
-<%--                        <th>Type</th>--%>
                         <th>Theme</th>
                         <th>Teacher</th>
                         <th>Sort</th>
@@ -52,16 +51,6 @@
                 </thead>
                 <tbody>
                     <tr>
-<%--                        <td>--%>
-<%--                            <label for="type"></label>--%>
-<%--                            <select name="type" id="type">--%>
-<%--                                <option value="" selected disabled hidden>All</option>--%>
-<%--                                <option value="openForRegistration">Open for registration</option>--%>
-<%--                                <option value="finished">Finished</option>--%>
-<%--                                <option value="inProgress">In progress</option>--%>
-<%--                                <option value="noTeacher">No Teacher</option>--%>
-<%--                            </select>--%>
-<%--                        </td>--%>
                         <td>
                             <label for="theme"></label>
                             <select name="theme" id="theme">
@@ -111,19 +100,12 @@
             </table>
         </div>
         <input type="submit" value="Apply">
+        <input type="reset" value="Reset">
     </form>
     </div>
 
-
-
-
-
-
-
-
-<br><br>
+    <br><br>
     <h3 class="center">Courses</h3>
-
 
 <div class="row justify-content-center">
     <div class="row col-md-8">
@@ -222,11 +204,13 @@
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
                         <c:when test="${currentPage eq i}">
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="${path}&page=${i}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">${i}
-                                </a>
-                            </li>
+                            <c:if test="${1 != noOfPages}">
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="${path}&page=${i}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">${i}
+                                    </a>
+                                </li>
+                            </c:if>
                         </c:when>
                         <c:otherwise>
                             <li class="page-item">

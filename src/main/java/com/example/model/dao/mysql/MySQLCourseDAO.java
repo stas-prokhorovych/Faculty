@@ -1,6 +1,8 @@
 package com.example.model.dao.mysql;
 
 import com.example.model.dao.CourseDAO;
+import com.example.model.dao.GenericDAO;
+import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
 import com.example.model.entity.Course;
@@ -15,7 +17,7 @@ import java.util.List;
 
 import static com.example.model.constants.Query.*;
 
-public class MySQLCourseDAO implements CourseDAO {
+public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
     private static MySQLCourseDAO instance;
     private static DaoFactory daoFactory;
 
@@ -30,49 +32,17 @@ public class MySQLCourseDAO implements CourseDAO {
         return instance;
     }
 
-    public int findNumberOfRecords() {
-        int numberOfRecords = 0;
-        try (Connection con = DataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery(FIND_NUMBER_OF_RECORDS)) {
-            if (rs.next()) {
-                numberOfRecords = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return numberOfRecords;
-    }
-
-    public int findNumberOfRecordsByTheme(String theme) {
-        int numberOfRecords = 0;
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_NUMBER_OF_RECORDS_BY_THEME);
-        ) {
-            statement.setString(1, theme);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    numberOfRecords = rs.getInt(1);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return numberOfRecords;
-    }
-
-    public void deleteCourse(int id) {
+    public void deleteCourse(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(DELETE_COURSE)) {
             statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
-    public void addCourse(Course course) {
+    public void addCourse(Course course) throws DAOException {
         String query;
 
         if (course.getLecturer() == 0) {
@@ -91,25 +61,25 @@ public class MySQLCourseDAO implements CourseDAO {
             if (course.getLecturer() != 0) {
                 statement.setInt(i++, course.getLecturer());
             }
-            statement.setString(i++, course.getCourseStatus().toString());
+            statement.setString(i, course.getCourseStatus().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
-    public void updateCourse(String name, int id) {
+    public void updateCourse(String name, int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(UPDATE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, name);
             statement.setInt(2, id);
             statement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
-    public List<String> findThemes() {
+    public List<String> findThemes() throws DAOException {
         List<String> themes = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement statement = con.createStatement();
@@ -118,42 +88,39 @@ public class MySQLCourseDAO implements CourseDAO {
                 themes.add(rs.getString("theme"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return themes;
     }
 
     @Override
-    public List<Course> getNoTeacherCourses() {
+    public List<Course> getNoTeacherCourses() throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement statement = con.createStatement();
              ResultSet rs = statement.executeQuery(FIND_NO_TEACHER_COURSES)) {
             while (rs.next()) {
-                Course course = mapResultSet(rs);
+                Course course = mapToEntity(rs);
                 courses.add(course);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return courses;
     }
 
     @Override
-    public CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order) {
+    public CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String role, String theme, Integer teacherId, String sort, String order) throws DAOException {
         List<Course> courses = new LinkedList<>();
         List<User> teachers = new LinkedList<>();
         List<Integer> studentsEnrolled = new LinkedList<>();
-        String queue = PaginationQueue.makeQueue(type, theme, teacherId, sort, order);
+        String queue = PaginationQueue.makeQueue(role, theme, teacherId, sort, order);
 
         CourseCatalogueInfo catalogueInfo = new CourseCatalogueInfo();
 
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(queue)) {
             int i = 1;
-            if (type != null) {
-                statement.setString(i++, type);
-            }
             if (theme != null) {
                 statement.setString(i++, theme);
             }
@@ -162,11 +129,11 @@ public class MySQLCourseDAO implements CourseDAO {
             }
 
             statement.setInt(i++, offset);
-            statement.setInt(i++, recordsPerPage);
+            statement.setInt(i, recordsPerPage);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
 
-                    Course course = mapResultSet(rs);
+                    Course course = mapToEntity(rs);
                     courses.add(course);
 
                     User teacher = new User();
@@ -195,18 +162,27 @@ public class MySQLCourseDAO implements CourseDAO {
             catalogueInfo.setTeachers(teachers);
             catalogueInfo.setStudentsEnrolled(studentsEnrolled);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return catalogueInfo;
     }
 
     @Override
-    public int findNumberOfRecordsByTeacher(Integer teacher) {
+    public int numberOfRecords(String role, String theme, Integer teacherId) throws DAOException {
         int numberOfRecords = 0;
+        String queue = PaginationQueue.numberOfPages(role, theme, teacherId);
+
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_NUMBER_OF_RECORDS_BY_TEACHER);
+             PreparedStatement statement = con.prepareStatement(queue)
         ) {
-            statement.setInt(1, teacher);
+            int i = 1;
+            if (theme != null) {
+                statement.setString(i++, theme);
+            }
+            if (teacherId != null) {
+                statement.setInt(i++, teacherId);
+            }
+
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     numberOfRecords = rs.getInt(1);
@@ -214,148 +190,75 @@ public class MySQLCourseDAO implements CourseDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return numberOfRecords;
     }
 
     @Override
-    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) {
-        List<Course> courses = new ArrayList<>();
+    public List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws DAOException {
+        List<Boolean> courseAlreadySelected = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_ALL_IN_PROGRESS_COURSES_BY_TEACHER_ID);
+             PreparedStatement statement = con.prepareStatement(FIND_SELECTED_COURSE)
         ) {
-            statement.setInt(1, teacherId);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    Course course = mapResultSet(rs);
-                    courses.add(course);
+            for(Course course: courses) {
+                statement.setInt(1, studentId);
+                statement.setInt(2, course.getId());
+                try (ResultSet rs = statement.executeQuery()) {
+                    if (rs.next()) {
+                        courseAlreadySelected.add(true);
+                    } else {
+                        courseAlreadySelected.add(false);
+                    }
                 }
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
-        return courses;
+        return courseAlreadySelected;
+    }
+
+
+    @Override
+    public Course findCourseById(String id) throws DAOException {
+        return findEntityByField(FIND_ALL_COURSE_BY_ID, id);
     }
 
     @Override
-    public List<Course> findFinishedCoursesByStudentId(Integer studentId) {
-        List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SELECT_STUDENT_FINISHED_COURSES);
-        ) {
-            statement.setInt(1, studentId);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    Course course = mapResultSet(rs);
-                    courses.add(course);
-                }
-            }
+    public Course findCourseByName(String name) throws DAOException {
+        return findEntityByField(FIND_COURSE_BY_NAME, name);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return courses;
     }
 
     @Override
-    public Course findCourseById(String id) {
-        Course course = null;
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_ALL_COURSE_BY_ID)) {
-            statement.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    course = mapResultSet(rs);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return course;
+    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws DAOException {
+        return findEntitiesByField(FIND_ALL_IN_PROGRESS_COURSES_BY_TEACHER_ID, teacherId);
     }
 
     @Override
-    public Course findCourseByName(String name) {
-        Course course = null;
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_COURSE_BY_NAME)) {
-            statement.setString(1, name);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    course = mapResultSet(rs);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return course;
+    public List<Course> findFinishedCoursesByStudentId(Integer studentId) throws DAOException {
+        return findEntitiesByField(SELECT_STUDENT_FINISHED_COURSES, studentId);
     }
 
     @Override
-    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) {
-        List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(FIND_ALL_FINISHED_COURSES_BY_TEACHER_ID);
-        ) {
-            statement.setInt(1, teacherId);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    Course course = mapResultSet(rs);
-                    courses.add(course);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return courses;
+    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws DAOException {
+        return findEntitiesByField(FIND_ALL_FINISHED_COURSES_BY_TEACHER_ID, teacherId);
     }
 
     @Override
-    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) {
-        List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SELECT_STUDENT_REGISTERED_COURSES);
-        ) {
-            statement.setInt(1, studentId);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    Course course = mapResultSet(rs);
-                    courses.add(course);
-                }
-            }
+    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws DAOException {
+        return findEntitiesByField(SELECT_STUDENT_REGISTERED_COURSES, studentId);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return courses;
     }
 
     @Override
-    public List<Course> findInProgressCoursesByStudentId(Integer studentId) {
-        List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(SELECT_STUDENT_IN_PROGRESS_COURSES);
-        ) {
-            statement.setInt(1, studentId);
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    Course course = mapResultSet(rs);
-                    courses.add(course);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return courses;
+    public List<Course> findInProgressCoursesByStudentId(Integer studentId) throws DAOException {
+        return findEntitiesByField(SELECT_STUDENT_IN_PROGRESS_COURSES, studentId);
     }
 
-    private Course mapResultSet(ResultSet rs) {
+    @Override
+    protected Course mapToEntity(ResultSet rs) throws DAOException {
         Course course;
         try {
             course = new Course();
@@ -365,9 +268,23 @@ public class MySQLCourseDAO implements CourseDAO {
             course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
             course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
             course.setLecturer(rs.getInt("id_lecturer"));
-            course.setCourseStatus(Course.CourseStatus.OPENED);
+            String courseStatus = rs.getString("course_status");
+            switch (courseStatus) {
+                case "Opened for registration":
+                    course.setCourseStatus(Course.CourseStatus.OPENED);
+                    break;
+                case "In progress":
+                    course.setCourseStatus(Course.CourseStatus.IN_PROGRESS);
+                    break;
+                case "Finished":
+                    course.setCourseStatus(Course.CourseStatus.FINISHED);
+                    break;
+                default:
+                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    break;
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return course;
     }

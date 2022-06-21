@@ -2,6 +2,7 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.service.UserService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ public class UnblockUserCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String studentId = request.getParameter("id");
         userService.unblockUser(studentId);
         return new UserCatalogueCommand().execute(request, response);

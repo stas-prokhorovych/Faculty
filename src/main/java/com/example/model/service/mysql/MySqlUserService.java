@@ -1,9 +1,11 @@
 package com.example.model.service.mysql;
 
 import com.example.model.dao.UserDAO;
+import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.entity.User;
-import com.example.model.exception.UserServiceException;
+import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.UserService;
 import com.example.model.utils.Validator;
 
@@ -41,9 +43,13 @@ public class MySqlUserService implements UserService {
      *                              or validation of data
      */
     @Override
-    public User getUser(String login, String password) throws UserServiceException {
-
-        User user = userDAO.findUserByLogin(login);
+    public User getUser(String login, String password) throws ServiceException {
+        User user;
+        try {
+            user = userDAO.findUserByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
 
         if (user == null) {
             throw new UserServiceException("no user with specified login");
@@ -56,43 +62,76 @@ public class MySqlUserService implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
-        userDAO.addUser(user);
+    public void addUser(User user) throws ServiceException {
+        try {
+            userDAO.addUser(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<User> getAllStudents() {
-        return userDAO.findStudents();
+    public List<User> getAllStudents() throws ServiceException {
+        try {
+            return userDAO.findStudents();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<User> getAllTeachers() {
-        return userDAO.findTeachers();
+    public List<User> getAllTeachers() throws ServiceException {
+        try {
+            return userDAO.findTeachers();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public void enrollStudentOnCourse(Integer studentId, Integer courseId) {
-        userDAO.enrollStudentOnCourse(studentId, courseId);
+    public void enrollStudentOnCourse(Integer studentId, Integer courseId) throws ServiceException {
+        try {
+            userDAO.enrollStudentOnCourse(studentId, courseId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public void blockUser(String studentId) {
-        userDAO.blockUser(studentId);
+    public void blockUser(String studentId) throws ServiceException {
+        try {
+            userDAO.blockUser(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public List<User> findAllGraduates(Integer courseId) {
-        return userDAO.findAllGraduates(courseId);
+    public List<User> findAllGraduates(Integer courseId) throws ServiceException {
+        try {
+            return userDAO.findAllGraduates(courseId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public void unblockUser(String studentId) {
-        userDAO.unblockUser(studentId);
+    public void unblockUser(String studentId) throws ServiceException {
+        try {
+            userDAO.unblockUser(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public void findUserByLogin(String login) throws UserServiceException {
-        User user = userDAO.findUserByLogin(login);
+    public void findUserByLogin(String login) throws ServiceException {
+        User user;
+        try {
+            user = userDAO.findUserByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         if (user != null) {
             throw new UserServiceException("user with such login already exist");
         }

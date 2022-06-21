@@ -5,6 +5,7 @@ import com.example.model.entity.Course;
 import com.example.model.entity.User;
 import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class AddTeacherCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String student = request.getParameter("students");
         String course = request.getParameter("courses");
 

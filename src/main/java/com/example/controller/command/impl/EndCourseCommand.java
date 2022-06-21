@@ -2,6 +2,7 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.service.JournalService;
+import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ public class EndCourseCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String courseId = request.getParameter("courseId");
         String[] studentIds = request.getParameterValues("student-id");
         String[] studentMarks = request.getParameterValues("mark");
