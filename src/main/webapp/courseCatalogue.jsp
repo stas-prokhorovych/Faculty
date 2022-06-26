@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Course Catalogue</title>
+    <title><fmt:message key="catalogue.title"/></title>
     <%@include file="/jspf/head.jspf"%>
 </head>
 <body>
@@ -33,7 +33,7 @@
     <c:set var="recordsPerPageAttr" value="&recordsPerPage=${recordsPerPage}"/>
 </c:if>
 
-    <h3 class="center">Filter</h3>
+    <h3 class="center"><fmt:message key="catalogue.filter"/></h3>
     <div class="row justify-content-center">
     <form action="controller">
         <input type="hidden" name="command" value="COURSE_CATALOGUE">
@@ -42,11 +42,11 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <tr>
-                        <th>Theme</th>
-                        <th>Teacher</th>
-                        <th>Sort</th>
-                        <th>Order</th>
-                        <th>Records</th>
+                        <th><fmt:message key="catalogue.theme"/></th>
+                        <th><fmt:message key="catalogue.teacher"/></th>
+                        <th><fmt:message key="catalogue.sort"/></th>
+                        <th><fmt:message key="catalogue.order"/></th>
+                        <th><fmt:message key="catalogue.records"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +54,7 @@
                         <td>
                             <label for="theme"></label>
                             <select name="theme" id="theme">
-                                <option value="" selected disabled hidden>All</option>
+                                <option value="" selected disabled hidden><fmt:message key="catalogue.all"/></option>
                                 <c:forEach items="${themesForForm}" var="theme">
                                     ${theme}<br>
                                     <option value="${theme}">${theme}</option>
@@ -64,7 +64,7 @@
                         <td>
                             <label for="teacher"></label>
                             <select name="teacher" id="teacher">
-                                <option value="" selected disabled hidden>All</option>
+                                <option value="" selected disabled hidden><fmt:message key="catalogue.all"/></option>
                                 <c:forEach items="${teacherForForm}" var="teacher">
                                     ${teacher}<br>
                                     <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
@@ -73,17 +73,17 @@
                         </td>
                         <td>
                             <input type="radio" id="name" name="sort" value="course.name">
-                            <label for="name">Name</label><br>
+                            <label for="name"><fmt:message key="catalogue.sort.name"/></label><br>
                             <input type="radio" id="start_date" name="sort" value="DATEDIFF(end_date, start_date)">
-                            <label for="start_date">Duration</label><br>
+                            <label for="start_date"><fmt:message key="catalogue.sort.duration"/></label><br>
                             <input type="radio" id="student_enrolled" name="sort" value="student_enrolled">
-                            <label for="student_enrolled">Student enrolled</label><br>
+                            <label for="student_enrolled"><fmt:message key="catalogue.sort.student.enrolled"/></label><br>
                         </td>
                         <td>
                             <input type="radio" id="ascending" name="order" value="ascending">
-                            <label for="ascending">Ascending</label><br>
+                            <label for="ascending"><fmt:message key="catalogue.order.ascending"/></label><br>
                             <input type="radio" id="descending" name="order" value="descending">
-                            <label for="descending">Descending</label><br>
+                            <label for="descending"><fmt:message key="catalogue.order.descending"/></label><br>
                         </td>
                         <td>
                             <input type="radio" id="2" name="recordsPerPage" value="2">
@@ -99,27 +99,27 @@
                 </tbody>
             </table>
         </div>
-        <input type="submit" value="Apply">
-        <input type="reset" value="Reset">
+        <input type="submit" value="<fmt:message key="catalogue.apply"/>">
+        <input type="reset" value="<fmt:message key="catalogue.reset"/>">
     </form>
     </div>
 
     <br><br>
-    <h3 class="center">Courses</h3>
+    <h3 class="center"><fmt:message key="catalogue.course.title"/></h3>
 
 <div class="row justify-content-center">
     <div class="row col-md-8">
         <table class="table table-bordered table-sm">
             <thead class="thead-light">
             <tr>
-                <th>Name</th>
-                <th>Theme</th>
-                <th>Start date</th>
-                <th>End date</th>
-                <th>Duration in days</th>
-                <th>Teacher</th>
-                <th>Course status</th>
-                <th>Student enrolled</th>
+                <th><fmt:message key="catalogue.course.name"/></th>
+                <th><fmt:message key="catalogue.course.theme"/></th>
+                <th><fmt:message key="catalogue.course.start.date"/></th>
+                <th><fmt:message key="catalogue.course.end.date"/></th>
+                <th><fmt:message key="catalogue.course.duration.in.days"/></th>
+                <th><fmt:message key="catalogue.course.teacher"/></th>
+                <th><fmt:message key="catalogue.course.course.status"/></th>
+                <th><fmt:message key="catalogue.course.student.enrolled"/></th>
                 <c:choose>
                     <c:when test="${sessionScope.role == 'Student'}">
                         <th>Student option</th>
@@ -156,34 +156,46 @@
                     </td>
                     <c:choose>
                         <c:when test="${sessionScope.role == 'Student'}">
-                            <td>
-                                <form method="post" action="<c:url value='/controller'/>">
-                                    <input type="hidden" name="command" value="ENROLL_ON_COURSE">
-                                    <input type="number" hidden name="student-id" value="${sessionScope.id}"/>
-                                    <input type="number" hidden name="course-id" value="${course.id}"/>
-                                    <input type="submit" name="enroll" value="Enroll"/>
-                                </form>
-                            </td>
+                            <c:forEach var="alreadySelected" items="${courseAlreadySelected}" varStatus="loop">
+                                <c:if test="${loop.index eq index}">
+                                    <c:if test="${alreadySelected eq false}">
+                                        <td>
+                                            <form method="post" action="<c:url value='/controller'/>">
+                                                <input type="hidden" name="command" value="ENROLL_ON_COURSE">
+                                                <input type="number" hidden name="student-id" value="${sessionScope.id}"/>
+                                                <input type="number" hidden name="course-id" value="${course.id}"/>
+                                                <input class="btn btn-success" type="submit" name="enroll" value="Enroll"/>
+                                            </form>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${alreadySelected eq true}">
+                                        <td>
+                                            <form method="post" action="<c:url value='/controller'/>">
+                                                <input type="hidden" name="command" value="LEAVE_COURSE">
+                                                <input type="number" hidden name="student-id" value="${sessionScope.id}"/>
+                                                <input type="number" hidden name="course-id" value="${course.id}"/>
+                                                <input class="btn btn-danger" type="submit" name="enroll" value="Leave"/>
+                                            </form>
+                                        </td>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
                         </c:when>
                     </c:choose>
-                    <c:choose>
-                        <c:when test="${sessionScope.role == 'Admin'}">
-                            <td>
-                                <form method="post" action="<c:url value='/controller'/>">
-                                    <input type="hidden" name="command" value="DELETE_COURSE">
-                                    <input type="number" hidden name="id" value="${course.id}"/>
-                                    <input type="submit" name="delete" value="Delete"/>
-                                </form>
-
-                                <form method="get" action="<c:url value='/controller'/>">
-                                    <input type="hidden" name="command" value="SHOW_COURSE_INFO">
-                                    <input type="number" hidden name="id" value="${course.id}"/>
-                                    <input type="text" hidden name="name" value="${course.name}"/>
-                                    <input type="submit" value="Update"/>
-                                </form>
-                            </td>
-                        </c:when>
-                    </c:choose>
+                        <c:if test="${sessionScope.role == 'Admin'}">
+                           <td>
+                               <form method="post" action="<c:url value='/controller'/>">
+                                   <input type="hidden" name="command" value="DELETE_COURSE">
+                                   <input type="number" hidden name="id" value="${course.id}"/>
+                                   <input type="submit" name="delete" value="Delete"/>
+                               </form>
+                               <form method="get" action="<c:url value='/controller'/>">
+                                   <input type="hidden" name="command" value="SHOW_COURSE_INFO">
+                                   <input type="number" hidden name="id" value="${course.id}"/>
+                                   <input type="submit" value="Update"/>
+                               </form>
+                           </td>
+                     </c:if>
                 </tr>
                 <c:set var="index" value="${index + 1}"/>
             </c:forEach>
@@ -196,7 +208,7 @@
                     <li class="page-item">
                         <a class="page-link"
                            href="${path}&page=${currentPage - 1}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">
-                            Previous
+                            <fmt:message key="catalogue.course.page.previous"/>
                         </a>
                     </li>
                 </c:if>
@@ -226,7 +238,7 @@
                     <li class="page-item">
                         <a class="page-link"
                            href="${path}&page=${currentPage + 1}${themeAttr}${sortAttr}${orderAttr}${recordsPerPageAttr}">
-                            Next
+                            <fmt:message key="catalogue.course.page.next"/>
                         </a>
                     </li>
                 </c:if>

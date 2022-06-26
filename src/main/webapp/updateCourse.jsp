@@ -24,7 +24,16 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="name"><strong>Name</strong>(current: ${course.name})</label>
-                                    <input type="text" id="name" name="name" class="form-control form-control-lg" <c:if test="${validLogin != null}"> value="${validLogin}"</c:if>/>
+                                    <input type="text" id="name" name="name" class="form-control form-control-lg"
+                                        <c:choose>
+                                            <c:when test="${validLogin != null}">
+                                                value="${validLogin}"
+                                            </c:when>
+                                            <c:otherwise>
+                                                value="${course.name}"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    />
                                     <c:if test="${nameError != null}">
                                         <div id="nameError" class="error">${nameError}</div>
                                     </c:if>
@@ -32,7 +41,16 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="theme"><strong>Theme*</strong>(current: ${course.theme})</label>
-                                    <input type="text" id="theme" name="theme" class="form-control form-control-lg" <c:if test="${validPassword != null}"> value="${validPassword}"</c:if>/>
+                                    <input type="text" id="theme" name="theme" class="form-control form-control-lg"
+                                            <c:choose>
+                                                <c:when test="${validTheme != null}">
+                                                    value="${validTheme}"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    value="${course.theme}"
+                                                </c:otherwise>
+                                            </c:choose>
+                                    />
                                     <c:if test="${themeError != null}">
                                         <div id="themeError" class="error">${themeError}</div>
                                     </c:if>
@@ -40,7 +58,16 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="start-date"><strong>Start date*</strong>(current: ${course.startDate})</label>
-                                    <input type="datetime-local" id="start-date" name="start-date" class="form-control form-control-lg" <c:if test="${validPassword != null}"> value="${validPassword}"</c:if>/>
+                                    <input type="datetime-local" id="start-date" name="start-date" class="form-control form-control-lg"
+                                            <c:choose>
+                                                <c:when test="${validStartDate != null}">
+                                                    value="${validStartDate}"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    value="${course.startDate}"
+                                                </c:otherwise>
+                                            </c:choose>
+                                    />
                                     <c:if test="${startDateError != null}">
                                         <div id="startDateError" class="error">${startDateError}</div>
                                     </c:if>
@@ -48,7 +75,16 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="end-date"><strong>End date*</strong>(current: ${course.endDate})</label>
-                                    <input type="datetime-local" id="end-date" name="end-date" class="form-control form-control-lg" <c:if test="${validPassword != null}"> value="${validPassword}"</c:if>/>
+                                    <input type="datetime-local" id="end-date" name="end-date" class="form-control form-control-lg"
+                                            <c:choose>
+                                                <c:when test="${validEndDate != null}">
+                                                    value="${validEndDate}"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    value="${course.endDate}"
+                                                </c:otherwise>
+                                            </c:choose>
+                                    />
                                     <c:if test="${endDateError != null}">
                                         <div id="endDateError" class="error">${endDateError}</div>
                                     </c:if>
@@ -58,7 +94,7 @@
                                     <label for="id-lecturer"><strong>Teacher</strong></label>
                                     <select name="id-lecturer" id="id-lecturer" class="form-control form-control-lg">
                                         <option value="">Select teacher if you want</option>
-                                        <c:forEach items="${teacherForForm}" var="teacher">
+                                        <c:forEach items="${teachers}" var="teacher">
                                             <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
                                         </c:forEach>
                                     </select>

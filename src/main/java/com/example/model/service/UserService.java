@@ -23,4 +23,12 @@ public interface UserService {
     void unblockUser(String studentId) throws ServiceException;
 
     void findUserByLogin(String login) throws ServiceException;
+
+    void leaveCourse(Integer studentId, Integer courseId) throws ServiceException;
+
+    List<User> getNewStudents() throws ServiceException;
+
+    void createTeacher(String studentId) throws ServiceException;
+
+    User findUserById(String studentId) throws ServiceException;
 }

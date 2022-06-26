@@ -32,6 +32,11 @@ public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
         return findEntityByField(SELECT_USER_BY_LOGIN, login);
     }
 
+    @Override
+    public User findUserById(String studentId) throws DAOException {
+        return findEntityByField(SELECT_USER_BY_ID, studentId);
+    }
+
     public void addUser(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
@@ -79,9 +84,48 @@ public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
     }
 
     @Override
+    public List<User> getNewStudents() throws DAOException {
+        List<User> students = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet rs = statement.executeQuery(FIND_NEW_USER)) {
+            while (rs.next()) {
+                students.add(mapToEntity(rs));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return students;
+    }
+
+    @Override
+    public void createTeacher(String studentId) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(CREATE_TEACHER)) {
+            statement.setString(1, "Teacher");
+            statement.setString(2, studentId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
     public void enrollStudentOnCourse(Integer studentId, Integer courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(CREATE_STUDENT_ON_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pst = con.prepareStatement(ENROLL_STUDENT_ON_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setInt(1, studentId);
+            pst.setInt(2, courseId);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void leaveCourse(Integer studentId, Integer courseId) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(LEAVE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             pst.setInt(1, studentId);
             pst.setInt(2, courseId);
             pst.executeUpdate();

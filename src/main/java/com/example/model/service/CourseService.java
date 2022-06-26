@@ -14,7 +14,7 @@ public interface CourseService {
 
     List<String> findThemes() throws ServiceException;
 
-    void updateCourse(String name, int id) throws ServiceException;
+    void updateCourse(Course course) throws ServiceException;
 
     List<Course> getNoTeacherCourses() throws ServiceException;
 
@@ -35,4 +35,10 @@ public interface CourseService {
     int numberOfRecords(String role, String theme, Integer teacherId) throws ServiceException;
 
     List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws ServiceException;
+
+    List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws ServiceException;
+
+    void startCourse(Integer courseId) throws ServiceException;
+
+    void assignCourse(String courseId, String studentId) throws ServiceException;
 }

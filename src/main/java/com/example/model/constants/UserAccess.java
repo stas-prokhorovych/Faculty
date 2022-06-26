@@ -18,45 +18,35 @@ public class UserAccess {
         guestUrls.add(HOME_PAGE);
         guestUrls.add(LOGIN_PAGE);
         guestUrls.add(SIGNUP_PAGE);
+        // student jsp pages
+        guestUrls.add(HOME_PAGE);
+        // teacher jsp pages
 
 
-        guestUrls.add(COURSE_CATALOGUE_PATH);
+        // admin jsp pages
+        adminUrls.add(USER_CATALOGUE_PATH);
+
+
+
+
         guestUrls.add(LOGIN_PATH);
         guestUrls.add(REGISTER_PATH);
         guestUrls.add(HOME_PAGE);
-
-        adminUrls.add(USER_CATALOGUE_PATH);
     }
 
     public static List<String> getGuestUrls() {
         return guestUrls;
     }
 
-    public static void setGuestUrls(List<String> guestUrls) {
-        UserAccess.guestUrls = guestUrls;
-    }
-
     public static List<String> getStudentUrls() {
         return studentUrls;
-    }
-
-    public static void setStudentUrls(List<String> studentUrls) {
-        UserAccess.studentUrls = studentUrls;
     }
 
     public static List<String> getTeacherUrls() {
         return teacherUrls;
     }
 
-    public static void setTeacherUrls(List<String> teacherUrls) {
-        UserAccess.teacherUrls = teacherUrls;
-    }
-
     public static List<String> getAdminUrls() {
         return adminUrls;
-    }
-
-    public static void setAdminUrls(List<String> adminUrls) {
-        UserAccess.adminUrls = adminUrls;
     }
 }

@@ -41,10 +41,6 @@
 
                             <button class="btn btn-primary btn-lg btn-block" type="submit"><fmt:message key="login.login"/></button>
 
-                            <hr class="my-4">
-                            <div class="col">
-                                <a href="forgotPassword.jsp"><fmt:message key="login.forget.password"/></a>
-                            </div>
                         </div>
                     </div>
                 </div>

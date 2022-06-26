@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a class="navbar-brand" href="index.jsp">Courses</a>
+    <a class="navbar-brand" href="index.jsp"><fmt:message key="navbar.courses"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,40 +11,40 @@
             <c:choose>
                 <c:when test="${sessionScope.login != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="profile.jsp">Profile</a>
+                        <a class="nav-link" href="profile.jsp"><fmt:message key="navbar.profile"/></a>
                     </li>
                 </c:when>
             </c:choose>
             <li class="nav-item">
-                <a class="nav-link" href="index.jsp">Home</a>
+                <a class="nav-link" href="index.jsp"><fmt:message key="navbar.home"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="controller?command=COURSE_CATALOGUE">Courses</a>
+                <a class="nav-link" href="controller?command=COURSE_CATALOGUE"><fmt:message key="navbar.catalogue"/></a>
             </li>
             <c:choose>
                 <c:when test="${sessionScope.role == 'Student'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=YOUR_COURSES">Your courses</a>
+                        <a class="nav-link" href="controller?command=YOUR_COURSES"><fmt:message key="navbar.your.courses"/></a>
                     </li>
                 </c:when>
             </c:choose>
             <c:choose>
                 <c:when test="${sessionScope.role == 'Teacher'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=SHOW_JOURNAL">Journal</a>
+                        <a class="nav-link" href="controller?command=SHOW_JOURNAL"><fmt:message key="navbar.journal"/></a>
                     </li>
                 </c:when>
             </c:choose>
             <c:choose>
                 <c:when test="${sessionScope.role == 'Admin'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=USER_CATALOGUE">Users</a>
+                        <a class="nav-link" href="controller?command=USER_CATALOGUE"><fmt:message key="navbar.users"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=SHOW_TEACHERS">Add course</a>
+                        <a class="nav-link" href="controller?command=SHOW_TEACHERS"><fmt:message key="navbar.add.course"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=ADD_TEACHER">Add teacher</a>
+                        <a class="nav-link" href="controller?command=ADD_TEACHER"><fmt:message key="navbar.add.teacher"/></a>
                     </li>
                 </c:when>
             </c:choose>
@@ -56,24 +56,26 @@
             <c:choose>
                 <c:when test="${sessionScope.login == null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.jsp">Login</a>
+                        <a class="nav-link" href="login.jsp"><fmt:message key="navbar.login"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="signup.jsp">Sign up</a>
+                        <a class="nav-link" href="signup.jsp"><fmt:message key="navbar.signup"/></a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=LOGOUT">Log out</a>
+                        <a class="nav-link" href="controller?command=LOGOUT"><fmt:message key="navbar.logout"/></a>
                     </li>
                 </c:otherwise>
             </c:choose>
         </ul>
 
         <form action="">
-            <select id="language" class="language-choose" name="language" onchange="submit()">
-                <option value="en">en</option>
-                <option value="uk">uk</option>
+            <input type="hidden" name="command" value="${param.command}">
+            <select id="language" class="language-choose" name="sessionLocale" onchange="submit()">
+                <option value="" selected disabled hidden><fmt:message key="navbar.lang"/></option>
+                <option value="en"><fmt:message key="navbar.en"/></option>
+                <option value="uk"><fmt:message key="navbar.uk"/></option>
             </select>
         </form>
     </div>

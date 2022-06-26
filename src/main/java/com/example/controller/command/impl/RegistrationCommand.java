@@ -74,8 +74,10 @@ public class RegistrationCommand implements Command {
         user.setUserAccess(true);
 
         userService.addUser(user);
+        user = userService.getUser(login, password);
 
         HttpSession session = request.getSession(true);
+
         session.setAttribute("id", user.getId());
         session.setAttribute("login", user.getLogin());
         session.setAttribute("email", user.getEmail());

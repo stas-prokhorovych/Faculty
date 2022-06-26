@@ -44,7 +44,7 @@
                                     <form method="post" action="<c:url value='/controller'/>">
                                         <input type="hidden" name="command" value="BLOCK_USER">
                                         <input type="number" hidden name="id" value="${student.id}"/>
-                                        <input type="submit" name="block" value="Block"/>
+                                        <input class="btn btn-danger" type="submit" name="block" value="Block"/>
                                     </form>
                                 </td>
                             </c:when>
@@ -53,7 +53,7 @@
                                     <form method="post" action="<c:url value='/controller'/>">
                                         <input type="hidden" name="command" value="UNBLOCK_USER">
                                         <input type="number" hidden name="id" value="${student.id}"/>
-                                        <input type="submit" name="block" value="Unblock"/>
+                                        <input class="btn btn-success" type="submit" name="block" value="Unblock"/>
                                     </form>
                                 </td>
                             </c:otherwise>
@@ -101,7 +101,8 @@
 
         </div>
     </div>
-
+    <br>
+    <br>
 
     <%@include file="/jspf/bootstrapScripts.jspf"%>
 </body>

@@ -22,4 +22,12 @@ public interface UserDAO {
     List<User> findAllGraduates(Integer courseId) throws DAOException;
 
     void unblockUser(String studentId) throws DAOException;
+
+    void leaveCourse(Integer studentId, Integer courseId) throws DAOException;
+
+    List<User> getNewStudents() throws DAOException;
+
+    void createTeacher(String studentId) throws DAOException;
+
+    User findUserById(String studentId) throws DAOException;
 }

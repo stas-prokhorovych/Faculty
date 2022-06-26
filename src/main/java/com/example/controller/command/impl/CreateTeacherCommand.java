@@ -1,7 +1,6 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.model.entity.Course;
 import com.example.model.entity.User;
 import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
@@ -12,11 +11,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-import static com.example.model.constants.Pages.ADD_TEACHER_PAGE;
+import static com.example.model.constants.Pages.HOME_PAGE;
 
-public class AddTeacherCommand implements Command {
+public class CreateTeacherCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;
     private static final CourseService courseService;
@@ -29,13 +27,12 @@ public class AddTeacherCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        List<User> students = userService.getNewStudents();
-        List<Course> courses = courseService.getNoTeacherCourses();
-        List<User> teachers = userService.getAllTeachers();
+        String studentId = request.getParameter("students");
+        String courseId = request.getParameter("courses");
 
-        request.setAttribute("students", students);
-        request.setAttribute("courses", courses);
-        request.setAttribute("teachers", teachers);
-        return ADD_TEACHER_PAGE;
+        userService.createTeacher(studentId);
+        courseService.assignCourse(courseId, studentId);
+
+        return HOME_PAGE;
     }
 }

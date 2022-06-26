@@ -11,6 +11,7 @@ import com.example.model.utils.pagination.CourseCatalogueInfo;
 import com.example.model.utils.pagination.PaginationQueue;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,12 +69,16 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
         }
     }
 
-    public void updateCourse(String name, int id) throws DAOException {
+    public void updateCourse(Course course) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(UPDATE_COURSE, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, name);
-            statement.setInt(2, id);
-            statement.execute();
+            statement.setString(1, course.getName());
+            statement.setString(2, course.getTheme());
+            statement.setTimestamp(3, Timestamp.valueOf(course.getStartDate()));
+            statement.setTimestamp(4, Timestamp.valueOf(course.getEndDate()));
+            statement.setInt(5, course.getLecturer());
+            statement.setInt(6, course.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -196,12 +201,38 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
     }
 
     @Override
+    public void startCourse(Integer courseId) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(START_COURSE)
+        ) {
+            statement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setInt(2, courseId);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void assignCourse(String courseId, String studentId) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(ASSIGN_COURSE)) {
+            statement.setString(1, studentId);
+            statement.setString(2, "Opened for registration");
+            statement.setString(3, courseId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
     public List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws DAOException {
         List<Boolean> courseAlreadySelected = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(FIND_SELECTED_COURSE)
         ) {
-            for(Course course: courses) {
+            for (Course course : courses) {
                 statement.setInt(1, studentId);
                 statement.setInt(2, course.getId());
                 try (ResultSet rs = statement.executeQuery()) {
@@ -219,7 +250,6 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
         return courseAlreadySelected;
     }
 
-
     @Override
     public Course findCourseById(String id) throws DAOException {
         return findEntityByField(FIND_ALL_COURSE_BY_ID, id);
@@ -229,6 +259,11 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
     public Course findCourseByName(String name) throws DAOException {
         return findEntityByField(FIND_COURSE_BY_NAME, name);
 
+    }
+
+    @Override
+    public List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws DAOException {
+        return findEntitiesByField(FIND_ALL_OPEN_COURSES_BY_TEACHER_ID, teacherId);
     }
 
     @Override

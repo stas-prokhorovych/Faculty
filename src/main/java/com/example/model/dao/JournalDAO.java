@@ -7,7 +7,8 @@ import com.example.model.entity.Journal;
 import java.util.List;
 
 public interface JournalDAO {
-    void endCourse(String courseId, String[] studentIds, String[] studentMarks) throws DAOException;
 
     List<Journal> findJournalInfo(List<Course> finishedCourses, Integer studentId) throws DAOException;
+
+    void endCourse(String courseId, String[] studentIds, int[] studentMarks, String[] markCode, String[] markExplanation) throws DAOException;
 }

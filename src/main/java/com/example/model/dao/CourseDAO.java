@@ -12,7 +12,7 @@ public interface CourseDAO {
 
     void addCourse(Course course) throws DAOException;
 
-    void updateCourse(String name, int id) throws DAOException;
+    void updateCourse(Course course) throws DAOException;
 
     List<String> findThemes() throws DAOException;
 
@@ -37,4 +37,10 @@ public interface CourseDAO {
     int numberOfRecords(String role, String theme, Integer teacherId) throws DAOException;
 
     List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws DAOException;
+
+    List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws DAOException;
+
+    void startCourse(Integer courseId) throws DAOException;
+
+    void assignCourse(String courseId, String studentId) throws DAOException;
 }

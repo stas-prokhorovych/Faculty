@@ -4,11 +4,13 @@ import com.example.controller.command.Command;
 import com.example.controller.command.CommandFactory;
 import com.example.model.service.exception.ServiceException;
 
+import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.example.model.constants.Pages.ERROR_PAGE;

@@ -2,7 +2,7 @@
 
 <html class="main-page">
 <head>
-    <title>Faculty</title>
+    <title><fmt:message key="index.title"/></title>
     <%@include file="/jspf/head.jspf"%>
 </head>
 <body class="main-page">
@@ -10,8 +10,8 @@
 
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="col-m d-5 p-lg-5 mx-auto my-5">
-            <h1 class="display-4 font-weight-normal">Courses</h1>
-            <p class="lead font-weight-normal">You can find plenty of courses on various topics. If you are student you can enroll and start learning journey</p>
+            <h1 class="display-4 font-weight-normal"><fmt:message key="index.courses"/></h1>
+            <p class="lead font-weight-normal"><fmt:message key="index.greeting"/></p>
 
         </div>
         <div class="product-device shadow-sm d-none d-md-block"></div>

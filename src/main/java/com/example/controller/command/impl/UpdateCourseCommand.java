@@ -1,14 +1,20 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
+import com.example.model.entity.Course;
 import com.example.model.service.CourseService;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
+import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Map;
+
+import static com.example.model.constants.Pages.*;
 
 public class UpdateCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -21,11 +27,41 @@ public class UpdateCourseCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        final String id = request.getParameter("id");
+        final String courseId = request.getParameter("id");
         final String name = request.getParameter("name");
+        final String theme = request.getParameter("theme");
+        final String startDate = request.getParameter("start-date");
+        final String endDate = request.getParameter("end-date");
+        final String idLecturer = request.getParameter("id-lecturer");
 
-        courseService.updateCourse(name, Integer.parseInt(id));
 
-        return new CourseCatalogueCommand().execute(request, response);
+        Course chosenToUpdateCourse = courseService.findCourseById(courseId);
+        request.setAttribute("course", chosenToUpdateCourse);
+
+        Map<String, String> inputErrors = Validator.checkAddCourseForm(name, theme, startDate, endDate);
+        if(!inputErrors.isEmpty()) {
+            for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
+                request.setAttribute(entry.getKey(), entry.getValue());
+            }
+            return UPDATE_COURSE_PAGE;
+        }
+
+        Course course = new Course();
+        course.setId(Integer.parseInt(courseId));
+        course.setName(name);
+        course.setTheme(theme);
+        course.setStartDate(LocalDateTime.parse(startDate));
+        course.setEndDate(LocalDateTime.parse(endDate));
+
+        System.out.println("f"+idLecturer+"s");
+        if(idLecturer.equals("")) {
+            course.setLecturer(chosenToUpdateCourse.getLecturer());
+            System.out.println("HERE");
+        } else {
+            course.setLecturer(Integer.parseInt(idLecturer));
+        }
+
+        courseService.updateCourse(course);
+        return PROFILE_PAGE;
     }
 }

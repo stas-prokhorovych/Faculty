@@ -4,8 +4,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="mytag" uri="/WEB-INF/tld/mytag.tld"%>
 
-<%--<fmt:setLocale value="uk"/>--%>
-<fmt:setLocale value="${language}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="resources"/>
-
-<%--<html lang="${requestScope.lang}" class="h-100">--%>

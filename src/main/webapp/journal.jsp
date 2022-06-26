@@ -8,6 +8,45 @@
 <body>
     <%@include file="/jspf/navbar.jspf"%>
 
+    <h2 class="center">Open for registration courses</h2>
+    <div class="row justify-content-center">
+        <div class="row col-md-8">
+            <table class="table table-bordered table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Theme</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th>Duration in days</th>
+                    <th>Teacher option</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="course" items="${openForRegCourses}">
+                    <tr>
+                        <td>${course.id}</td>
+                        <td>${course.name}</td>
+                        <td>${course.theme}</td>
+                        <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                        <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
+                        <td>${course.durationInDays}</td>
+                        <td>
+                            <form method="post" action="<c:url value='/controller'/>">
+                                <input type="hidden" name="command" value="START_COURSE">
+                                <input type="number" hidden name="teacher-id" value="${sessionScope.id}"/>
+                                <input type="number" hidden name="course-id" value="${course.id}"/>
+                                <input type="submit" name="enroll" value="Start course"/>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <h2 class="center">Courses in progress that you teach</h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
@@ -29,8 +68,8 @@
                         <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
-                        <td>${course.startDate}</td>
-                        <td>${course.endDate}</td>
+                        <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                        <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
                         <td>
                             <form method="post" action="<c:url value='/controller'/>">
@@ -67,8 +106,8 @@
                         <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
-                        <td>${course.startDate}</td>
-                        <td>${course.endDate}</td>
+                        <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
+                        <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
                     </tr>
                 </c:forEach>

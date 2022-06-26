@@ -25,6 +25,7 @@ public class EndCourseCommand implements Command {
         String[] studentIds = request.getParameterValues("student-id");
         String[] studentMarks = request.getParameterValues("mark");
 
+
         journalService.endCourse(courseId, studentIds, studentMarks);
 
         return new ShowJournalCommand().execute(request, response);

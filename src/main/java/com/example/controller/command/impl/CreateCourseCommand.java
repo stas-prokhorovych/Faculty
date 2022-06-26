@@ -68,6 +68,6 @@ public class CreateCourseCommand implements Command {
             return ADD_COURSE_PAGE;
         }
 
-        return new CourseCatalogueCommand().execute(request, response);
+        return PROFILE_PAGE;
     }
 }

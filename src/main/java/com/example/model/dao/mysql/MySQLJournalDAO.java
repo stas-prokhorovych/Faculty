@@ -9,6 +9,7 @@ import com.example.model.entity.Course;
 import com.example.model.entity.Journal;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
     }
 
     @Override
-    public void endCourse(String courseId, String[] studentIds, String[] studentMarks) throws DAOException {
+    public void endCourse(String courseId, String[] studentIds, int[] studentMarks, String[] markCode, String[] markExplanation) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(WRITE_MARKS_TO_JOURNAL, Statement.RETURN_GENERATED_KEYS)) {
             con.setAutoCommit(false);
@@ -38,13 +39,16 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
                 int idStudentOnCourse = findIdOfStudentOnCourse(courseId, studentIds[i]);
 
                 statement.setInt(1, idStudentOnCourse);
-                statement.setString(2, studentMarks[i]);
+                statement.setInt(2, studentMarks[i]);
+                statement.setString(3, markCode[i]);
+                statement.setString(4, markExplanation[i]);
                 statement.executeUpdate();
             }
             changeCourseInfo(courseId);
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new DAOException(e);
         }
     }
@@ -55,7 +59,7 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
 
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(FIND_JOURNAL_INFO, Statement.RETURN_GENERATED_KEYS)) {
-            for(Course course: finishedCourses) {
+            for (Course course : finishedCourses) {
                 statement.setInt(1, studentId);
                 statement.setInt(2, course.getId());
                 try (ResultSet rs = statement.executeQuery()) {
@@ -72,11 +76,13 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
         return journalInfo;
     }
 
+
     private void changeCourseInfo(String courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(UPDATE_COURSE_INFO_TO_FINISH)) {
             statement.setString(1, "Finished");
-            statement.setString(2, courseId);
+            statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setString(3, courseId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);

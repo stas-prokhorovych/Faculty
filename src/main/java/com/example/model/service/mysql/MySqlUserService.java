@@ -136,4 +136,40 @@ public class MySqlUserService implements UserService {
             throw new UserServiceException("user with such login already exist");
         }
     }
+
+    @Override
+    public void leaveCourse(Integer studentId, Integer courseId) throws ServiceException {
+        try {
+            userDAO.leaveCourse(studentId, courseId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> getNewStudents() throws ServiceException {
+        try {
+            return userDAO.getNewStudents();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void createTeacher(String studentId) throws ServiceException {
+        try {
+            userDAO.createTeacher(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User findUserById(String studentId) throws ServiceException {
+        try {
+            return userDAO.findUserById(studentId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

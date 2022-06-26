@@ -9,8 +9,6 @@ public class PaginationQueue {
         return FIND_NUMBER_OF_RECORDS_HEAD + addWhereClause(role, theme, teacher);
     }
 
-
-
     public static String makeQueue(String role, String theme, Integer teacher, String sort, String order) {
         return addHead() +
                 addWhereClause(role, theme, teacher) +
@@ -32,12 +30,11 @@ public class PaginationQueue {
                 return sj.toString();
             }
         } else {
+            sj = new StringJoiner(" AND ", "", " ");
+            sj.add(" WHERE course_status<>'Closed, no teacher assigned yet'");
             if (theme == null && teacher == null) {
-                return "";
+                return sj.toString();
             }
-
-            sj = new StringJoiner(" AND ", "WHERE ", " ");
-
         }
 
         if (theme != null) {

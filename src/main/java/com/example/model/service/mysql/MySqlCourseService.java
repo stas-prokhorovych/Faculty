@@ -74,9 +74,9 @@ public class MySqlCourseService implements CourseService {
     }
 
     @Override
-    public void updateCourse(String name, int id) throws ServiceException {
+    public void updateCourse(Course course) throws ServiceException {
         try {
-            courseDAO.updateCourse(name, id);
+            courseDAO.updateCourse(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -123,6 +123,33 @@ public class MySqlCourseService implements CourseService {
     public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws ServiceException {
         try {
             return courseDAO.findAllInProgressCoursesByTeacherId(teacherId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws ServiceException {
+        try {
+            return courseDAO.finAllOpenForRegCoursesByTeacherId(teacherId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void startCourse(Integer courseId) throws ServiceException {
+        try {
+            courseDAO.startCourse(courseId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void assignCourse(String courseId, String studentId) throws ServiceException {
+        try {
+            courseDAO.assignCourse(courseId, studentId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

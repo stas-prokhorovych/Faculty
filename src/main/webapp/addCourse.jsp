@@ -56,7 +56,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label for="id-lecturer"><strong>Teacher</strong></label>
-                                    <select name="id-lecturer" id="id-lecturer" class="form-control form-control-lg">
+                                    <select name="id-lecturer" id="id" class="form-control form-control-lg">
                                         <option value="">Select teacher if you want</option>
                                         <c:forEach items="${teacherForForm}" var="teacher">
                                             <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>

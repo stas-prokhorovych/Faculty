@@ -30,10 +30,11 @@ public class ShowJournalCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer teacherId = (Integer) request.getSession(false).getAttribute("id");
 
-
+        List<Course> openForRegCourses = courseService.finAllOpenForRegCoursesByTeacherId(teacherId);
         List<Course> inProgressCourses = courseService.findAllInProgressCoursesByTeacherId(teacherId);
         List<Course> finishedCourses =  courseService.findAllFinishedCoursesByTeacherId(teacherId);
 
+        request.setAttribute("openForRegCourses", openForRegCourses);
         request.setAttribute("inProgressCourses", inProgressCourses);
         request.setAttribute("finishedCourses", finishedCourses);
 

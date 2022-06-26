@@ -1,3 +1,11 @@
+.idea/
+/mvn/
+lib/
+logs/
+Faculty.iml
+mvnw
+mvnw.cmd
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

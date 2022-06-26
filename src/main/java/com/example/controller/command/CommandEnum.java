@@ -14,6 +14,7 @@ public enum CommandEnum {
     USER_CATALOGUE(new UserCatalogueCommand()),
     ADD_TEACHER(new AddTeacherCommand()),
     ENROLL_ON_COURSE(new EnrollOnCourse()),
+    LEAVE_COURSE(new LeaveCourseCommand()),
     SHOW_JOURNAL(new ShowJournalCommand()),
     PDF_REPORT(new PdfReportCommand()),
     YOUR_COURSES(new StudentCourses()),
@@ -22,6 +23,9 @@ public enum CommandEnum {
     SHOW_GRADUATES(new ShowGraduatesCommand()),
     END_COURSE(new EndCourseCommand()),
     SHOW_TEACHERS(new ShowTeachersCommand()),
+    START_COURSE(new StartCourseCommand()),
+    CREATE_TEACHER(new CreateTeacherCommand()),
+    ASSIGN_TEACHER_TO_COURSE(new AssignTeacherToCourseCommand()),
     SHOW_COURSE_INFO(new ShowCourseInfoCommand());
 
     private Command command;
