@@ -3,6 +3,7 @@ package com.example.controller.command.impl;
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.Validator;
@@ -43,8 +44,14 @@ public class UpdateCourseCommand implements Command {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
-            return UPDATE_COURSE_PAGE;
+            return new ShowCourseInfoCommand().execute(request, response);
         }
+
+        request.setAttribute("validName", name);
+        request.setAttribute("validTheme", theme);
+        request.setAttribute("validStartDate", startDate);
+        request.setAttribute("validEndDate", endDate);
+
 
         Course course = new Course();
         course.setId(Integer.parseInt(courseId));
@@ -53,15 +60,21 @@ public class UpdateCourseCommand implements Command {
         course.setStartDate(LocalDateTime.parse(startDate));
         course.setEndDate(LocalDateTime.parse(endDate));
 
-        System.out.println("f"+idLecturer+"s");
         if(idLecturer.equals("")) {
             course.setLecturer(chosenToUpdateCourse.getLecturer());
-            System.out.println("HERE");
         } else {
             course.setLecturer(Integer.parseInt(idLecturer));
         }
 
-        courseService.updateCourse(course);
+        try {
+            courseService.updateCourse(course);
+        } catch (CourseServiceException e) {
+            System.out.println("here");
+            request.setAttribute("dataError", e.getMessage());
+            return new ShowCourseInfoCommand().execute(request, response);
+        }
+
+
         return PROFILE_PAGE;
     }
 }

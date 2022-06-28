@@ -97,4 +97,13 @@ public class MySqlJournalService implements JournalService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public void endCourse(String courseId) throws ServiceException{
+        try {
+            journalDAO.endCourse(courseId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

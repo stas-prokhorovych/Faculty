@@ -85,6 +85,7 @@ public class RegistrationCommand implements Command {
         session.setAttribute("name", user.getFirstName());
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
+        session.setAttribute("access", user.isUserAccess());
 
         return PROFILE_PAGE;
     }

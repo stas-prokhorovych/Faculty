@@ -1,13 +1,13 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <html>
 <head>
     <title><fmt:message key="catalogue.title"/></title>
-    <%@include file="/jspf/head.jspf"%>
+    <%@include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <body>
-<%@include file="/jspf/navbar.jspf"%>
+<%@include file="/WEB-INF/jspf/navbar.jspf"%>
 <br>
 <br>
 
@@ -122,12 +122,12 @@
                 <th><fmt:message key="catalogue.course.student.enrolled"/></th>
                 <c:choose>
                     <c:when test="${sessionScope.role == 'Student'}">
-                        <th>Student option</th>
+                        <th><fmt:message key="catalogue.course.student.option"/></th>
                     </c:when>
                 </c:choose>
                 <c:choose>
                     <c:when test="${sessionScope.role == 'Admin'}">
-                        <th>Admin option</th>
+                        <th><fmt:message key="catalogue.course.admin.option"/></th>
                     </c:when>
                 </c:choose>
             </tr>
@@ -160,21 +160,19 @@
                                 <c:if test="${loop.index eq index}">
                                     <c:if test="${alreadySelected eq false}">
                                         <td>
-                                            <form method="post" action="<c:url value='/controller'/>">
-                                                <input type="hidden" name="command" value="ENROLL_ON_COURSE">
+                                            <form method="post" action="controller?command=ENROLL_ON_COURSE">
                                                 <input type="number" hidden name="student-id" value="${sessionScope.id}"/>
                                                 <input type="number" hidden name="course-id" value="${course.id}"/>
-                                                <input class="btn btn-success" type="submit" name="enroll" value="Enroll"/>
+                                                <input class="btn btn-success" type="submit" name="enroll" value="<fmt:message key="catalogue.course.enroll"/>"/>
                                             </form>
                                         </td>
                                     </c:if>
                                     <c:if test="${alreadySelected eq true}">
                                         <td>
-                                            <form method="post" action="<c:url value='/controller'/>">
-                                                <input type="hidden" name="command" value="LEAVE_COURSE">
+                                            <form method="post" action="controller?command=LEAVE_COURSE">
                                                 <input type="number" hidden name="student-id" value="${sessionScope.id}"/>
                                                 <input type="number" hidden name="course-id" value="${course.id}"/>
-                                                <input class="btn btn-danger" type="submit" name="enroll" value="Leave"/>
+                                                <input class="btn btn-danger" type="submit" name="enroll" value="<fmt:message key="catalogue.course.leave"/>"/>
                                             </form>
                                         </td>
                                     </c:if>
@@ -184,15 +182,13 @@
                     </c:choose>
                         <c:if test="${sessionScope.role == 'Admin'}">
                            <td>
-                               <form method="post" action="<c:url value='/controller'/>">
-                                   <input type="hidden" name="command" value="DELETE_COURSE">
+                               <form method="post" action="controller?command=DELETE_COURSE">
                                    <input type="number" hidden name="id" value="${course.id}"/>
-                                   <input type="submit" name="delete" value="Delete"/>
+                                   <input class="btn btn-danger" type="submit" name="delete" value="<fmt:message key="catalogue.course.delete"/>"/>
                                </form>
-                               <form method="get" action="<c:url value='/controller'/>">
-                                   <input type="hidden" name="command" value="SHOW_COURSE_INFO">
+                               <form method="post" action="controller?command=SHOW_COURSE_INFO">
                                    <input type="number" hidden name="id" value="${course.id}"/>
-                                   <input type="submit" value="Update"/>
+                                   <input class="btn btn-warning" type="submit" value="<fmt:message key="catalogue.course.update"/>"/>
                                </form>
                            </td>
                      </c:if>
@@ -247,6 +243,6 @@
     </div>
 </div>
 
-<%@include file="/jspf/bootstrapScripts.jspf"%>
+<%@include file="/WEB-INF/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

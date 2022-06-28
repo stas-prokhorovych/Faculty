@@ -39,7 +39,7 @@ public class CreateCourseCommand implements Command {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
-            return ADD_COURSE_PAGE;
+            return new ShowTeachersCommand().execute(request, response);
         }
 
         request.setAttribute("validName", name);
@@ -60,12 +60,11 @@ public class CreateCourseCommand implements Command {
             course.setLecturer(Integer.parseInt(idLecturer));
             course.setCourseStatus(Course.CourseStatus.OPENED);
         }
-
         try {
             courseService.addCourse(course);
         } catch (CourseServiceException e) {
             request.setAttribute("dataError", e.getMessage());
-            return ADD_COURSE_PAGE;
+            return new ShowTeachersCommand().execute(request, response);
         }
 
         return PROFILE_PAGE;

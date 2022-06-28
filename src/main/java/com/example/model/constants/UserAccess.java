@@ -14,24 +14,53 @@ public class UserAccess {
     private static List<String> adminUrls = new ArrayList<>();
 
     static {
-        // guest jsp pages
+        // guest jsp pages and commands
         guestUrls.add(HOME_PAGE);
         guestUrls.add(LOGIN_PAGE);
-        guestUrls.add(SIGNUP_PAGE);
-        // student jsp pages
-        guestUrls.add(HOME_PAGE);
-        // teacher jsp pages
+        guestUrls.add("/css/styling.css");
+        guestUrls.add("/js/captchaCheck.js");
+        guestUrls.add("command=UNKNOWN");
+        guestUrls.add("command=LOGIN");
+        guestUrls.add("command=REGISTER");
+        guestUrls.add("command=COURSE_CATALOGUE");
+        guestUrls.add("command=GOTO_HOME_PAGE");
+        guestUrls.add("command=GOTO_SIGNUP_PAGE");
+
+
+        // student commands
+        studentUrls.addAll(getGuestUrls());
+        studentUrls.add("command=GOTO_PROFILE_PAGE");
+        studentUrls.add("command=LOGOUT");
+        studentUrls.add("command=ENROLL_ON_COURSE");
+        studentUrls.add("command=LEAVE_COURSE");
+        studentUrls.add("command=YOUR_COURSES");
+
+
+        // teacher commands
+        teacherUrls.addAll(getGuestUrls());
+        teacherUrls.add("command=GOTO_PROFILE_PAGE");
+        teacherUrls.add("command=LOGOUT");
+        teacherUrls.add("command=SHOW_JOURNAL");
+        teacherUrls.add("command=SHOW_GRADUATES");
+        teacherUrls.add("command=END_COURSE");
+        teacherUrls.add("command=START_COURSE");
 
 
         // admin jsp pages
-        adminUrls.add(USER_CATALOGUE_PATH);
-
-
-
-
-        guestUrls.add(LOGIN_PATH);
-        guestUrls.add(REGISTER_PATH);
-        guestUrls.add(HOME_PAGE);
+        adminUrls.addAll(getGuestUrls());
+        adminUrls.add("command=LOGOUT");
+        adminUrls.add("command=CREATE_COURSE");
+        adminUrls.add("command=DELETE_COURSE");
+        adminUrls.add("command=UPDATE_COURSE");
+        adminUrls.add("command=USER_CATALOGUE");
+        adminUrls.add("command=ADD_TEACHER");
+        adminUrls.add("command=PDF_REPORT");
+        adminUrls.add("command=BLOCK_USER");
+        adminUrls.add("command=UNBLOCK_USER");
+        adminUrls.add("command=SHOW_TEACHERS");
+        adminUrls.add("command=CREATE_TEACHER");
+        adminUrls.add("command=ASSIGN_TEACHER_TO_COURSE");
+        adminUrls.add("command=SHOW_COURSE_INFO");
     }
 
     public static List<String> getGuestUrls() {

@@ -1,43 +1,41 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/WEB-INF/jspf/header.jspf"%>
 
 <html>
 <head>
-    <title>Journal</title>
-    <%@include file="/jspf/head.jspf"%>
+    <title><fmt:message key="journal.title"/></title>
+    <%@include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <body>
-    <%@include file="/jspf/navbar.jspf"%>
+    <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
-    <h2 class="center">Open for registration courses</h2>
+    <h2 class="center"><fmt:message key="journal.open.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Theme</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Duration in days</th>
-                    <th>Teacher option</th>
+                    <th><fmt:message key="journal.courses.name"/></th>
+                    <th><fmt:message key="journal.courses.theme"/></th>
+                    <th><fmt:message key="journal.courses.start.date"/></th>
+                    <th><fmt:message key="journal.courses.end.date"/></th>
+                    <th><fmt:message key="journal.courses.duration.in.days"/></th>
+                    <th><fmt:message key="journal.teacher.option"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="course" items="${openForRegCourses}">
                     <tr>
-                        <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
                         <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
                         <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
                         <td>
-                            <form method="post" action="<c:url value='/controller'/>">
+                            <form method="post" action="controller?command=START_COURSE">
                                 <input type="hidden" name="command" value="START_COURSE">
                                 <input type="number" hidden name="teacher-id" value="${sessionScope.id}"/>
                                 <input type="number" hidden name="course-id" value="${course.id}"/>
-                                <input type="submit" name="enroll" value="Start course"/>
+                                <input type="submit" name="enroll" value="<fmt:message key="journal.start.course"/>"/>
                             </form>
                         </td>
                     </tr>
@@ -47,36 +45,34 @@
         </div>
     </div>
 
-    <h2 class="center">Courses in progress that you teach</h2>
+    <h2 class="center"><fmt:message key="journal.in.progress.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Theme</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Duration in days</th>
-                    <th>Teacher option</th>
+                    <th><fmt:message key="journal.courses.name"/></th>
+                    <th><fmt:message key="journal.courses.theme"/></th>
+                    <th><fmt:message key="journal.courses.start.date"/></th>
+                    <th><fmt:message key="journal.courses.end.date"/></th>
+                    <th><fmt:message key="journal.courses.duration.in.days"/></th>
+                    <th><fmt:message key="journal.teacher.option"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="course" items="${inProgressCourses}">
                     <tr>
-                        <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
                         <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
                         <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
                         <td>
-                            <form method="post" action="<c:url value='/controller'/>">
+                            <form method="post" action="controller?command=SHOW_GRADUATES">
                                 <input type="hidden" name="command" value="SHOW_GRADUATES">
                                 <input type="number" hidden name="teacher-id" value="${sessionScope.id}"/>
                                 <input type="number" hidden name="course-id" value="${course.id}"/>
-                                <input type="submit" name="enroll" value="End this course"/>
+                                <input type="submit" name="enroll" value="<fmt:message key="journal.end.course"/>"/>
                             </form>
                         </td>
                     </tr>
@@ -86,24 +82,22 @@
         </div>
     </div>
 
-    <h2 class="center">Finished courses that you taught</h2>
+    <h2 class="center"><fmt:message key="journal.finished.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Theme</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Duration in days</th>
+                    <th><fmt:message key="journal.courses.name"/></th>
+                    <th><fmt:message key="journal.courses.theme"/></th>
+                    <th><fmt:message key="journal.courses.start.date"/></th>
+                    <th><fmt:message key="journal.courses.end.date"/></th>
+                    <th><fmt:message key="journal.courses.duration.in.days"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="course" items="${finishedCourses}">
                     <tr>
-                        <td>${course.id}</td>
                         <td>${course.name}</td>
                         <td>${course.theme}</td>
                         <td><mytag:dateFormatTag localDateTime="${course.startDate}"/></td>
@@ -116,6 +110,6 @@
         </div>
     </div>
 
-    <%@include file="/jspf/bootstrapScripts.jspf"%>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

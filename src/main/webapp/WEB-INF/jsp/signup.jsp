@@ -1,12 +1,12 @@
-<%@include file="/jspf/header.jspf" %>
+<%@include file="/WEB-INF/jspf/header.jspf" %>
 
 <html>
 <head>
     <title><fmt:message key="signup.register"/></title>
-    <%@include file="/jspf/head.jspf" %>
+    <%@include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body class="form-page">
-    <%@include file="/jspf/navbar.jspf" %>
+    <%@include file="/WEB-INF/jspf/navbar.jspf" %>
 
     <form id="form" action="controller?command=REGISTER" method="post">
         <section class="vh-100">
@@ -23,16 +23,16 @@
                                 </c:if>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="login"><strong><fmt:message key="signup.login"/></strong></label>
-                                    <input type="text" id="login" name="login" class="form-control form-control-lg" <c:if test="${validLogin != null}"> value="${validLogin}"</c:if>/>
+                                    <label class="form-label" for="login-signup"><strong><fmt:message key="signup.login"/></strong></label>
+                                    <input type="text" id="login-signup" name="login" class="form-control form-control-lg" <c:if test="${validLogin != null}"> value="${validLogin}"</c:if>/>
                                     <c:if test="${loginError != null}">
                                         <div id="loginError" class="error">${loginError}</div>
                                     </c:if>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="password"><strong><fmt:message key="signup.password"/></strong></label>
-                                    <input type="password" id="password" name="password" class="form-control form-control-lg" <c:if test="${validPassword != null}"> value="${validPassword}"</c:if>/>
+                                    <label class="form-label" for="password-signup"><strong><fmt:message key="signup.password"/></strong></label>
+                                    <input type="password" id="password-signup" name="password" class="form-control form-control-lg" <c:if test="${validPassword != null}"> value="${validPassword}"</c:if>/>
                                     <c:if test="${passwordError != null}">
                                         <div id="passwordError" class="error">${passwordError}</div>
                                     </c:if>
@@ -92,8 +92,8 @@
     </form>
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="js/captchaCheck.js"/>
+    <script src="../../js/captchaCheck.js"></script>
 
-    <%@include file="/jspf/bootstrapScripts.jspf" %>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf" %>
 </body>
 </html>

@@ -1,18 +1,17 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/WEB-INF/jspf/header.jspf"%>
 
 <html>
 <head>
-    <title>Graduates</title>
-    <%@include file="/jspf/head.jspf"%>
+    <title><fmt:message key="graduates.title"/></title>
+    <%@include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <body>
-    <%@include file="/jspf/navbar.jspf"%>
+    <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
-    <h2 class="center">Congratulations with end of course.<br> Please enter marks for your students</h2>
+    <h2 class="center"><fmt:message key="graduates.congradulations"/><br><fmt:message key="graduates.hint"/></h2>
 
     <div class="row justify-content-center">
-        <form method="get" action="<c:url value='/controller'/>">
-            <input type="hidden" name="command" value="END_COURSE">
+        <form method="POST" action="controller?command=END_COURSE">
             <input type="number" hidden name="courseId" value="${courseId}"/>
 
 
@@ -20,11 +19,11 @@
                 <table class="table table-bordered table-sm">
                     <thead class="thead-light">
                     <tr>
-                        <th>Login</th>
-                        <th>Email</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>MARK</th>
+                        <th><fmt:message key="graduates.login"/></th>
+                        <th><fmt:message key="graduates.email"/></th>
+                        <th><fmt:message key="graduates.first.name"/></th>
+                        <th><fmt:message key="graduates.last.name"/></th>
+                        <th><fmt:message key="graduates.mark"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,6 +47,6 @@
         </form>
     </div>
 
-    <%@include file="/jspf/bootstrapScripts.jspf"%>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

@@ -1,12 +1,12 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/WEB-INF/jspf/header.jspf"%>
 
 <html class="main-page">
 <head>
     <title><fmt:message key="index.title"/></title>
-    <%@include file="/jspf/head.jspf"%>
+    <%@include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <body class="main-page">
-    <%@include file="/jspf/navbar.jspf"%>
+    <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="col-m d-5 p-lg-5 mx-auto my-5">
@@ -25,6 +25,6 @@
         <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
     </div>
 
-    <%@include file="/jspf/bootstrapScripts.jspf"%>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

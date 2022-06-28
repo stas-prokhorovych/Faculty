@@ -47,10 +47,12 @@ public class MySqlCourseService implements CourseService {
         try {
             courseWithThisName = courseDAO.findCourseByName(course.getName());
         } catch (DAOException e) {
+
             throw new ServiceException(e);
         }
 
         if (courseWithThisName != null) {
+            System.out.println("here");
             throw new CourseServiceException("course with such name already exist");
         }
         if (course.getStartDate().isAfter(course.getEndDate())) {
@@ -76,6 +78,16 @@ public class MySqlCourseService implements CourseService {
     @Override
     public void updateCourse(Course course) throws ServiceException {
         try {
+            Course courseWithThisName;
+            courseWithThisName = courseDAO.findCourseByName(course.getName());
+
+            if (courseWithThisName != null) {
+                throw new CourseServiceException("course with such name already exist");
+            }
+
+            if (course.getStartDate().isAfter(course.getEndDate())) {
+                throw new CourseServiceException("start date must be before end date");
+            }
             courseDAO.updateCourse(course);
         } catch (DAOException e) {
             throw new ServiceException(e);

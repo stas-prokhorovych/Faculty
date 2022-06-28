@@ -11,4 +11,6 @@ public interface JournalDAO {
     List<Journal> findJournalInfo(List<Course> finishedCourses, Integer studentId) throws DAOException;
 
     void endCourse(String courseId, String[] studentIds, int[] studentMarks, String[] markCode, String[] markExplanation) throws DAOException;
+
+    void endCourse(String courseId) throws DAOException;
 }

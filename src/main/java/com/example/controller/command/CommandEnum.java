@@ -1,7 +1,14 @@
 package com.example.controller.command;
 
 import com.example.controller.command.impl.*;
+import com.example.controller.command.impl.page.GoToHomePageCommand;
+import com.example.controller.command.impl.page.GoToLoginPageCommand;
+import com.example.controller.command.impl.page.GoToProfileCommand;
+import com.example.controller.command.impl.page.GoToRegisterCommand;
 
+/**
+ * Contains and gives all commands in system.
+ */
 public enum CommandEnum {
     UNKNOWN(new UnknownCommand()),
     LOGOUT(new LogoutCommand()),
@@ -26,7 +33,11 @@ public enum CommandEnum {
     START_COURSE(new StartCourseCommand()),
     CREATE_TEACHER(new CreateTeacherCommand()),
     ASSIGN_TEACHER_TO_COURSE(new AssignTeacherToCourseCommand()),
-    SHOW_COURSE_INFO(new ShowCourseInfoCommand());
+    SHOW_COURSE_INFO(new ShowCourseInfoCommand()),
+    GOTO_HOME_PAGE(new GoToHomePageCommand()),
+    GOTO_LOGIN_PAGE(new GoToLoginPageCommand()),
+    GOTO_SIGNUP_PAGE(new GoToRegisterCommand()),
+    GOTO_PROFILE_PAGE(new GoToProfileCommand());
 
     private Command command;
 

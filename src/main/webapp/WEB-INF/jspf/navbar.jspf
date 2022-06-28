@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a class="navbar-brand" href="index.jsp"><fmt:message key="navbar.courses"/></a>
+    <a class="navbar-brand" href="controller?command=GOTO_HOME_PAGE"><fmt:message key="navbar.courses"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,12 +11,12 @@
             <c:choose>
                 <c:when test="${sessionScope.login != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="profile.jsp"><fmt:message key="navbar.profile"/></a>
+                        <a class="nav-link" href="controller?command=GOTO_PROFILE_PAGE"><fmt:message key="navbar.profile"/></a>
                     </li>
                 </c:when>
             </c:choose>
             <li class="nav-item">
-                <a class="nav-link" href="index.jsp"><fmt:message key="navbar.home"/></a>
+                <a class="nav-link" href="controller?command=GOTO_HOME_PAGE"><fmt:message key="navbar.home"/></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="controller?command=COURSE_CATALOGUE"><fmt:message key="navbar.catalogue"/></a>
@@ -56,10 +56,10 @@
             <c:choose>
                 <c:when test="${sessionScope.login == null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.jsp"><fmt:message key="navbar.login"/></a>
+                        <a class="nav-link" href="controller?command=GOTO_LOGIN_PAGE"><fmt:message key="navbar.login"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="signup.jsp"><fmt:message key="navbar.signup"/></a>
+                        <a class="nav-link" href="controller?command=GOTO_SIGNUP_PAGE"><fmt:message key="navbar.signup"/></a>
                     </li>
                 </c:when>
                 <c:otherwise>

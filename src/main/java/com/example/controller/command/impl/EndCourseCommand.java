@@ -22,9 +22,14 @@ public class EndCourseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String courseId = request.getParameter("courseId");
+
         String[] studentIds = request.getParameterValues("student-id");
         String[] studentMarks = request.getParameterValues("mark");
 
+        if(studentIds == null || studentMarks == null || studentIds.length == 0 || studentMarks.length == 0) {
+            journalService.endCourse(courseId);
+            return new ShowJournalCommand().execute(request, response);
+        }
 
         journalService.endCourse(courseId, studentIds, studentMarks);
 

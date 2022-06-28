@@ -1,12 +1,12 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/WEB-INF/jspf/header.jspf"%>
 
 <html>
 <head>
-    <title>Update course</title>
-    <%@include file="/jspf/head.jspf"%>
+    <title><fmt:message key="update.course.title"/></title>
+    <%@include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <body class="form-page">
-    <%@include file="/jspf/navbar.jspf"%>
+    <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
     <form id="form" action="controller?command=UPDATE_COURSE" method="post">
         <section class="vh-100">
@@ -16,14 +16,14 @@
                         <div class="card shadow-2-strong" style="border-radius: 1rem;">
                             <div class="card-body p-5 text-center">
 
-                                <h3 class="mb-4">Update course</h3>
+                                <h3 class="mb-4"><fmt:message key="update.course.title"/></h3>
                                 <c:if test="${dataError != null}">
                                     <div id="commonError" class="data-error">${dataError}</div>
                                     <br>
                                 </c:if>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="name"><strong>Name</strong>(current: ${course.name})</label>
+                                    <label class="form-label" for="name"><strong><fmt:message key="update.course.name"/></strong>(<fmt:message key="update.course.current"/> ${course.name})</label>
                                     <input type="text" id="name" name="name" class="form-control form-control-lg"
                                         <c:choose>
                                             <c:when test="${validLogin != null}">
@@ -40,7 +40,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="theme"><strong>Theme*</strong>(current: ${course.theme})</label>
+                                    <label class="form-label" for="theme"><strong><fmt:message key="update.course.theme"/></strong>(<fmt:message key="update.course.current"/>  ${course.theme})</label>
                                     <input type="text" id="theme" name="theme" class="form-control form-control-lg"
                                             <c:choose>
                                                 <c:when test="${validTheme != null}">
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="start-date"><strong>Start date*</strong>(current: ${course.startDate})</label>
+                                    <label class="form-label" for="start-date"><strong><fmt:message key="update.course.start.date"/></strong>(<fmt:message key="update.course.current"/>  <mytag:dateFormatTag localDateTime="${course.startDate}"/>)</label>
                                     <input type="datetime-local" id="start-date" name="start-date" class="form-control form-control-lg"
                                             <c:choose>
                                                 <c:when test="${validStartDate != null}">
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="end-date"><strong>End date*</strong>(current: ${course.endDate})</label>
+                                    <label class="form-label" for="end-date"><strong><fmt:message key="update.course.end.date"/></strong>(<fmt:message key="update.course.current"/>  <mytag:dateFormatTag localDateTime="${course.endDate}"/>)</label>
                                     <input type="datetime-local" id="end-date" name="end-date" class="form-control form-control-lg"
                                             <c:choose>
                                                 <c:when test="${validEndDate != null}">
@@ -91,9 +91,9 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label for="id-lecturer"><strong>Teacher</strong></label>
+                                    <label for="id-lecturer"><strong><fmt:message key="update.course.teacher"/></strong></label>
                                     <select name="id-lecturer" id="id-lecturer" class="form-control form-control-lg">
-                                        <option value="">Select teacher if you want</option>
+                                        <option value=""><fmt:message key="update.course.hint"/></option>
                                         <c:forEach items="${teachers}" var="teacher">
                                             <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
                                         </c:forEach>
@@ -101,7 +101,7 @@
                                 </div>
 
                                 <input type="number" hidden name="id" value="${course.id}"/>
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Add</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit"><fmt:message key="update.course.add"/> </button>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,6 @@
         </section>
     </form>
 
-    <%@include file="/jspf/bootstrapScripts.jspf"%>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

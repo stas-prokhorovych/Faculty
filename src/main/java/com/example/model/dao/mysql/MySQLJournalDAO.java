@@ -48,9 +48,13 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public void endCourse(String courseId) throws DAOException {
+            changeCourseInfo(courseId);
     }
 
     @Override

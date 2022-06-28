@@ -10,4 +10,6 @@ public interface JournalService {
     void endCourse(String courseId, String[] studentIds, String[] studentMarks) throws ServiceException;
 
     List<Journal> findJournalInfo(List<Course> finishedCourses, Integer studentId) throws ServiceException;
+
+    void endCourse(String courseId) throws ServiceException;
 }

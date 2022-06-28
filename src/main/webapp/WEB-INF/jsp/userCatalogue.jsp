@@ -1,19 +1,18 @@
-<%@include file="/jspf/header.jspf"%>
+<%@include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <html>
 <head>
-    <title>User Catalogue</title>
-    <%@include file="/jspf/head.jspf"%>
+    <title><fmt:message key="user.catalogue.title"/></title>
+    <%@include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <body>
-    <%@include file="/jspf/navbar.jspf"%>
+    <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
     <div class="center">
-        <h2 class="center">Students</h2>
-        <form method="get" action="controller">
-            <input type="hidden" name="command" value="PDF_REPORT">
-            <input class="image" type="image" src="images/pdf.png" alt="Alt text"/>
+        <h2 class="center"><fmt:message key="user.catalogue.students"/></h2>
+        <form method="post" action="controller?command=PDF_REPORT">
+            <input class="btn btn-info" type="submit" name="delete" value="pdf"/>
         </form>
     </div>
 
@@ -22,11 +21,11 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>Login</th>
-                    <th>Email</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Admin option</th>
+                    <th><fmt:message key="user.catalogue.login"/></th>
+                    <th><fmt:message key="user.catalogue.email"/></th>
+                    <th><fmt:message key="user.catalogue.first.name"/></th>
+                    <th><fmt:message key="user.catalogue.last.name"/></th>
+                    <th><fmt:message key="user.catalogue.admin.option"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,8 +40,7 @@
                         <c:choose>
                             <c:when test="${student.userAccess == true}">
                                 <td>
-                                    <form method="post" action="<c:url value='/controller'/>">
-                                        <input type="hidden" name="command" value="BLOCK_USER">
+                                    <form method="post" action="controller?command=BLOCK_USER">
                                         <input type="number" hidden name="id" value="${student.id}"/>
                                         <input class="btn btn-danger" type="submit" name="block" value="Block"/>
                                     </form>
@@ -50,8 +48,7 @@
                             </c:when>
                             <c:otherwise>
                                 <td>
-                                    <form method="post" action="<c:url value='/controller'/>">
-                                        <input type="hidden" name="command" value="UNBLOCK_USER">
+                                    <form method="post" action="controller?command=UNBLOCK_USER">
                                         <input type="number" hidden name="id" value="${student.id}"/>
                                         <input class="btn btn-success" type="submit" name="block" value="Unblock"/>
                                     </form>
@@ -67,10 +64,9 @@
     </div>
 
     <div class="center">
-        <h2 class="center">Teachers</h2>
-        <form method="get" action="controller">
-            <input type="hidden" name="command" value="PDF_REPORT">
-            <input class="image" type="image" src="images/pdf.png" alt="Alt text"/>
+        <h2 class="center"><fmt:message key="user.catalogue.teachers"/></h2>
+        <form method="post" action="controller?command=PDF_REPORT">
+            <input class="btn btn-info" type="submit" name="delete" value="pdf"/>
         </form>
     </div>
 
@@ -79,10 +75,10 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>Login</th>
-                    <th>Email</th>
-                    <th>First name</th>
-                    <th>Last name</th>
+                    <th><fmt:message key="user.catalogue.login"/></th>
+                    <th><fmt:message key="user.catalogue.email"/></th>
+                    <th><fmt:message key="user.catalogue.first.name"/></th>
+                    <th><fmt:message key="user.catalogue.last.name"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,6 +100,6 @@
     <br>
     <br>
 
-    <%@include file="/jspf/bootstrapScripts.jspf"%>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf"%>
 </body>
 </html>

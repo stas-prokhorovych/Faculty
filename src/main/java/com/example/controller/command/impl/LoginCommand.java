@@ -1,6 +1,8 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
+import com.example.controller.command.impl.page.GoToLoginPageCommand;
+import com.example.controller.command.impl.page.GoToProfileCommand;
 import com.example.model.entity.User;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.exception.UserServiceException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.ref.ReferenceQueue;
 import java.util.Map;
 
 import static com.example.model.constants.Pages.LOGIN_PAGE;
@@ -58,6 +61,8 @@ public class LoginCommand implements Command {
         session.setAttribute("name", user.getFirstName());
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
+        session.setAttribute("access", user.isUserAccess());
+
         return PROFILE_PAGE;
     }
 }

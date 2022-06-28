@@ -1,14 +1,14 @@
-<%@include file="/jspf/header.jspf" %>
+<%@include file="/WEB-INF/jspf/header.jspf" %>
 
 <html>
 <head>
     <title><fmt:message key="login.login"/></title>
-    <%@include file="/jspf/head.jspf" %>
+    <%@include file="/WEB-INF/jspf/head.jspf" %>
 <%--    <script defer src="js/validation.js"></script>--%>
 </head>
 
 <body class="form-page">
-<%@include file="/jspf/navbar.jspf" %>
+<%@include file="/WEB-INF/jspf/navbar.jspf" %>
 <form id="form" action="controller?command=LOGIN" method="post">
     <section class="vh-100">
         <div class="container py-5 h-100">
@@ -49,6 +49,6 @@
     </section>
 </form>
 
-<%@include file="/jspf/bootstrapScripts.jspf" %>
+<%@include file="/WEB-INF/jspf/bootstrapScripts.jspf" %>
 </body>
 </html>

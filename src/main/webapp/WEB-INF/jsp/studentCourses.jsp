@@ -1,24 +1,24 @@
-<%@include file="/jspf/header.jspf" %>
+<%@include file="/WEB-INF/jspf/header.jspf" %>
 
 <html>
 <head>
-    <title>Your courses</title>
-    <%@include file="/jspf/head.jspf" %>
+    <title><fmt:message key="student.courses.title"/></title>
+    <%@include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body>
-    <%@include file="/jspf/navbar.jspf" %>
+    <%@include file="/WEB-INF/jspf/navbar.jspf" %>
 
-    <h2 class="center">Registered courses</h2>
+    <h2 class="center"><fmt:message key="student.courses.registered.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>Name</th>
-                    <th>Theme</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Duration in days</th>
+                    <th><fmt:message key="student.courses.name"/></th>
+                    <th><fmt:message key="student.courses.theme"/></th>
+                    <th><fmt:message key="student.courses.start.date"/></th>
+                    <th><fmt:message key="student.courses.end.date"/></th>
+                    <th><fmt:message key="student.courses.duration.in.days"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,17 +36,17 @@
         </div>
     </div>
 
-    <h2 class="center">Courses in progress</h2>
+    <h2 class="center"><fmt:message key="student.courses.in.progress.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>Name</th>
-                    <th>Theme</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Duration in days</th>
+                    <th><fmt:message key="student.courses.name"/></th>
+                    <th><fmt:message key="student.courses.theme"/></th>
+                    <th><fmt:message key="student.courses.start.date"/></th>
+                    <th><fmt:message key="student.courses.end.date"/></th>
+                    <th><fmt:message key="student.courses.duration.in.days"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,20 +64,20 @@
         </div>
     </div>
 
-    <h2 class="center">Finished courses</h2>
+    <h2 class="center"><fmt:message key="student.courses.finished.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th>Name</th>
-                    <th>Theme</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Duration in days</th>
-                    <th>Mark points</th>
-                    <th>Mark code</th>
-                    <th>Mark explanation</th>
+                    <th><fmt:message key="student.courses.name"/></th>
+                    <th><fmt:message key="student.courses.theme"/></th>
+                    <th><fmt:message key="student.courses.start.date"/></th>
+                    <th><fmt:message key="student.courses.end.date"/></th>
+                    <th><fmt:message key="student.courses.duration.in.days"/></th>
+                    <th><fmt:message key="student.courses.mark.points"/></th>
+                    <th><fmt:message key="student.courses.mark.code"/></th>
+                    <th><fmt:message key="student.courses.mark.explanation"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,7 +104,6 @@
         </div>
     </div>
 
-
-    <%@include file="/jspf/bootstrapScripts.jspf" %>
+    <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf" %>
 </body>
 </html>
