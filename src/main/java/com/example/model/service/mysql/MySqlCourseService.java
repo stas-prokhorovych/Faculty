@@ -7,7 +7,7 @@ import com.example.model.entity.Course;
 import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.CourseService;
 import com.example.model.service.exception.ServiceException;
-import com.example.model.utils.pagination.CourseCatalogueInfo;
+import com.example.model.utils.CourseCatalogueInfo;
 
 import java.util.List;
 
@@ -76,12 +76,12 @@ public class MySqlCourseService implements CourseService {
     }
 
     @Override
-    public void updateCourse(Course course) throws ServiceException {
+    public void updateCourse(Course course, String previousName) throws ServiceException {
         try {
             Course courseWithThisName;
             courseWithThisName = courseDAO.findCourseByName(course.getName());
 
-            if (courseWithThisName != null) {
+            if (!course.getName().equals(previousName) &&  courseWithThisName != null) {
                 throw new CourseServiceException("course with such name already exist");
             }
 

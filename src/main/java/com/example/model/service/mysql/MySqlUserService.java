@@ -54,7 +54,7 @@ public class MySqlUserService implements UserService {
         if (user == null) {
             throw new UserServiceException("no user with specified login");
         }
-        if (!Validator.isPasswordCorrect(password, user.getPassword())) {
+        if (!Validator.isPasswordsMatch(password, user.getPassword())) {
             throw new UserServiceException("password is not correct");
         }
 

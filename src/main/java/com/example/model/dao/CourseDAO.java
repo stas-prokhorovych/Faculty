@@ -2,7 +2,7 @@ package com.example.model.dao;
 
 import com.example.model.dao.exception.DAOException;
 import com.example.model.entity.Course;
-import com.example.model.utils.pagination.CourseCatalogueInfo;
+import com.example.model.utils.CourseCatalogueInfo;
 
 import java.util.List;
 

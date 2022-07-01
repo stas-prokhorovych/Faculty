@@ -68,7 +68,7 @@
                         <td><mytag:dateFormatTag localDateTime="${course.endDate}"/></td>
                         <td>${course.durationInDays}</td>
                         <td>
-                            <form method="post" action="controller?command=SHOW_GRADUATES">
+                            <form method="POST" action="controller?command=SHOW_GRADUATES">
                                 <input type="hidden" name="command" value="SHOW_GRADUATES">
                                 <input type="number" hidden name="teacher-id" value="${sessionScope.id}"/>
                                 <input type="number" hidden name="course-id" value="${course.id}"/>

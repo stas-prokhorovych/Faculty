@@ -7,8 +7,8 @@ import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
 import com.example.model.entity.Course;
 import com.example.model.entity.User;
-import com.example.model.utils.pagination.CourseCatalogueInfo;
-import com.example.model.utils.pagination.PaginationQueue;
+import com.example.model.utils.CourseCatalogueInfo;
+import com.example.model.utils.PaginationQueue;
 
 import java.sql.*;
 import java.time.LocalDateTime;

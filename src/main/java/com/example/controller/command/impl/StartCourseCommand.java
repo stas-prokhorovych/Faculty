@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
+
 public class StartCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;
@@ -25,6 +27,6 @@ public class StartCourseCommand implements Command {
 
         courseService.startCourse(courseId);
 
-        return new ShowJournalCommand().execute(request, response);
+        return "redirect:" + SHOW_JOURNAL_PAGE;
     }
 }

@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.controller.command.Command;
 import com.example.controller.command.CommandFactory;
+import com.example.model.constants.Prg;
 import com.example.model.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 import static com.example.model.constants.Pages.ERROR_PAGE;
 
@@ -22,7 +24,7 @@ public class FrontController extends HttpServlet {
     /**
      * Services a GET-requests.
      *
-     * @param request a request object
+     * @param request  a request object
      * @param response a response object
      * @throws ServletException
      * @throws IOException
@@ -35,7 +37,7 @@ public class FrontController extends HttpServlet {
     /**
      * Services a POST-requests.
      *
-     * @param request a request object
+     * @param request  a request object
      * @param response a response object
      * @throws ServletException
      * @throws IOException
@@ -47,7 +49,8 @@ public class FrontController extends HttpServlet {
 
     /**
      * Services requests.
-     * @param request a request object
+     *
+     * @param request  a request object
      * @param response a response object
      * @throws ServletException
      * @throws IOException
@@ -57,9 +60,16 @@ public class FrontController extends HttpServlet {
         String page = null;
         try {
             page = command.execute(request, response);
+            if(page.contains("redirect:")) {
+                Map<String, String> redirectPath = Prg.getRedirectPath();
+                response.sendRedirect(redirectPath.get(page));
+                return;
+            }
         } catch (ServiceException e) {
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         }
+
         request.getRequestDispatcher(page).forward(request, response);
     }
 }
+

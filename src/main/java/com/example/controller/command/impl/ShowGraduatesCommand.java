@@ -28,7 +28,6 @@ public class ShowGraduatesCommand implements Command {
         Integer courseId = Integer.valueOf(request.getParameter("course-id"));
         List<User> graduates = userService.findAllGraduates(courseId);
 
-
         request.setAttribute("graduates", graduates);
         request.setAttribute("courseId", courseId);
 

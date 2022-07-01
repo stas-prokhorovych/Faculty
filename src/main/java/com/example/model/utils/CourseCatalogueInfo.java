@@ -1,4 +1,4 @@
-package com.example.model.utils.pagination;
+package com.example.model.utils;
 
 import com.example.model.entity.Course;
 import com.example.model.entity.User;

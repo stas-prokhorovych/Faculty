@@ -7,7 +7,7 @@ import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
-import com.example.model.utils.pagination.CourseCatalogueInfo;
+import com.example.model.utils.CourseCatalogueInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

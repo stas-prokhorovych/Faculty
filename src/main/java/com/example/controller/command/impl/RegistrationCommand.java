@@ -6,6 +6,7 @@ import com.example.model.service.exception.ServiceException;
 import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
+import com.example.model.utils.FormValidator;
 import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
@@ -36,7 +37,7 @@ public class RegistrationCommand implements Command {
         String lastName = request.getParameter("last-name");
         String phone = request.getParameter("phone");
 
-        Map<String, String> inputErrors = Validator.checkSignupForm(login, password, passwordRepeat, email, firstName, lastName, phone);
+        Map<String, String> inputErrors = FormValidator.checkSignupForm(login, password, passwordRepeat, email, firstName, lastName, phone);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
@@ -87,6 +88,6 @@ public class RegistrationCommand implements Command {
         session.setAttribute("phone", user.getPhoneNumber());
         session.setAttribute("access", user.isUserAccess());
 
-        return PROFILE_PAGE;
+        return "redirect:" + PROFILE_PAGE;
     }
 }

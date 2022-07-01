@@ -92,7 +92,7 @@
     </form>
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="../../js/captchaCheck.js"></script>
+    <script type="text/javascript" src='<c:url value="/js/captchaCheck.js"/>'></script>
 
     <%@include file="/WEB-INF/jspf/bootstrapScripts.jspf" %>
 </body>

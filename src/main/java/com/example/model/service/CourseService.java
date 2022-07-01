@@ -2,9 +2,8 @@ package com.example.model.service;
 
 import com.example.model.entity.Course;
 import com.example.model.service.exception.ServiceException;
-import com.example.model.utils.pagination.CourseCatalogueInfo;
+import com.example.model.utils.CourseCatalogueInfo;
 
-import java.rmi.ServerException;
 import java.util.List;
 
 public interface CourseService {
@@ -14,7 +13,7 @@ public interface CourseService {
 
     List<String> findThemes() throws ServiceException;
 
-    void updateCourse(Course course) throws ServiceException;
+    void updateCourse(Course course, String previousName) throws ServiceException;
 
     List<Course> getNoTeacherCourses() throws ServiceException;
 

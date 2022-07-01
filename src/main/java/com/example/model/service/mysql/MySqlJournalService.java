@@ -7,9 +7,8 @@ import com.example.model.entity.Course;
 import com.example.model.entity.Journal;
 import com.example.model.service.JournalService;
 import com.example.model.service.exception.ServiceException;
-import com.example.model.utils.Mark;
+import com.example.model.constants.Mark;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 

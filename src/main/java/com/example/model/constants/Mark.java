@@ -1,4 +1,4 @@
-package com.example.model.utils;
+package com.example.model.constants;
 
 public enum Mark {
     A("A", "Excellent"),
@@ -9,8 +9,8 @@ public enum Mark {
     FX("FX", "Fail"),
     F("F", "Fail");
 
-    private String code;
-    private String explanation;
+    private final String code;
+    private final String explanation;
 
     Mark(String code, String explanation) {
         this.code = code;
@@ -21,15 +21,12 @@ public enum Mark {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getExplanation() {
         return explanation;
     }
 
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
+    @Override
+    public String toString() {
+        return code;
     }
 }

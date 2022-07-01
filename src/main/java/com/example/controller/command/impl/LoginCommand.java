@@ -1,21 +1,18 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.controller.command.impl.page.GoToLoginPageCommand;
-import com.example.controller.command.impl.page.GoToProfileCommand;
 import com.example.model.entity.User;
+import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.exception.UserServiceException;
-import com.example.model.service.UserService;
 import com.example.model.service.factory.ServiceFactory;
-import com.example.model.utils.Validator;
+import com.example.model.utils.FormValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.ref.ReferenceQueue;
 import java.util.Map;
 
 import static com.example.model.constants.Pages.LOGIN_PAGE;
@@ -35,7 +32,7 @@ public class LoginCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        Map<String, String> inputErrors = Validator.checkLoginForm(login, password);
+        Map<String, String> inputErrors = FormValidator.checkLoginForm(login, password);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
@@ -62,7 +59,6 @@ public class LoginCommand implements Command {
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
         session.setAttribute("access", user.isUserAccess());
-
-        return PROFILE_PAGE;
+        return "redirect:" + PROFILE_PAGE;
     }
 }

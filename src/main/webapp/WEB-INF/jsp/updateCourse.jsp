@@ -101,6 +101,7 @@
                                 </div>
 
                                 <input type="number" hidden name="id" value="${course.id}"/>
+                                <input type="text" hidden name="prevCourseName" value="${course.name}"/>
                                 <button class="btn btn-primary btn-lg btn-block" type="submit"><fmt:message key="update.course.add"/> </button>
                             </div>
                         </div>

@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.model.constants.Pages.*;
-import static com.example.model.constants.Paths.*;
 
 public class UserAccess {
+    private UserAccess() {
+    }
 
-    private static List<String> guestUrls = new ArrayList<>();
-    private static List<String> studentUrls = new ArrayList<>();
-    private static List<String> teacherUrls = new ArrayList<>();
-    private static List<String> adminUrls = new ArrayList<>();
+    private static final List<String> guestUrls = new ArrayList<>();
+    private static final List<String> studentUrls = new ArrayList<>();
+    private static final List<String> teacherUrls = new ArrayList<>();
+    private static final List<String> adminUrls = new ArrayList<>();
 
     static {
         // guest jsp pages and commands
         guestUrls.add(HOME_PAGE);
-        guestUrls.add(LOGIN_PAGE);
         guestUrls.add("/css/styling.css");
         guestUrls.add("/js/captchaCheck.js");
         guestUrls.add("command=UNKNOWN");
@@ -25,7 +25,7 @@ public class UserAccess {
         guestUrls.add("command=COURSE_CATALOGUE");
         guestUrls.add("command=GOTO_HOME_PAGE");
         guestUrls.add("command=GOTO_SIGNUP_PAGE");
-
+        guestUrls.add("command=GOTO_LOGIN_PAGE");
 
         // student commands
         studentUrls.addAll(getGuestUrls());
@@ -48,6 +48,7 @@ public class UserAccess {
 
         // admin jsp pages
         adminUrls.addAll(getGuestUrls());
+        adminUrls.add("command=GOTO_PROFILE_PAGE");
         adminUrls.add("command=LOGOUT");
         adminUrls.add("command=CREATE_COURSE");
         adminUrls.add("command=DELETE_COURSE");

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
+
 public class LeaveCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;
@@ -26,6 +28,6 @@ public class LeaveCourseCommand implements Command {
 
         userService.leaveCourse(studentId, courseId);
 
-        return new CourseCatalogueCommand().execute(request, response);
+        return "redirect:" + COURSE_CATALOGUE_PAGE;
     }
 }

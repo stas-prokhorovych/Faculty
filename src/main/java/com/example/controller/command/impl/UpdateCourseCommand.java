@@ -6,6 +6,7 @@ import com.example.model.service.CourseService;
 import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
+import com.example.model.utils.FormValidator;
 import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
@@ -34,12 +35,12 @@ public class UpdateCourseCommand implements Command {
         final String startDate = request.getParameter("start-date");
         final String endDate = request.getParameter("end-date");
         final String idLecturer = request.getParameter("id-lecturer");
-
+        final String previousName = request.getParameter("prevCourseName");
 
         Course chosenToUpdateCourse = courseService.findCourseById(courseId);
         request.setAttribute("course", chosenToUpdateCourse);
 
-        Map<String, String> inputErrors = Validator.checkAddCourseForm(name, theme, startDate, endDate);
+        Map<String, String> inputErrors = FormValidator.checkAddCourseForm(name, theme, startDate, endDate);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
@@ -67,9 +68,8 @@ public class UpdateCourseCommand implements Command {
         }
 
         try {
-            courseService.updateCourse(course);
+            courseService.updateCourse(course,previousName);
         } catch (CourseServiceException e) {
-            System.out.println("here");
             request.setAttribute("dataError", e.getMessage());
             return new ShowCourseInfoCommand().execute(request, response);
         }

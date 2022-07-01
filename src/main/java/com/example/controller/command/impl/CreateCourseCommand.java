@@ -6,6 +6,7 @@ import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.CourseService;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
+import com.example.model.utils.FormValidator;
 import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,7 @@ public class CreateCourseCommand implements Command {
         String endDate = request.getParameter("end-date");
         String idLecturer = request.getParameter("id-lecturer");
 
-        Map<String, String> inputErrors = Validator.checkAddCourseForm(name, theme, startDate, endDate);
+        Map<String, String> inputErrors = FormValidator.checkAddCourseForm(name, theme, startDate, endDate);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
