@@ -1,5 +1,4 @@
 <%@include file="/WEB-INF/jspf/header.jspf"%>
-
 <html>
 <head>
     <title><fmt:message key="graduates.title"/></title>
@@ -12,7 +11,7 @@
 
     <div class="row justify-content-center">
         <form method="POST" action="controller?command=END_COURSE">
-            <input type="number" hidden name="courseId" value="${courseId}"/>
+            <input type="number" hidden name="courseId" value="${prgGraduateCourseId}"/>
 
 
             <div class="row col-md-6">
@@ -27,7 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="student" items="${graduates}">
+                    <c:forEach var="student" items="${prgGraduates}">
                         <tr>
                             <td>${student.login}</td>
                             <td>${student.email}</td>
@@ -43,7 +42,7 @@
                 </table>
             </div>
 
-            <input type="submit" name="enroll" value="Finish"/>
+            <input type="submit" name="enroll" value="<fmt:message key="add.teacher.finish"/>"/>
         </form>
     </div>
 

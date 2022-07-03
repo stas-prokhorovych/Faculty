@@ -25,6 +25,12 @@
     padding: 1em;
 }
 
+.data-success {
+    color: #88b731;
+    border: 3px solid #88b731;
+    padding: 1em;
+}
+
 .profile-background {
     background-color: #9b9b78;
 }

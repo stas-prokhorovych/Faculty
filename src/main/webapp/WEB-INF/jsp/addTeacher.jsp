@@ -20,7 +20,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label for="users"><fmt:message key="add.teacher.users"/></label>
-                                            <select name="students" id="users">
+                                            <select name="students" id="users" required>
                                                 <c:forEach items="${students}" var="student">
                                                     <option value="${student.id}">${student.firstName} ${student.lastName}</option>
                                                 </c:forEach>
@@ -29,7 +29,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label for="choose-course"><fmt:message key="add.teacher.courses"/></label>
-                                        <select name="courses" id="choose-course">
+                                        <select name="courses" id="choose-course" required>
                                             <c:forEach items="${courses}" var="course">
                                                 <option value="${course.id}">${course.name}</option>
                                             </c:forEach>
@@ -62,7 +62,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label for="teachers"><fmt:message key="add.teacher.teachers"/></label>
-                                    <select name="teachers" id="teachers">
+                                    <select name="teachers" id="teachers" required>
                                         <c:forEach items="${teachers}" var="teacher">
                                             <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
                                         </c:forEach>
@@ -74,7 +74,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label for="courses"><fmt:message key="add.teacher.courses"/></label>
-                                    <select name="courses" id="courses">
+                                    <select name="courses" id="courses" required>
                                         <c:forEach items="${courses}" var="course">
                                             <option value="${course.id}">${course.name}</option>
                                         </c:forEach>

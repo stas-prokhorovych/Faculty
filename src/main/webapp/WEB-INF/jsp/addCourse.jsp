@@ -17,6 +17,11 @@
                             <div class="card-body p-5 text-center">
 
                                 <h3 class="mb-4"><fmt:message key="add.course.create"/></h3>
+                                <c:if test="${successCourseCreation != null}">
+                                    <div id="successCourseCreation" class="data-success">${successCourseCreation}</div>
+                                    <br>
+                                </c:if>
+
                                 <c:if test="${dataError != null}">
                                     <div id="commonError" class="data-error">${dataError}</div>
                                     <br>

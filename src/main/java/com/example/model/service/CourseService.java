@@ -15,18 +15,6 @@ public interface CourseService {
 
     void updateCourse(Course course, String previousName) throws ServiceException;
 
-    List<Course> getNoTeacherCourses() throws ServiceException;
-
-    List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws ServiceException;
-
-    List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws ServiceException;
-
-    List<Course> findInProgressCoursesByStudentId(Integer studentId) throws ServiceException;
-
-    List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws ServiceException;
-
-    List<Course> findFinishedCoursesByStudentId(Integer studentId) throws ServiceException;
-
     Course findCourseById(String id) throws ServiceException;
 
     CourseCatalogueInfo findCoursesByPage(int offset, int recordsPerPage, String type, String theme, Integer teacherId, String sort, String order) throws ServiceException;
@@ -35,9 +23,13 @@ public interface CourseService {
 
     List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws ServiceException;
 
-    List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws ServiceException;
-
-    void startCourse(Integer courseId) throws ServiceException;
-
     void assignCourse(String courseId, String studentId) throws ServiceException;
+
+    List<Course> findCoursesByTeacherAndStatus(Integer teacherId, String status) throws ServiceException;
+
+    List<Course> findStudentCoursesByStatus(Integer studentId, String status) throws ServiceException;
+
+    void startCourse(String status, Integer courseId) throws ServiceException;
+
+    List<Course> findCoursesNoTeacherAssigned(String status) throws ServiceException;
 }

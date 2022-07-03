@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class EnrollOnCourse implements Command {
     private static final ServiceFactory serviceFactory;
@@ -29,6 +30,6 @@ public class EnrollOnCourse implements Command {
 
         userService.enrollStudentOnCourse(studentId, courseId);
 
-        return "redirect:" + COURSE_CATALOGUE_PAGE;
+        return REDIRECT + COURSE_CATALOGUE_PAGE;
     }
 }

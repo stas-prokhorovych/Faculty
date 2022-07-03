@@ -23,14 +23,14 @@
                                 </c:if>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="name"><strong><fmt:message key="update.course.name"/></strong>(<fmt:message key="update.course.current"/> ${course.name})</label>
+                                    <label class="form-label" for="name"><strong><fmt:message key="update.course.name"/></strong>(<fmt:message key="update.course.current"/> ${updateCourse.name})</label>
                                     <input type="text" id="name" name="name" class="form-control form-control-lg"
                                         <c:choose>
                                             <c:when test="${validLogin != null}">
                                                 value="${validLogin}"
                                             </c:when>
                                             <c:otherwise>
-                                                value="${course.name}"
+                                                value="${updateCourse.name}"
                                             </c:otherwise>
                                         </c:choose>
                                     />
@@ -40,14 +40,14 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="theme"><strong><fmt:message key="update.course.theme"/></strong>(<fmt:message key="update.course.current"/>  ${course.theme})</label>
+                                    <label class="form-label" for="theme"><strong><fmt:message key="update.course.theme"/></strong>(<fmt:message key="update.course.current"/>  ${updateCourse.theme})</label>
                                     <input type="text" id="theme" name="theme" class="form-control form-control-lg"
                                             <c:choose>
                                                 <c:when test="${validTheme != null}">
                                                     value="${validTheme}"
                                                 </c:when>
                                                 <c:otherwise>
-                                                    value="${course.theme}"
+                                                    value="${updateCourse.theme}"
                                                 </c:otherwise>
                                             </c:choose>
                                     />
@@ -57,14 +57,14 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="start-date"><strong><fmt:message key="update.course.start.date"/></strong>(<fmt:message key="update.course.current"/>  <mytag:dateFormatTag localDateTime="${course.startDate}"/>)</label>
+                                    <label class="form-label" for="start-date"><strong><fmt:message key="update.course.start.date"/></strong>(<fmt:message key="update.course.current"/>  <mytag:dateFormatTag localDateTime="${updateCourse.startDate}"/>)</label>
                                     <input type="datetime-local" id="start-date" name="start-date" class="form-control form-control-lg"
                                             <c:choose>
                                                 <c:when test="${validStartDate != null}">
                                                     value="${validStartDate}"
                                                 </c:when>
                                                 <c:otherwise>
-                                                    value="${course.startDate}"
+                                                    value="${updateCourse.startDate}"
                                                 </c:otherwise>
                                             </c:choose>
                                     />
@@ -74,14 +74,14 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="end-date"><strong><fmt:message key="update.course.end.date"/></strong>(<fmt:message key="update.course.current"/>  <mytag:dateFormatTag localDateTime="${course.endDate}"/>)</label>
+                                    <label class="form-label" for="end-date"><strong><fmt:message key="update.course.end.date"/></strong>(<fmt:message key="update.course.current"/>  <mytag:dateFormatTag localDateTime="${updateCourse.endDate}"/>)</label>
                                     <input type="datetime-local" id="end-date" name="end-date" class="form-control form-control-lg"
                                             <c:choose>
                                                 <c:when test="${validEndDate != null}">
                                                     value="${validEndDate}"
                                                 </c:when>
                                                 <c:otherwise>
-                                                    value="${course.endDate}"
+                                                    value="${updateCourse.endDate}"
                                                 </c:otherwise>
                                             </c:choose>
                                     />
@@ -94,14 +94,14 @@
                                     <label for="id-lecturer"><strong><fmt:message key="update.course.teacher"/></strong></label>
                                     <select name="id-lecturer" id="id-lecturer" class="form-control form-control-lg">
                                         <option value=""><fmt:message key="update.course.hint"/></option>
-                                        <c:forEach items="${teachers}" var="teacher">
+                                        <c:forEach items="${updateTeachers}" var="teacher">
                                             <option value="${teacher.id}">${teacher.firstName} ${teacher.lastName}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
 
-                                <input type="number" hidden name="id" value="${course.id}"/>
-                                <input type="text" hidden name="prevCourseName" value="${course.name}"/>
+                                <input type="number" hidden name="id" value="${updateCourse.id}"/>
+                                <input type="text" hidden name="prevCourseName" value="${updateCourse.name}"/>
                                 <button class="btn btn-primary btn-lg btn-block" type="submit"><fmt:message key="update.course.add"/> </button>
                             </div>
                         </div>

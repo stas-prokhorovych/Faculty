@@ -11,23 +11,17 @@ public interface UserDAO {
 
     void addUser(User user) throws DAOException;
 
-    List<User> findTeachers() throws DAOException;
-
-    List<User> findStudents() throws DAOException;
-
     void enrollStudentOnCourse(Integer studentId, Integer courseId) throws DAOException;
-
-    void blockUser(String studentId) throws DAOException;
 
     List<User> findAllGraduates(Integer courseId) throws DAOException;
 
-    void unblockUser(String studentId) throws DAOException;
-
     void leaveCourse(Integer studentId, Integer courseId) throws DAOException;
-
-    List<User> getNewStudents() throws DAOException;
 
     void createTeacher(String studentId) throws DAOException;
 
-    User findUserById(String studentId) throws DAOException;
+    List<User> getNewStudents(String userTypeStudent) throws DAOException;
+
+    List<User> findByRole(String role) throws DAOException;
+
+    void updateUserAccess(boolean access, String studentId) throws DAOException;
 }

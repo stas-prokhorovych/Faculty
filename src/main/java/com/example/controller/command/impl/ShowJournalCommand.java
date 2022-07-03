@@ -17,22 +17,20 @@ import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
 
 public class ShowJournalCommand implements Command {
     private static final ServiceFactory serviceFactory;
-    private static final JournalService journalService;
     private static final CourseService courseService;
 
     static {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
-        journalService = serviceFactory.getJournalService();
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer teacherId = (Integer) request.getSession(false).getAttribute("id");
 
-        List<Course> openForRegCourses = courseService.finAllOpenForRegCoursesByTeacherId(teacherId);
-        List<Course> inProgressCourses = courseService.findAllInProgressCoursesByTeacherId(teacherId);
-        List<Course> finishedCourses =  courseService.findAllFinishedCoursesByTeacherId(teacherId);
+        List<Course> openForRegCourses = courseService.findCoursesByTeacherAndStatus(teacherId, "Opened for registration");
+        List<Course> inProgressCourses = courseService.findCoursesByTeacherAndStatus(teacherId, "In progress");
+        List<Course> finishedCourses =  courseService.findCoursesByTeacherAndStatus(teacherId, "Finished");
 
         request.setAttribute("openForRegCourses", openForRegCourses);
         request.setAttribute("inProgressCourses", inProgressCourses);

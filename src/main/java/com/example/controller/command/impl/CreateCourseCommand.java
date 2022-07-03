@@ -10,13 +10,16 @@ import com.example.model.utils.FormValidator;
 import com.example.model.utils.Validator;
 
 import javax.servlet.ServletException;
+import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
 import static com.example.model.constants.Pages.*;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class CreateCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -29,6 +32,18 @@ public class CreateCourseCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+        HttpSession session = request.getSession(true);
+
+        if(session.getAttribute("successHintShow") != null && session.getAttribute("successHintShow").equals("1")) {
+            session.removeAttribute("successHintShow");
+            session.removeAttribute("successCourseCreation");
+        }
+
+        if(session.getAttribute("successCourseCreation") != null) {
+            session.setAttribute("successHintShow", "1");
+            return ADD_COURSE_PAGE;
+        }
+
         String name = request.getParameter("name");
         String theme = request.getParameter("theme");
         String startDate = request.getParameter("start-date");
@@ -36,8 +51,8 @@ public class CreateCourseCommand implements Command {
         String idLecturer = request.getParameter("id-lecturer");
 
         Map<String, String> inputErrors = FormValidator.checkAddCourseForm(name, theme, startDate, endDate);
-        if(!inputErrors.isEmpty()) {
-            for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
+        if (!inputErrors.isEmpty()) {
+            for (Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
             return new ShowTeachersCommand().execute(request, response);
@@ -48,19 +63,25 @@ public class CreateCourseCommand implements Command {
         request.setAttribute("validStartDate", startDate);
         request.setAttribute("validEndDate", endDate);
 
-        Course course = new Course();
-        course.setName(name);
-        course.setTheme(theme);
-        course.setStartDate(LocalDateTime.parse(startDate));
-        course.setEndDate(LocalDateTime.parse(endDate));
-
-        if(idLecturer == null || idLecturer.equals("")) {
-            course.setLecturer(0);
-            course.setCourseStatus(Course.CourseStatus.CLOSED);
+        int lecturer;
+        Course.CourseStatus status;
+        if (idLecturer == null || idLecturer.equals("")) {
+            lecturer = 0;
+            status = Course.CourseStatus.CLOSED;
         } else {
-            course.setLecturer(Integer.parseInt(idLecturer));
-            course.setCourseStatus(Course.CourseStatus.OPENED);
+            lecturer = Integer.parseInt(idLecturer);
+            status = Course.CourseStatus.OPENED;
         }
+
+        Course course = new Course.Builder()
+                .setName(name)
+                .setTheme(theme)
+                .setStartDate(LocalDateTime.parse(startDate))
+                .setEndDate(LocalDateTime.parse(endDate))
+                .setLecturer(lecturer)
+                .setCourseStatus(status)
+                .build();
+
         try {
             courseService.addCourse(course);
         } catch (CourseServiceException e) {
@@ -68,6 +89,8 @@ public class CreateCourseCommand implements Command {
             return new ShowTeachersCommand().execute(request, response);
         }
 
-        return PROFILE_PAGE;
+        session.setAttribute("successCourseCreation", "Course was creates");
+        session.setAttribute("successHintShow", "0");
+        return REDIRECT + ADD_COURSE_PAGE;
     }
 }

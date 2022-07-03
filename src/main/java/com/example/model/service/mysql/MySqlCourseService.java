@@ -52,7 +52,6 @@ public class MySqlCourseService implements CourseService {
         }
 
         if (courseWithThisName != null) {
-            System.out.println("here");
             throw new CourseServiceException("course with such name already exist");
         }
         if (course.getStartDate().isAfter(course.getEndDate())) {
@@ -95,64 +94,9 @@ public class MySqlCourseService implements CourseService {
     }
 
     @Override
-    public List<Course> getNoTeacherCourses() throws ServiceException {
+    public List<Course> findCoursesNoTeacherAssigned(String status) throws ServiceException {
         try {
-            return courseDAO.getNoTeacherCourses();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-
-    @Override
-    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws ServiceException {
-        try {
-            return courseDAO.findAllFinishedCoursesByTeacherId(teacherId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws ServiceException {
-        try {
-            return courseDAO.findRegisteredCoursesByStudentId(studentId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Course> findInProgressCoursesByStudentId(Integer studentId) throws ServiceException {
-        try {
-            return courseDAO.findInProgressCoursesByStudentId(studentId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws ServiceException {
-        try {
-            return courseDAO.findAllInProgressCoursesByTeacherId(teacherId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws ServiceException {
-        try {
-            return courseDAO.finAllOpenForRegCoursesByTeacherId(teacherId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void startCourse(Integer courseId) throws ServiceException {
-        try {
-            courseDAO.startCourse(courseId);
+            return courseDAO.findCoursesNoTeacherAssigned(status);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -168,9 +112,27 @@ public class MySqlCourseService implements CourseService {
     }
 
     @Override
-    public List<Course> findFinishedCoursesByStudentId(Integer studentId) throws ServiceException {
+    public List<Course> findCoursesByTeacherAndStatus(Integer teacherId, String status) throws ServiceException {
         try {
-            return courseDAO.findFinishedCoursesByStudentId(studentId);
+            return courseDAO.findCoursesByTeacherAndStatus(teacherId, status);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Course> findStudentCoursesByStatus(Integer studentId, String status) throws ServiceException {
+        try {
+            return courseDAO.findStudentCoursesByStatus(studentId, status);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void startCourse(String status, Integer courseId) throws ServiceException {
+        try {
+            courseDAO.startCourse(status, courseId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

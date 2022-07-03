@@ -16,18 +16,6 @@ public interface CourseDAO {
 
     List<String> findThemes() throws DAOException;
 
-    List<Course> getNoTeacherCourses() throws DAOException;
-
-    List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws DAOException;
-
-    List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws DAOException;
-
-    List<Course> findInProgressCoursesByStudentId(Integer studentId) throws DAOException;
-
-    List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws DAOException;
-
-    List<Course> findFinishedCoursesByStudentId(Integer studentId) throws DAOException;
-
     Course findCourseById(String id) throws DAOException;
 
     Course findCourseByName(String name) throws DAOException;
@@ -38,9 +26,13 @@ public interface CourseDAO {
 
     List<Boolean> courseAlreadySelected(List<Course> courses, Integer studentId) throws DAOException;
 
-    List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws DAOException;
-
-    void startCourse(Integer courseId) throws DAOException;
-
     void assignCourse(String courseId, String studentId) throws DAOException;
+
+    List<Course> findCoursesByTeacherAndStatus(Integer teacherId, String status) throws DAOException;
+
+    List<Course> findStudentCoursesByStatus(Integer studentId, String status) throws DAOException;
+
+    void startCourse(String status, Integer courseId) throws DAOException;
+
+    List<Course> findCoursesNoTeacherAssigned(String status) throws DAOException;
 }

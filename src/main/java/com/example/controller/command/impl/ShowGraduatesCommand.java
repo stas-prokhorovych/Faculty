@@ -9,10 +9,12 @@ import com.example.model.service.factory.ServiceFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 import static com.example.model.constants.Pages.GRADUATES_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class ShowGraduatesCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -25,12 +27,20 @@ public class ShowGraduatesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        Integer courseId = Integer.valueOf(request.getParameter("course-id"));
+        Integer courseId;
+        HttpSession session = request.getSession(true);
+
+        if(request.getParameter("course-id") != null) {
+            courseId = Integer.valueOf(request.getParameter("course-id"));
+        } else {
+            courseId = (Integer) session.getAttribute("prgGraduateCourseId");
+        }
+
         List<User> graduates = userService.findAllGraduates(courseId);
 
-        request.setAttribute("graduates", graduates);
-        request.setAttribute("courseId", courseId);
+        session.setAttribute("prgGraduates", graduates);
+        session.setAttribute("prgGraduateCourseId", courseId);
 
-        return GRADUATES_PAGE;
+        return REDIRECT + GRADUATES_PAGE;
     }
 }

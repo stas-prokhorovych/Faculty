@@ -99,4 +99,61 @@ public class User {
             return name;
         }
     }
+
+    public static class Builder {
+        private User user;
+
+        public Builder() {
+            user = new User();
+        }
+
+        public Builder setId(int id) {
+            user.setId(id);
+            return this;
+        }
+
+        public Builder setLogin(String login) {
+            user.setLogin(login);
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            user.setPassword(password);
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            user.setEmail(email);
+            return this;
+        }
+
+        public Builder setRole(Role role) {
+            user.setRole(role);
+            return this;
+        }
+
+        public Builder setFirstName(String firstName) {
+            user.setFirstName(firstName);
+            return this;
+        }
+
+        public Builder setLastName(String lastName) {
+            user.setLastName(lastName);
+            return this;
+        }
+
+        public Builder setPhoneNumber(String phoneNumber) {
+            user.setPhoneNumber(phoneNumber);
+            return this;
+        }
+
+        public Builder setUserAccess(boolean userAccess) {
+            user.setUserAccess(userAccess);
+            return this;
+        }
+
+        public User build() {
+            return user;
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.model.dao.mysql;
 
 import com.example.model.dao.CourseDAO;
-import com.example.model.dao.GenericDAO;
 import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
@@ -18,7 +17,7 @@ import java.util.List;
 
 import static com.example.model.constants.Query.*;
 
-public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
+public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO {
     private static MySQLCourseDAO instance;
     private static DaoFactory daoFactory;
 
@@ -99,19 +98,8 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
     }
 
     @Override
-    public List<Course> getNoTeacherCourses() throws DAOException {
-        List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery(FIND_NO_TEACHER_COURSES)) {
-            while (rs.next()) {
-                Course course = mapToEntity(rs);
-                courses.add(course);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return courses;
+    public List<Course> findCoursesNoTeacherAssigned(String status) throws DAOException {
+        return findEntitiesByField(FIND_NO_TEACHER_COURSES, status);
     }
 
     @Override
@@ -185,7 +173,7 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
                 statement.setString(i++, theme);
             }
             if (teacherId != null) {
-                statement.setInt(i++, teacherId);
+                statement.setInt(i, teacherId);
             }
 
             try (ResultSet rs = statement.executeQuery()) {
@@ -201,12 +189,13 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
     }
 
     @Override
-    public void startCourse(Integer courseId) throws DAOException {
+    public void startCourse(String status, Integer courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(START_COURSE)
         ) {
             statement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            statement.setInt(2, courseId);
+            statement.setString(2, status);
+            statement.setInt(3, courseId);
             statement.execute();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -258,66 +247,49 @@ public class MySQLCourseDAO extends GenericDAO<Course> implements CourseDAO {
     @Override
     public Course findCourseByName(String name) throws DAOException {
         return findEntityByField(FIND_COURSE_BY_NAME, name);
-
     }
 
     @Override
-    public List<Course> finAllOpenForRegCoursesByTeacherId(Integer teacherId) throws DAOException {
-        return findEntitiesByField(FIND_ALL_OPEN_COURSES_BY_TEACHER_ID, teacherId);
+    public List<Course> findCoursesByTeacherAndStatus(Integer teacherId, String status) throws DAOException {
+        return findEntitiesByField(FIND_COURSES_BY_TEACHER_AND_STATUS, teacherId, status);
     }
 
     @Override
-    public List<Course> findAllInProgressCoursesByTeacherId(Integer teacherId) throws DAOException {
-        return findEntitiesByField(FIND_ALL_IN_PROGRESS_COURSES_BY_TEACHER_ID, teacherId);
+    public List<Course> findStudentCoursesByStatus(Integer studentId, String status) throws DAOException {
+        return findEntitiesByField(SELECT_STUDENT_COURSES_BY_STATUS, status, studentId);
     }
 
     @Override
-    public List<Course> findFinishedCoursesByStudentId(Integer studentId) throws DAOException {
-        return findEntitiesByField(SELECT_STUDENT_FINISHED_COURSES, studentId);
-    }
-
-    @Override
-    public List<Course> findAllFinishedCoursesByTeacherId(int teacherId) throws DAOException {
-        return findEntitiesByField(FIND_ALL_FINISHED_COURSES_BY_TEACHER_ID, teacherId);
-    }
-
-    @Override
-    public List<Course> findRegisteredCoursesByStudentId(Integer studentId) throws DAOException {
-        return findEntitiesByField(SELECT_STUDENT_REGISTERED_COURSES, studentId);
-
-    }
-
-    @Override
-    public List<Course> findInProgressCoursesByStudentId(Integer studentId) throws DAOException {
-        return findEntitiesByField(SELECT_STUDENT_IN_PROGRESS_COURSES, studentId);
-    }
-
-    @Override
-    protected Course mapToEntity(ResultSet rs) throws DAOException {
+    public Course mapToEntity(ResultSet rs) throws DAOException {
         Course course;
         try {
-            course = new Course();
-            course.setId(rs.getInt("id"));
-            course.setName(rs.getString("name"));
-            course.setTheme(rs.getString("theme"));
-            course.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
-            course.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
-            course.setLecturer(rs.getInt("id_lecturer"));
-            String courseStatus = rs.getString("course_status");
-            switch (courseStatus) {
+            String givenStatus = rs.getString("course_status");
+            Course.CourseStatus status;
+            switch (givenStatus) {
                 case "Opened for registration":
-                    course.setCourseStatus(Course.CourseStatus.OPENED);
+                    status = Course.CourseStatus.OPENED;
                     break;
                 case "In progress":
-                    course.setCourseStatus(Course.CourseStatus.IN_PROGRESS);
+                    status = Course.CourseStatus.IN_PROGRESS;
                     break;
                 case "Finished":
-                    course.setCourseStatus(Course.CourseStatus.FINISHED);
+                    status = Course.CourseStatus.FINISHED;
                     break;
                 default:
-                    course.setCourseStatus(Course.CourseStatus.CLOSED);
+                    status = Course.CourseStatus.CLOSED;
                     break;
             }
+
+            course = new Course.Builder()
+                    .setId(rs.getInt("id"))
+                    .setName(rs.getString("name"))
+                    .setTheme(rs.getString("theme"))
+                    .setStartDate(rs.getTimestamp("start_date").toLocalDateTime())
+                    .setEndDate(rs.getTimestamp("end_date").toLocalDateTime())
+                    .setLecturer(rs.getInt("id_lecturer"))
+                    .setCourseStatus(status)
+                    .build();
+
         } catch (SQLException e) {
             throw new DAOException(e);
         }

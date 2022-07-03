@@ -44,7 +44,7 @@ public class UserAccess {
         teacherUrls.add("command=SHOW_GRADUATES");
         teacherUrls.add("command=END_COURSE");
         teacherUrls.add("command=START_COURSE");
-
+        teacherUrls.add("command=GOTO_GRADUATES_PAGE");
 
         // admin jsp pages
         adminUrls.addAll(getGuestUrls());
@@ -62,7 +62,11 @@ public class UserAccess {
         adminUrls.add("command=CREATE_TEACHER");
         adminUrls.add("command=ASSIGN_TEACHER_TO_COURSE");
         adminUrls.add("command=SHOW_COURSE_INFO");
+        adminUrls.add("command=GOTO_UPDATE_COURSE_PAGE");
     }
+
+
+
 
     public static List<String> getGuestUrls() {
         return guestUrls;

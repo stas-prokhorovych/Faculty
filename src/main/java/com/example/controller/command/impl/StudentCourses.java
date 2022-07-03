@@ -30,10 +30,10 @@ public class StudentCourses implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer studentId = (Integer) request.getSession(false).getAttribute("id");
-        List<Course> registeredCourses = courseService.findRegisteredCoursesByStudentId(studentId);
-        List<Course> inProgressCourses = courseService.findInProgressCoursesByStudentId(studentId);
 
-        List<Course> finishedCourses = courseService.findFinishedCoursesByStudentId(studentId);
+        List<Course> registeredCourses = courseService.findStudentCoursesByStatus(studentId, "Opened for registration");
+        List<Course> inProgressCourses = courseService.findStudentCoursesByStatus(studentId, "In progress");
+        List<Course> finishedCourses = courseService.findStudentCoursesByStatus(studentId, "Finished");
         List<Journal> journalInfo = journalService.findJournalInfo(finishedCourses, studentId);
 
         request.setAttribute("registeredCourses", registeredCourses);

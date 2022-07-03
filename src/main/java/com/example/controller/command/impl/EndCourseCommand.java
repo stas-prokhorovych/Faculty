@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
+
 public class EndCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final JournalService journalService;
@@ -33,6 +36,6 @@ public class EndCourseCommand implements Command {
 
         journalService.endCourse(courseId, studentIds, studentMarks);
 
-        return new ShowJournalCommand().execute(request, response);
+        return REDIRECT + SHOW_JOURNAL_PAGE;
     }
 }

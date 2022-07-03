@@ -71,24 +71,6 @@ public class MySqlUserService implements UserService {
     }
 
     @Override
-    public List<User> getAllStudents() throws ServiceException {
-        try {
-            return userDAO.findStudents();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<User> getAllTeachers() throws ServiceException {
-        try {
-            return userDAO.findTeachers();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public void enrollStudentOnCourse(Integer studentId, Integer courseId) throws ServiceException {
         try {
             userDAO.enrollStudentOnCourse(studentId, courseId);
@@ -98,27 +80,9 @@ public class MySqlUserService implements UserService {
     }
 
     @Override
-    public void blockUser(String studentId) throws ServiceException {
-        try {
-            userDAO.blockUser(studentId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<User> findAllGraduates(Integer courseId) throws ServiceException {
         try {
             return userDAO.findAllGraduates(courseId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void unblockUser(String studentId) throws ServiceException {
-        try {
-            userDAO.unblockUser(studentId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -147,15 +111,6 @@ public class MySqlUserService implements UserService {
     }
 
     @Override
-    public List<User> getNewStudents() throws ServiceException {
-        try {
-            return userDAO.getNewStudents();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public void createTeacher(String studentId) throws ServiceException {
         try {
             userDAO.createTeacher(studentId);
@@ -165,9 +120,27 @@ public class MySqlUserService implements UserService {
     }
 
     @Override
-    public User findUserById(String studentId) throws ServiceException {
+    public List<User> getNewStudents(String userTypeStudent) throws ServiceException {
         try {
-            return userDAO.findUserById(studentId);
+            return userDAO.getNewStudents(userTypeStudent);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> findByRole(String role) throws ServiceException {
+        try {
+            return userDAO.findByRole(role);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void updateUserAccess(boolean access, String studentId) throws ServiceException {
+        try {
+            userDAO.updateUserAccess(access, studentId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -25,8 +25,8 @@ public class UserCatalogueCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        List<User> students = userService.getAllStudents();
-        List<User> teachers = userService.getAllTeachers();
+        List<User> students = userService.findByRole("Student");
+        List<User> teachers = userService.findByRole("Teacher");
 
         request.setAttribute("students", students);
         request.setAttribute("teachers", teachers);

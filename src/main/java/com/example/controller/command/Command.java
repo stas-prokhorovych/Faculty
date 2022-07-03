@@ -15,6 +15,8 @@ public interface Command {
     /**
      * Execution method for command.
      *
+     * @param request client request
+     * @param response server response
      * @return Address to go once the command is executed.
      */
     String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException;

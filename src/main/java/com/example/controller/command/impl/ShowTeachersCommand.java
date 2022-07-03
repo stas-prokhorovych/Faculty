@@ -25,7 +25,7 @@ public class ShowTeachersCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        List<User> teacherForForm = userService.getAllTeachers();
+        List<User> teacherForForm = userService.findByRole("Teacher");
         request.setAttribute("teacherForForm", teacherForForm);
 
         return ADD_COURSE_PAGE;

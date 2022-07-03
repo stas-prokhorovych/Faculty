@@ -1,9 +1,9 @@
 package com.example.model.dao.mysql;
 
-import com.example.model.dao.GenericDAO;
 import com.example.model.dao.JournalDAO;
 import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
+import com.example.model.dao.transaction.ConnectionWrapper;
 import com.example.model.db.DataSource;
 import com.example.model.entity.Course;
 import com.example.model.entity.Journal;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static com.example.model.constants.Query.*;
 
-public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
+public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements JournalDAO {
     private static MySQLJournalDAO instance;
     private static DaoFactory daoFactory;
 
@@ -32,29 +32,41 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
 
     @Override
     public void endCourse(String courseId, String[] studentIds, int[] studentMarks, String[] markCode, String[] markExplanation) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement statement = con.prepareStatement(WRITE_MARKS_TO_JOURNAL, Statement.RETURN_GENERATED_KEYS)) {
-            con.setAutoCommit(false);
-            for (int i = 0; i < studentIds.length; i++) {
-                int idStudentOnCourse = findIdOfStudentOnCourse(courseId, studentIds[i]);
+        Connection con = null;
+        ConnectionWrapper connectionWrapper = null;
+        try {
+            con = DataSource.getConnection();
+            connectionWrapper = new ConnectionWrapper(con);
 
-                statement.setInt(1, idStudentOnCourse);
-                statement.setInt(2, studentMarks[i]);
-                statement.setString(3, markCode[i]);
-                statement.setString(4, markExplanation[i]);
-                statement.executeUpdate();
+            try (PreparedStatement statement = con.prepareStatement(WRITE_MARKS_TO_JOURNAL, Statement.RETURN_GENERATED_KEYS)) {
+                connectionWrapper.beginTransaction();
+                for (int i = 0; i < studentIds.length; i++) {
+                    int idStudentOnCourse = findIdOfStudentOnCourse(courseId, studentIds[i]);
+                    statement.setInt(1, idStudentOnCourse);
+                    statement.setInt(2, studentMarks[i]);
+                    statement.setString(3, markCode[i]);
+                    statement.setString(4, markExplanation[i]);
+                    statement.executeUpdate();
+                }
+                changeCourseInfo(courseId);
+                connectionWrapper.commitTransaction();
             }
-            changeCourseInfo(courseId);
-            con.commit();
-            con.setAutoCommit(true);
+
         } catch (SQLException e) {
+            if (connectionWrapper != null) {
+                connectionWrapper.rollbackTransaction();
+            }
             throw new DAOException(e);
+        } finally {
+            if (connectionWrapper != null) {
+                connectionWrapper.close();
+            }
         }
     }
 
     @Override
     public void endCourse(String courseId) throws DAOException {
-            changeCourseInfo(courseId);
+        changeCourseInfo(courseId);
     }
 
     @Override
@@ -111,7 +123,7 @@ public class MySQLJournalDAO extends GenericDAO<Journal> implements JournalDAO {
     }
 
     @Override
-    protected Journal mapToEntity(ResultSet rs) throws DAOException {
+    public Journal mapToEntity(ResultSet rs) throws DAOException {
         Journal journal;
         try {
             journal = new Journal();

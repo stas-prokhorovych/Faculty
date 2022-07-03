@@ -42,7 +42,7 @@
                                 <td>
                                     <form method="post" action="controller?command=BLOCK_USER">
                                         <input type="number" hidden name="id" value="${student.id}"/>
-                                        <input class="btn btn-danger" type="submit" name="block" value="Block"/>
+                                        <input class="btn btn-danger" type="submit" name="block" value="<fmt:message key="user.catalogue.block"/>"/>
                                     </form>
                                 </td>
                             </c:when>
@@ -50,12 +50,11 @@
                                 <td>
                                     <form method="post" action="controller?command=UNBLOCK_USER">
                                         <input type="number" hidden name="id" value="${student.id}"/>
-                                        <input class="btn btn-success" type="submit" name="block" value="Unblock"/>
+                                        <input class="btn btn-success" type="submit" name="block" value="<fmt:message key="user.catalogue.unblock"/>"/>
                                     </form>
                                 </td>
                             </c:otherwise>
                         </c:choose>
-
                     </tr>
                 </c:forEach>
                 </tbody>

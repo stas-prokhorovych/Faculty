@@ -2,6 +2,7 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
+import com.example.model.entity.User;
 import com.example.model.service.CourseService;
 import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import static com.example.model.constants.Pages.*;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class UpdateCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -53,19 +55,22 @@ public class UpdateCourseCommand implements Command {
         request.setAttribute("validStartDate", startDate);
         request.setAttribute("validEndDate", endDate);
 
-
-        Course course = new Course();
-        course.setId(Integer.parseInt(courseId));
-        course.setName(name);
-        course.setTheme(theme);
-        course.setStartDate(LocalDateTime.parse(startDate));
-        course.setEndDate(LocalDateTime.parse(endDate));
-
+        int lecturer;
         if(idLecturer.equals("")) {
-            course.setLecturer(chosenToUpdateCourse.getLecturer());
+            lecturer = chosenToUpdateCourse.getLecturer();
         } else {
-            course.setLecturer(Integer.parseInt(idLecturer));
+            lecturer = Integer.parseInt(idLecturer);
         }
+
+        Course course = new Course.Builder()
+                .setId(Integer.parseInt(courseId))
+                .setName(name)
+                .setTheme(theme)
+                .setStartDate(LocalDateTime.parse(startDate))
+                .setEndDate(LocalDateTime.parse(endDate))
+                .setLecturer(lecturer)
+                .setCourseStatus(chosenToUpdateCourse.getCourseStatus())
+                .build();
 
         try {
             courseService.updateCourse(course,previousName);
@@ -74,7 +79,6 @@ public class UpdateCourseCommand implements Command {
             return new ShowCourseInfoCommand().execute(request, response);
         }
 
-
-        return PROFILE_PAGE;
+        return REDIRECT + PROFILE_PAGE;
     }
 }

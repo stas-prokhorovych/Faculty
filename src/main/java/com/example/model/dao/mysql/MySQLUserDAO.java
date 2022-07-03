@@ -1,6 +1,5 @@
 package com.example.model.dao.mysql;
 
-import com.example.model.dao.GenericDAO;
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
@@ -8,12 +7,11 @@ import com.example.model.db.DataSource;
 import com.example.model.entity.User;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.model.constants.Query.*;
 
-public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
+public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
     private static MySQLUserDAO instance;
     private static DaoFactory daoFactory;
 
@@ -30,11 +28,6 @@ public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
 
     public User findUserByLogin(String login) throws DAOException {
         return findEntityByField(SELECT_USER_BY_LOGIN, login);
-    }
-
-    @Override
-    public User findUserById(String studentId) throws DAOException {
-        return findEntityByField(SELECT_USER_BY_ID, studentId);
     }
 
     public void addUser(User user) throws DAOException {
@@ -54,48 +47,14 @@ public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
         }
     }
 
-    public List<User> findTeachers() throws DAOException {
-        List<User> teachers = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery(FIND_TEACHERS)) {
-            while (rs.next()) {
-                teachers.add(mapToEntity(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return teachers;
+    @Override
+    public List<User> getNewStudents(String userTypeStudent) throws DAOException {
+        return findEntitiesByField(FIND_NEW_USER, userTypeStudent);
     }
 
     @Override
-    public List<User> findStudents() throws DAOException {
-        List<User> students = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery(FIND_STUDENTS)) {
-            while (rs.next()) {
-                students.add(mapToEntity(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return students;
-    }
-
-    @Override
-    public List<User> getNewStudents() throws DAOException {
-        List<User> students = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery(FIND_NEW_USER)) {
-            while (rs.next()) {
-                students.add(mapToEntity(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return students;
+    public List<User> findByRole(String role) throws DAOException {
+        return findEntitiesByField(FIND_BY_ROLE, role);
     }
 
     @Override
@@ -135,21 +94,11 @@ public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
     }
 
     @Override
-    public void blockUser(String studentId) throws DAOException {
+    public void updateUserAccess(boolean access, String studentId) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(BLOCK_USER)) {
-            pst.setString(1, studentId);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public void unblockUser(String studentId) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(UNBLOCK_USER)) {
-            pst.setString(1, studentId);
+             PreparedStatement pst = con.prepareStatement(UPDATE_USER_ACCESS)) {
+            pst.setBoolean(1, access);
+            pst.setString(2, studentId);
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -162,30 +111,34 @@ public class MySQLUserDAO extends GenericDAO<User> implements UserDAO {
     }
 
     @Override
-    protected User mapToEntity(ResultSet rs) throws DAOException {
+    public User mapToEntity(ResultSet rs) throws DAOException {
         User user;
         try {
-            user = new User();
-            user.setId(rs.getInt("id"));
-            user.setLogin(rs.getString("login"));
-            user.setPassword(rs.getString("password"));
-            user.setEmail(rs.getString("email"));
-            String role = rs.getString("role");
-            switch (role) {
+            String givenRole = rs.getString("role");
+            User.Role role;
+            switch (givenRole) {
                 case "Admin":
-                    user.setRole(User.Role.ADMIN);
+                    role = User.Role.ADMIN;
                     break;
                 case "Teacher":
-                    user.setRole(User.Role.TEACHER);
+                    role = User.Role.TEACHER;
                     break;
                 default:
-                    user.setRole(User.Role.STUDENT);
+                    role = User.Role.STUDENT;
                     break;
             }
-            user.setFirstName(rs.getString("first_name"));
-            user.setLastName(rs.getString("last_name"));
-            user.setPhoneNumber(rs.getString("phone_number"));
-            user.setUserAccess(rs.getBoolean("user_access"));
+
+            user = new User.Builder()
+                    .setId(rs.getInt("id"))
+                    .setLogin(rs.getString("login"))
+                    .setPassword(rs.getString("password"))
+                    .setEmail(rs.getString("email"))
+                    .setRole(role)
+                    .setFirstName(rs.getString("first_name"))
+                    .setLastName(rs.getString("last_name"))
+                    .setPhoneNumber(rs.getString("phone_number"))
+                    .setUserAccess(rs.getBoolean("user_access"))
+                    .build();
         } catch (SQLException e) {
             throw new DAOException(e);
         }

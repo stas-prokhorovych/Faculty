@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class BlockUserCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -24,7 +25,7 @@ public class BlockUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String studentId = request.getParameter("id");
-        userService.blockUser(studentId);
-        return new UserCatalogueCommand().execute(request, response);
+        userService.updateUserAccess(false, studentId);
+        return REDIRECT + USER_CATALOGUE_PAGE;
     }
 }

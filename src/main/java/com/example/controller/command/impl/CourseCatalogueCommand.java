@@ -36,7 +36,8 @@ public class CourseCatalogueCommand implements Command {
         List<String> themesForForm = courseService.findThemes();
         request.setAttribute("themesForForm", themesForForm);
 
-        List<User> teacherForForm = userService.getAllTeachers();
+        List<User> teacherForForm = userService.findByRole("Teacher");
+
         request.setAttribute("teacherForForm", teacherForForm);
 
         String theme = null;

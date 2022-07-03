@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import static com.example.model.constants.Pages.ADD_TEACHER_PAGE;
 import static com.example.model.constants.Pages.HOME_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class AssignTeacherToCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -29,6 +30,6 @@ public class AssignTeacherToCourseCommand implements Command {
         String teacherId = request.getParameter("teachers");
 
         courseService.assignCourse(courseId, teacherId);
-        return HOME_PAGE;
+        return REDIRECT + HOME_PAGE;
     }
 }

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
+
 public class DeleteCourseCommand implements Command {
 
     private static final ServiceFactory serviceFactory;
@@ -24,6 +27,6 @@ public class DeleteCourseCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String id = request.getParameter("id");
         courseService.deleteCourse(Integer.parseInt(id));
-        return new CourseCatalogueCommand().execute(request, response);
+        return REDIRECT + COURSE_CATALOGUE_PAGE;
     }
 }

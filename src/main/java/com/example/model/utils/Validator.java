@@ -42,7 +42,7 @@ public class Validator {
     }
 
     public static boolean isCourseNameValid(final String courseName) {
-        return courseName.matches("[A-Z]*[a-z\\d\\s]{0,20}");
+        return courseName.matches(".*?");
     }
 
     public static boolean isCourseThemeValid(final String courseTheme) {

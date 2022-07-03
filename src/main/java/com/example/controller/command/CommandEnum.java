@@ -1,10 +1,7 @@
 package com.example.controller.command;
 
 import com.example.controller.command.impl.*;
-import com.example.controller.command.impl.page.GoToHomePageCommand;
-import com.example.controller.command.impl.page.GoToLoginPageCommand;
-import com.example.controller.command.impl.page.GoToProfileCommand;
-import com.example.controller.command.impl.page.GoToRegisterCommand;
+import com.example.controller.command.impl.page.*;
 
 /**
  * Contains and gives all commands in system.
@@ -37,9 +34,11 @@ public enum CommandEnum {
     GOTO_HOME_PAGE(new GoToHomePageCommand()),
     GOTO_LOGIN_PAGE(new GoToLoginPageCommand()),
     GOTO_SIGNUP_PAGE(new GoToRegisterCommand()),
+    GOTO_UPDATE_COURSE_PAGE(new GoToUpdatePageCommand()),
+    GOTO_GRADUATES_PAGE(new GoToGraduatesPageCommand()),
     GOTO_PROFILE_PAGE(new GoToProfileCommand());
 
-    private Command command;
+    private final Command command;
 
     CommandEnum(Command command) {
         this.command = command;

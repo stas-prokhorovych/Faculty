@@ -94,4 +94,50 @@ public class Course {
         }
     }
 
+    public static class Builder {
+        private Course course;
+
+        public Builder() {
+            course = new Course();
+        }
+
+        public Builder setId(int id) {
+            course.setId(id);
+            return this;
+        }
+
+        public Builder setName(String name) {
+            course.setName(name);
+            return this;
+        }
+
+        public Builder setTheme(String theme) {
+            course.setTheme(theme);
+            return this;
+        }
+
+        public Builder setStartDate(LocalDateTime startDate) {
+            course.setStartDate(startDate);
+            return this;
+        }
+
+        public Builder setEndDate(LocalDateTime endDate) {
+            course.setEndDate(endDate);
+            return this;
+        }
+
+        public Builder setLecturer(int lecturer) {
+            course.setLecturer(lecturer);
+            return this;
+        }
+
+        public Builder setCourseStatus(CourseStatus courseStatus) {
+            course.setCourseStatus(courseStatus);
+            return this;
+        }
+
+        public Course build() {
+            return course;
+        }
+    }
 }

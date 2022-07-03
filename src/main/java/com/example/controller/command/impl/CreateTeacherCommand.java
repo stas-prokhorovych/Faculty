@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.example.model.constants.Pages.HOME_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class CreateTeacherCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -33,6 +34,6 @@ public class CreateTeacherCommand implements Command {
         userService.createTeacher(studentId);
         courseService.assignCourse(courseId, studentId);
 
-        return HOME_PAGE;
+        return REDIRECT + HOME_PAGE;
     }
 }

@@ -29,13 +29,14 @@ public class AddTeacherCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        List<User> students = userService.getNewStudents();
-        List<Course> courses = courseService.getNoTeacherCourses();
-        List<User> teachers = userService.getAllTeachers();
+        List<User> students = userService.getNewStudents("Student");
+        List<Course> courses = courseService.findCoursesNoTeacherAssigned("Closed, no teacher assigned yet");
+        List<User> teachers = userService.findByRole("Teacher");
 
         request.setAttribute("students", students);
         request.setAttribute("courses", courses);
         request.setAttribute("teachers", teachers);
+
         return ADD_TEACHER_PAGE;
     }
 }

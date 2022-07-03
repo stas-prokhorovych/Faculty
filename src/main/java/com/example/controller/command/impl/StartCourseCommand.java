@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class StartCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -24,9 +25,7 @@ public class StartCourseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer courseId = Integer.valueOf(request.getParameter("course-id"));
-
-        courseService.startCourse(courseId);
-
-        return "redirect:" + SHOW_JOURNAL_PAGE;
+        courseService.startCourse("In progress", courseId);
+        return REDIRECT + SHOW_JOURNAL_PAGE;
     }
 }

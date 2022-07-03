@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static com.example.model.constants.Pages.LOGIN_PAGE;
 import static com.example.model.constants.Pages.PROFILE_PAGE;
+import static com.example.model.constants.Prg.REDIRECT;
 
 public class LoginCommand implements Command {
     private static final ServiceFactory serviceFactory;
@@ -59,6 +60,6 @@ public class LoginCommand implements Command {
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
         session.setAttribute("access", user.isUserAccess());
-        return "redirect:" + PROFILE_PAGE;
+        return REDIRECT + PROFILE_PAGE;
     }
 }
