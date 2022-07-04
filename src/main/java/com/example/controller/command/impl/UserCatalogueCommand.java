@@ -14,6 +14,9 @@ import java.util.List;
 
 import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
 
+/**
+ * User catalogue command
+ */
 public class UserCatalogueCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;

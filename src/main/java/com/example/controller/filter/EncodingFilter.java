@@ -6,6 +6,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
+/**
+ * Filter used to maintain character encoding UTF-8
+ */
 @WebFilter(filterName = "EncodingFilter",
         urlPatterns = {"/*"},
         initParams = {
@@ -16,24 +19,23 @@ public class EncodingFilter implements Filter {
     private String encodingCode;
     private String contentType;
 
-    public void init(FilterConfig config) throws ServletException {
-//        LOG.info("Filter initialization starts");
+    public void init(FilterConfig config) {
+        LOG.trace("Filter initialization starts");
         encodingCode = config.getInitParameter("encoding");
         contentType = config.getInitParameter("content-type");
-//        LOG.info("Filter initialization finished");
+        LOG.trace("Filter initialization finished");
     }
 
     public void destroy() {
-//        LOG.trace("=========================================================================");
-//        LOG.info("Filter destruction starts");
+        LOG.trace("Filter destruction starts");
         encodingCode = null;
         contentType = null;
-//        LOG.info("Filter destruction finished");
+        LOG.trace("Filter destruction finished");
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-//        LOG.info("Filter starts");
+        LOG.trace("Filter starts");
         String codeRequest = request.getCharacterEncoding();
 
         if (encodingCode != null && !encodingCode.equalsIgnoreCase(codeRequest)) {
@@ -44,7 +46,7 @@ public class EncodingFilter implements Filter {
             response.setContentType(contentType);
         }
 
-//        LOG.info("Filter finished");
+        LOG.trace("Filter finished");
         chain.doFilter(request, response);
     }
 }

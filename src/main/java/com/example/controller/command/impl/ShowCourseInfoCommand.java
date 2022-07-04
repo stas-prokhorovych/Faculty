@@ -18,6 +18,9 @@ import java.util.List;
 import static com.example.model.constants.Pages.UPDATE_COURSE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Show course information command
+ */
 public class ShowCourseInfoCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;

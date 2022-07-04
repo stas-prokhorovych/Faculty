@@ -30,6 +30,17 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
         return instance;
     }
 
+    /**
+     * End this course
+     *
+     * @param courseId id course to finish
+     * @param studentIds student ids of this course
+     * @param studentMarks marks that correspond to students ids
+     * @param markCode marks code that correspond to student ids
+     * @param markExplanation marks explanation that correspond to student ids
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public void endCourse(String courseId, String[] studentIds, int[] studentMarks, String[] markCode, String[] markExplanation) throws DAOException {
         Connection con = null;
@@ -64,11 +75,28 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
         }
     }
 
+    /**
+     *  Chnage course info
+     *  set course status to finished
+     *
+     * @param courseId id of course to finish
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public void endCourse(String courseId) throws DAOException {
         changeCourseInfo(courseId);
     }
 
+    /**
+     * Information about particular student
+     *
+     * @param finishedCourses courses that have status finished
+     * @param studentId id of student
+     * @return list of journal with marks
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public List<Journal> findJournalInfo(List<Course> finishedCourses, Integer studentId) throws DAOException {
         List<Journal> journalInfo = new ArrayList<>();
@@ -92,7 +120,13 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
         return journalInfo;
     }
 
-
+    /**
+     * Mark course as finished
+     *
+     * @param courseId course to change info
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     private void changeCourseInfo(String courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(UPDATE_COURSE_INFO_TO_FINISH)) {
@@ -105,6 +139,15 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
         }
     }
 
+    /**
+     * Find id of student on course
+     *
+     * @param courseId courseId
+     * @param studentId StudentId
+     * @return id of student on course
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     private int findIdOfStudentOnCourse(String courseId, String studentId) throws DAOException {
         int id = 0;
         try (Connection con = DataSource.getConnection();
@@ -122,6 +165,14 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
         return id;
     }
 
+    /**
+     * Used to map object
+     *
+     * @param rs rs of give executed statement
+     * @return  return mapped object
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public Journal mapToEntity(ResultSet rs) throws DAOException {
         Journal journal;

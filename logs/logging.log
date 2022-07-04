@@ -395,3 +395,135 @@
 2022-07-04 00:53:31 INFO  ConnectionWrapper:32 - Transaction started...
 2022-07-04 00:53:31 INFO  ConnectionWrapper:44 - Transaction was committed...
 2022-07-04 00:53:31 INFO  ConnectionWrapper:69 - Connection was closed...
+2022-07-04 01:03:21 INFO  ConnectionWrapper:32 - Transaction started...
+2022-07-04 01:03:21 INFO  ConnectionWrapper:44 - Transaction was committed...
+2022-07-04 01:03:21 INFO  ConnectionWrapper:69 - Connection was closed...
+2022-07-04 02:30:00 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 02:30:00 INFO  EncodingFilter:23 - Filter initialization starts
+2022-07-04 02:30:00 INFO  EncodingFilter:26 - Filter initialization finished
+2022-07-04 02:30:00 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:00 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:01 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:01 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:01 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:01 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:01 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-04 02:30:04 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:04 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:07 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:07 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:07 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:07 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:08 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:08 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:09 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:09 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:11 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:11 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:11 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:11 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:12 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:12 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:12 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:12 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:15 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:15 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:15 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:15 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:16 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:16 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:16 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:16 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:17 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:17 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:31 INFO  EncodingFilter:30 - Filter destruction starts
+2022-07-04 02:30:31 INFO  EncodingFilter:33 - Filter destruction finished
+2022-07-04 02:30:31 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 02:30:40 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 02:30:40 INFO  EncodingFilter:23 - Filter initialization starts
+2022-07-04 02:30:40 INFO  EncodingFilter:26 - Filter initialization finished
+2022-07-04 02:30:40 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:40 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:41 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:41 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:43 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:43 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:46 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:46 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:46 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:46 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:47 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:47 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:48 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:48 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:48 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:48 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:49 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:49 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:49 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:49 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:52 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:52 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:30:52 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:30:52 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:10 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:10 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:11 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:11 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:11 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:11 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:12 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:12 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:12 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:12 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:14 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:14 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:14 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:14 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:15 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:15 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:15 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:15 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:16 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:16 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:16 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:16 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:17 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:17 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:17 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:17 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:18 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:18 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:18 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:18 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:20 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:20 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:20 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:20 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:21 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:21 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:31:23 INFO  EncodingFilter:38 - Filter starts
+2022-07-04 02:31:23 INFO  EncodingFilter:49 - Filter finished
+2022-07-04 02:33:25 INFO  EncodingFilter:30 - Filter destruction starts
+2022-07-04 02:33:25 INFO  EncodingFilter:33 - Filter destruction finished
+2022-07-04 02:33:25 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 14:57:26 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 14:57:28 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-04 15:00:37 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 15:10:48 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 15:12:21 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 15:12:31 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 15:13:54 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 15:20:36 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 15:20:38 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-04 15:23:42 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 15:23:52 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 15:23:54 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-04 15:24:12 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 15:24:20 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 15:24:22 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-04 15:25:29 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-04 17:37:48 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-04 17:37:49 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-04 18:10:20 WARN  SecurityFilter:75 - Access restrict. Trying to access: command=ADD_TEACHER
+2022-07-04 19:36:18 INFO  ConnectionPoolListener:21 - Pool successfully initialized

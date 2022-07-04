@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.example.model.constants.Pages.ADD_TEACHER_PAGE;
 
+/**
+ * Add teacher command
+ */
 public class AddTeacherCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;

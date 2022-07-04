@@ -5,6 +5,10 @@ import java.util.Map;
 
 import static com.example.model.constants.Pages.*;
 
+/**
+ * Prg class contains enum that
+ * redirect to certain page if POST method was used
+ */
 public class Prg {
     private Prg() {
     }

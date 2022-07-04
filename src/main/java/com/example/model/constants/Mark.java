@@ -1,5 +1,9 @@
 package com.example.model.constants;
 
+/**
+ * Enum for marks
+ * used Bologna Process marks system
+ */
 public enum Mark {
     A("A", "Excellent"),
     B("B", "Very good"),

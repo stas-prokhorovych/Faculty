@@ -10,6 +10,9 @@ import com.example.model.dao.mysql.MySQLUserDAO;
 
 import java.sql.Connection;
 
+/**
+ * Concrete realization of dao factory
+ */
 public class MySqlDaoFactory extends DaoFactory {
 
     private static MySqlDaoFactory instance;

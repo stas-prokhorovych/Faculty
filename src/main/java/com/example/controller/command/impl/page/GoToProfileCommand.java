@@ -10,6 +10,10 @@ import java.io.IOException;
 
 import static com.example.model.constants.Pages.PROFILE_PAGE;
 
+/**
+ * Returns profile page
+ * Also used for PRG pattern
+ */
 public class GoToProfileCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {

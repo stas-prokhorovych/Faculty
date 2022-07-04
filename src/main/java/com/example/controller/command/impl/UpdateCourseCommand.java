@@ -2,13 +2,13 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
-import com.example.model.entity.User;
 import com.example.model.service.CourseService;
 import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.FormValidator;
-import com.example.model.utils.Validator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +17,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import static com.example.model.constants.Pages.*;
+import static com.example.model.constants.Pages.PROFILE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Update course command
+ */
 public class UpdateCourseCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(UpdateCourseCommand.class);
+
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;
 
@@ -47,6 +52,7 @@ public class UpdateCourseCommand implements Command {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+            LOG.trace("Update course input errors");
             return new ShowCourseInfoCommand().execute(request, response);
         }
 
@@ -75,6 +81,7 @@ public class UpdateCourseCommand implements Command {
         try {
             courseService.updateCourse(course,previousName);
         } catch (CourseServiceException e) {
+            LOG.trace("Update course data errors", e);
             request.setAttribute("dataError", e.getMessage());
             return new ShowCourseInfoCommand().execute(request, response);
         }

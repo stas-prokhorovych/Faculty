@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.example.model.constants.Pages.PAGE_NOT_FOUND_PAGE;
 
+/**
+ * Uknown command
+ */
 public class UnknownCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.example.model.constants.Pages.STUDENT_COURSES;
 
+/**
+ * Student courses command
+ */
 public class StudentCourses implements Command {
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;

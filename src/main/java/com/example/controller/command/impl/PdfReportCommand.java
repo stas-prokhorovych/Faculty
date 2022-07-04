@@ -13,6 +13,9 @@ import java.util.Date;
 
 import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
 
+/**
+ * Pdf command
+ */
 public class PdfReportCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

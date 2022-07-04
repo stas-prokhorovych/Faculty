@@ -18,6 +18,10 @@ import java.util.List;
 
 import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
 
+/**
+ * Catalogue of all courses
+ * Also pagination implemented here
+ */
 public class CourseCatalogueCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;

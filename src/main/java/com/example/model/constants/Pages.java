@@ -1,5 +1,8 @@
 package com.example.model.constants;
 
+/**
+ * App's pages
+ */
 public final class Pages {
     private Pages() {
     }

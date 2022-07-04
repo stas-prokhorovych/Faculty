@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MySQLGenericDAO<T> implements GenericDAO<T> {
+
+    /**
+     * @param sql query to be executed
+     * @param values values to be inserted
+     * @return return found object
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @SafeVarargs
     public final <V> List<T> findEntitiesByField(String sql, V... values) throws DAOException {
         List<T> list = new ArrayList<>();
@@ -42,6 +50,13 @@ public abstract class MySQLGenericDAO<T> implements GenericDAO<T> {
         return list;
     }
 
+    /**
+     * @param sql sql query to be executed
+     * @param value values to be inserted
+     * @return return found object
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     public <V, T> T findEntityByField(String sql, V value) throws DAOException {
         T entity = null;
 
@@ -59,6 +74,14 @@ public abstract class MySQLGenericDAO<T> implements GenericDAO<T> {
         return entity;
     }
 
+    /**
+     * Help class choose variable type
+     *
+     * @param value specific value
+     * @param statement prepared statement to set parameter
+     * @throws SQLException in case of some exception with
+     *                      a data source or a connection with it
+     */
     public  <V> void chooseVariableType(V value, PreparedStatement statement) throws SQLException {
         switch (value.getClass().getSimpleName()) {
             case "Integer":

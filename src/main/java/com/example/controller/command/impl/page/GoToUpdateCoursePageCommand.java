@@ -8,11 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.example.model.constants.Pages.ADD_COURSE_PAGE;
+import static com.example.model.constants.Pages.UPDATE_COURSE_PAGE;
 
-public class GoToAddCoursePageCommand implements Command {
+/**
+ * Returns update course page
+ */
+public class GoToUpdateCoursePageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
-        return ADD_COURSE_PAGE;
+        return UPDATE_COURSE_PAGE;
     }
 }

@@ -13,6 +13,9 @@ import java.io.IOException;
 import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Delete course command
+ */
 public class DeleteCourseCommand implements Command {
 
     private static final ServiceFactory serviceFactory;

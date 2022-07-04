@@ -7,6 +7,7 @@ import com.example.model.entity.User;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.UserService;
+import com.example.model.utils.PasswordHelper;
 import com.example.model.utils.Validator;
 
 import java.util.List;
@@ -54,9 +55,10 @@ public class MySqlUserService implements UserService {
         if (user == null) {
             throw new UserServiceException("no user with specified login");
         }
-        if (!Validator.isPasswordsMatch(password, user.getPassword())) {
+        if (!PasswordHelper.match(password, user.getPassword())) {
             throw new UserServiceException("password is not correct");
         }
+
 
         return user;
     }

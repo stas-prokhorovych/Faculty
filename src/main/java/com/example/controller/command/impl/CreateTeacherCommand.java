@@ -1,7 +1,6 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.model.entity.User;
 import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
@@ -15,6 +14,9 @@ import java.io.IOException;
 import static com.example.model.constants.Pages.HOME_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Create teacher command
+ */
 public class CreateTeacherCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;

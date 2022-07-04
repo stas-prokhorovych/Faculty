@@ -59,12 +59,12 @@ public class FormValidator {
             errors.put("passwordError", "Password is empty, please input your information");
         } else if (!Validator.isPasswordValid(password)) {
             errorOccur = true;
-            errors.put("passwordError", "Password in not valid");
+            errors.put("passwordError", "Password is not valid");
         } else {
             validInputs.put("validPassword", password);
         }
 
-        if (repeatPassword == null || repeatPassword.equals("")) {
+        if (password == null || repeatPassword == null || repeatPassword.equals("")) {
             errorOccur = true;
             errors.put("repeatPasswordError", "Password repeat is empty, please input your information");
         } else if (!Validator.isPasswordsMatch(password, repeatPassword)) {
@@ -79,7 +79,7 @@ public class FormValidator {
             errors.put("emailError", "Email is empty, please input your information");
         } else if (!Validator.isEmailValid(email)) {
             errorOccur = true;
-            errors.put("emailError", "Email in not valid");
+            errors.put("emailError", "Email is not valid");
         } else {
             validInputs.put("validEmail", email);
         }
@@ -89,7 +89,7 @@ public class FormValidator {
             errors.put("firstNameError", "First Name is empty, please input your information");
         } else if (!Validator.isFirstNameValid(firstName)) {
             errorOccur = true;
-            errors.put("firstNameError", "First Name in not valid");
+            errors.put("firstNameError", "First Name is not valid");
         } else {
             validInputs.put("validFirstName", firstName);
         }
@@ -99,7 +99,7 @@ public class FormValidator {
             errors.put("lastNameError", "Last Name is empty, please input your information");
         } else if (!Validator.isLastNameValid(lastName)) {
             errorOccur = true;
-            errors.put("lastNameError", "Last Name in not valid");
+            errors.put("lastNameError", "Last Name is not valid");
         } else {
             validInputs.put("validLastName", lastName);
         }
@@ -107,7 +107,7 @@ public class FormValidator {
         if (phone != null && !phone.equals("")) {
             if(!Validator.isPhoneValid(phone)) {
                 errorOccur = true;
-                errors.put("phoneError", "Phone in not valid");
+                errors.put("phoneError", "Phone is not valid");
             }
         } else {
             validInputs.put("phoneError", phone);
@@ -130,7 +130,7 @@ public class FormValidator {
             errors.put("nameError", "Name is empty, please input your information");
         } else if (!Validator.isCourseNameValid(name)) {
             errorOccur = true;
-            errors.put("nameError", "Course name in not valid");
+            errors.put("nameError", "Course name is not valid");
         } else {
             validInputs.put("validName", name);
         }
@@ -140,7 +140,7 @@ public class FormValidator {
             errors.put("themeError", "Course theme is empty, please input your information");
         } else if (!Validator.isCourseThemeValid(theme)) {
             errorOccur = true;
-            errors.put("themeError", "Course theme in not valid");
+            errors.put("themeError", "Course theme is not valid");
         } else {
             validInputs.put("validTheme", theme);
         }

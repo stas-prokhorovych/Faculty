@@ -2,15 +2,15 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
-import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.FormValidator;
-import com.example.model.utils.Validator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,10 +18,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import static com.example.model.constants.Pages.*;
+import static com.example.model.constants.Pages.ADD_COURSE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Course creation command
+ */
 public class CreateCourseCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(CreateCourseCommand.class);
+
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;
 
@@ -41,6 +46,7 @@ public class CreateCourseCommand implements Command {
 
         if(session.getAttribute("successCourseCreation") != null) {
             session.setAttribute("successHintShow", "1");
+            LOG.trace("Showing success hint");
             return ADD_COURSE_PAGE;
         }
 
@@ -55,6 +61,7 @@ public class CreateCourseCommand implements Command {
             for (Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+            LOG.debug("Input errors");
             return new ShowTeachersCommand().execute(request, response);
         }
 
@@ -86,6 +93,7 @@ public class CreateCourseCommand implements Command {
             courseService.addCourse(course);
         } catch (CourseServiceException e) {
             request.setAttribute("dataError", e.getMessage());
+            LOG.debug("Data error: ", e);
             return new ShowTeachersCommand().execute(request, response);
         }
 

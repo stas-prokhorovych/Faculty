@@ -7,6 +7,9 @@ import com.example.model.service.exception.ServiceException;
 import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.FormValidator;
+import com.example.model.utils.PasswordHelper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +22,12 @@ import static com.example.model.constants.Pages.PROFILE_PAGE;
 import static com.example.model.constants.Pages.SIGNUP_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Registration command
+ */
 public class RegistrationCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(RegistrationCommand.class);
+
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;
 
@@ -43,6 +51,7 @@ public class RegistrationCommand implements Command {
             for (Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+            LOG.trace("Registration form input errors");
             return SIGNUP_PAGE;
         }
 
@@ -57,13 +66,14 @@ public class RegistrationCommand implements Command {
         try {
             userService.findUserByLogin(login);
         } catch (UserServiceException e) {
+            LOG.trace("Registration form data errors", e);
             request.setAttribute("dataError", e.getMessage());
             return SIGNUP_PAGE;
         }
 
         User user = new User.Builder()
                 .setLogin(login)
-                .setPassword(password)
+                .setPassword(PasswordHelper.encrypt(password))
                 .setEmail(email)
                 .setRole(User.Role.STUDENT)
                 .setFirstName(firstName)

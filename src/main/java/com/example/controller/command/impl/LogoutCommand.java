@@ -11,6 +11,9 @@ import java.io.IOException;
 import static com.example.model.constants.Pages.HOME_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Log out command
+ */
 public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

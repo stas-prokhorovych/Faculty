@@ -1,6 +1,7 @@
 package com.example.controller.filter;
 
 import com.example.model.constants.UserAccess;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,16 +16,13 @@ import java.util.Objects;
 import static com.example.model.constants.Pages.LOGIN_PAGE;
 import static com.example.model.constants.Pages.PROFILE_PAGE;
 
-@WebFilter(filterName = "SecurityFilter",
-        urlPatterns = {"/*"}
-)
-
 /**
  * Security filter manages application authorization access.
- * By default user has anonymous role. Trying access to restricted pages redirect user to login page.
+ * By default, user has guest role. Trying access to restricted pages redirect user to login page.
  */
-
+@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"})
 public class SecurityFilter implements Filter {
+    private static final Logger LOG = Logger.getLogger(SecurityFilter.class);
 
     /**
      * Map of restricted pages according to user ROLE.
@@ -66,6 +64,7 @@ public class SecurityFilter implements Filter {
         Boolean access = (Boolean) session.getAttribute("access");
         if(!Objects.isNull(access)) {
             if(!access && !path.equals("command=LOGOUT")) {
+                LOG.info("User was blocked and trying to access: " + path);
                 request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
                 return;
             }
@@ -73,6 +72,7 @@ public class SecurityFilter implements Filter {
 
         List<String> accessibleUrls = urls.get(role);
         if (!accessibleUrls.contains(path)) {
+            LOG.warn("Access restrict. Trying to access: " + path);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
         } else {
             chain.doFilter(req, res);

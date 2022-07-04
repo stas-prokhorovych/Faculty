@@ -5,8 +5,9 @@ import com.example.model.dao.JournalDAO;
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.mysql.factory.MySqlDaoFactory;
 
-import java.sql.Connection;
-
+/**
+ * DAO factory
+ */
 public abstract class DaoFactory {
 
     public static DaoFactory getDaoFactory (String db) {
@@ -23,6 +24,4 @@ public abstract class DaoFactory {
     public abstract JournalDAO getJournalDAO();
 
     public abstract UserDAO getUserDAO();
-
-//    public abstract Connection getConnection();
 }

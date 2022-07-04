@@ -14,6 +14,9 @@ import java.io.IOException;
 import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Enroll on course
+ */
 public class EnrollOnCourse implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;
@@ -27,7 +30,6 @@ public class EnrollOnCourse implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer studentId = Integer.valueOf(request.getParameter("student-id"));
         Integer courseId = Integer.valueOf(request.getParameter("course-id"));
-
         userService.enrollStudentOnCourse(studentId, courseId);
 
         return REDIRECT + COURSE_CATALOGUE_PAGE;

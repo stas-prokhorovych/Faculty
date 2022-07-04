@@ -1,5 +1,8 @@
 package com.example.model.constants;
 
+/**
+ * SQL queries
+ */
 public final class Query {
     private Query() {
     }

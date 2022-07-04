@@ -1,9 +1,5 @@
 
 f
-java:S1301"KReplace this "switch" statement by "if" statements to increase readability.(ª™²˜ÿÿÿÿÿ
+java:S1301"KReplace this "switch" statement by "if" statements to increase readability.(ª™²˜ÿÿÿÿÿ
 O
-java:S1610
-":Convert the abstract class "DaoFactory" into an interface.(¿ã>
-]	java:S125"<This block of commented-out lines of code should be removed.(ÏÍÖÍùÿÿÿÿ8‘ƒ¸•0
-M
-java:S1128"0Remove this unused import 'java.sql.Connection'.(¥ËôÖ8ĞÈæ«˜0
+java:S1610":Convert the abstract class "DaoFactory" into an interface.(¿ã>

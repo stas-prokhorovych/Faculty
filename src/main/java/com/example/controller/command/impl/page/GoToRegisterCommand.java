@@ -10,6 +10,9 @@ import java.io.IOException;
 
 import static com.example.model.constants.Pages.SIGNUP_PAGE;
 
+/**
+ * Returns register page
+ */
 public class GoToRegisterCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {

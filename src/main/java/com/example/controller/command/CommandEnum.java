@@ -34,7 +34,7 @@ public enum CommandEnum {
     GOTO_HOME_PAGE(new GoToHomePageCommand()),
     GOTO_LOGIN_PAGE(new GoToLoginPageCommand()),
     GOTO_SIGNUP_PAGE(new GoToRegisterCommand()),
-    GOTO_UPDATE_COURSE_PAGE(new GoToUpdatePageCommand()),
+    GOTO_UPDATE_COURSE_PAGE(new GoToUpdateCoursePageCommand()),
     GOTO_GRADUATES_PAGE(new GoToGraduatesPageCommand()),
     GOTO_PROFILE_PAGE(new GoToProfileCommand());
 

@@ -10,6 +10,9 @@ import java.io.IOException;
 
 import static com.example.model.constants.Pages.LOGIN_PAGE;
 
+/**
+ * Returns login page
+ */
 public class GoToLoginPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {

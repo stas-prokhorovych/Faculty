@@ -13,6 +13,9 @@ import java.io.IOException;
 import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Edit course command
+ */
 public class EndCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final JournalService journalService;
@@ -31,7 +34,7 @@ public class EndCourseCommand implements Command {
 
         if(studentIds == null || studentMarks == null || studentIds.length == 0 || studentMarks.length == 0) {
             journalService.endCourse(courseId);
-            return new ShowJournalCommand().execute(request, response);
+            return REDIRECT + SHOW_JOURNAL_PAGE;
         }
 
         journalService.endCourse(courseId, studentIds, studentMarks);

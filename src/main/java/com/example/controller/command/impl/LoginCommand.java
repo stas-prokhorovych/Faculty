@@ -7,6 +7,8 @@ import com.example.model.service.exception.ServiceException;
 import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.factory.ServiceFactory;
 import com.example.model.utils.FormValidator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,12 @@ import static com.example.model.constants.Pages.LOGIN_PAGE;
 import static com.example.model.constants.Pages.PROFILE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Login command
+ */
 public class LoginCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
+
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;
 
@@ -38,6 +45,7 @@ public class LoginCommand implements Command {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+            LOG.trace("Login page inputs errors");
             return LOGIN_PAGE;
         }
 
@@ -47,6 +55,7 @@ public class LoginCommand implements Command {
         try {
             user = userService.getUser(login, password);
         } catch (UserServiceException e){
+            LOG.trace("Login page data errors", e);
             request.setAttribute("dataError", e.getMessage());
             return LOGIN_PAGE;
         }

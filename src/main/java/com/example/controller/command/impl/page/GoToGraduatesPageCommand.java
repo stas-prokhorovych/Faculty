@@ -10,6 +10,10 @@ import java.io.IOException;
 
 import static com.example.model.constants.Pages.GRADUATES_PAGE;
 
+/**
+ *  Returns graduates page
+ *  used for PRG pattern
+ */
 public class GoToGraduatesPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {

@@ -72,9 +72,4 @@ public class ConnectionWrapper {
             throw new DAOException(e);
         }
     }
-
-    public Connection getConnection() {
-        LOG.info("Getting connection...");
-        return connection;
-    }
 }

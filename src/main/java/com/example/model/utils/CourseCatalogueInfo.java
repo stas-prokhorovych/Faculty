@@ -5,6 +5,10 @@ import com.example.model.entity.User;
 
 import java.util.List;
 
+/**
+ * Used for pagination
+ * used to display info from 3 tables
+ */
 public class CourseCatalogueInfo {
     private List<Course> courses;
     private List<User> teachers;

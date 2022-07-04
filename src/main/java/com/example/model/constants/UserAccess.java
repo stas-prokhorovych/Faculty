@@ -5,6 +5,11 @@ import java.util.List;
 
 import static com.example.model.constants.Pages.*;
 
+/**
+ * User access
+ * used by SecurityFilter
+ * {@link com.example.controller.filter.SecurityFilter}
+ */
 public class UserAccess {
     private UserAccess() {
     }
@@ -64,9 +69,6 @@ public class UserAccess {
         adminUrls.add("command=SHOW_COURSE_INFO");
         adminUrls.add("command=GOTO_UPDATE_COURSE_PAGE");
     }
-
-
-
 
     public static List<String> getGuestUrls() {
         return guestUrls;

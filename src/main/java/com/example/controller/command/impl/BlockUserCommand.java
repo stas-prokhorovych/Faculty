@@ -13,6 +13,9 @@ import java.io.IOException;
 import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
+/**
+ * Block user command
+ */
 public class BlockUserCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;

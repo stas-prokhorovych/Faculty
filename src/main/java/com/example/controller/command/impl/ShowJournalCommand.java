@@ -15,6 +15,9 @@ import java.util.List;
 
 import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
 
+/**
+ * Show journal command
+ */
 public class ShowJournalCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final CourseService courseService;
