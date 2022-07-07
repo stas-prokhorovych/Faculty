@@ -27,11 +27,10 @@ import static com.example.model.constants.Prg.REDIRECT;
 public class LoginCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
 
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
+    private UserService userService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public LoginCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
     }
 

@@ -18,11 +18,10 @@ import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
  * User catalogue command
  */
 public class UserCatalogueCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
+    private UserService userService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public UserCatalogueCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
     }
 

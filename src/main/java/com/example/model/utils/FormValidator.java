@@ -3,10 +3,18 @@ package com.example.model.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Validation of input forms
+ */
 public class FormValidator {
     private FormValidator() {
     }
 
+    /**
+     * @param login login of the user
+     * @param password password of the user
+     * @return nothing if input valid error array(with valid inputs) otherwise
+     */
     public static Map<String, String> checkLoginForm(String login, String password) {
         boolean errorOccur = false;
         Map<String, String> validInputs = new HashMap<>();
@@ -38,6 +46,17 @@ public class FormValidator {
         return errors;
     }
 
+    /**
+     *
+     * @param login login of the user
+     * @param password password of the user
+     * @param repeatPassword repeat password of the user
+     * @param email email of the user
+     * @param firstName first name of the user
+     * @param lastName last name of the user
+     * @param phone phone of the user
+     * @return nothing if input valid error array(with valid inputs) otherwise
+     */
     public static Map<String, String> checkSignupForm(String login, String password, String repeatPassword,
                                                       String email, String firstName, String lastName, String phone) {
         boolean errorOccur = false;
@@ -120,6 +139,14 @@ public class FormValidator {
         return errors;
     }
 
+    /**
+     *
+     * @param name name of the course
+     * @param theme theme of the course
+     * @param startDate start date of the course
+     * @param endDate end date of the course
+     * @return nothing if input valid error array(with valid inputs) otherwise
+     */
     public static Map<String, String> checkAddCourseForm(String name, String theme, String startDate, String endDate) {
         boolean errorOccur = false;
         Map<String, String> validInputs = new HashMap<>();

@@ -17,11 +17,11 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Assign teacher to course command
  */
 public class AssignTeacherToCourseCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    private CourseService courseService;
+
+    public AssignTeacherToCourseCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
     }
 

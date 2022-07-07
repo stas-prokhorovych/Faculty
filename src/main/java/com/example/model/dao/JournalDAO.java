@@ -33,7 +33,7 @@ public interface JournalDAO {
     void endCourse(String courseId, String[] studentIds, int[] studentMarks, String[] markCode, String[] markExplanation) throws DAOException;
 
     /**
-     *  Chnage course info
+     *  Change course info
      *  set course status to finished
      *
      * @param courseId id of course to finish

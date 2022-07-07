@@ -54,14 +54,26 @@ public interface UserDAO {
     void createTeacher(String studentId) throws DAOException;
 
     /**
-     *
-     * @param userTypeStudent
-     * @return
-     * @throws DAOException
+     * @param userTypeStudent type of the user
+     * @return student that has to course that he study
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
      */
     List<User> getNewStudents(String userTypeStudent) throws DAOException;
 
+    /**
+     * @param role role of user
+     * @return list of user by role
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     List<User> findByRole(String role) throws DAOException;
 
+    /**
+     * @param access access to change on
+     * @param studentId student id which access will be changed
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     void updateUserAccess(boolean access, String studentId) throws DAOException;
 }

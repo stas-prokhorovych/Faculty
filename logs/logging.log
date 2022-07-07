@@ -527,3 +527,15 @@
 2022-07-04 17:37:49 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
 2022-07-04 18:10:20 WARN  SecurityFilter:75 - Access restrict. Trying to access: command=ADD_TEACHER
 2022-07-04 19:36:18 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-05 01:04:01 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-05 01:04:02 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-05 02:19:04 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-05 02:19:14 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-05 02:19:15 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-05 02:41:35 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-05 02:51:17 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-05 02:51:20 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-05 02:51:31 INFO  ConnectionPoolListener:21 - Pool successfully initialized
+2022-07-07 16:10:00 INFO  ConnectionPoolListener:27 - Pool successfully destroyed
+2022-07-07 16:10:02 WARN  SecurityFilter:75 - Access restrict. Trying to access: /images/favicon.ico
+2022-07-07 16:15:24 INFO  ConnectionPoolListener:21 - Pool successfully initialized

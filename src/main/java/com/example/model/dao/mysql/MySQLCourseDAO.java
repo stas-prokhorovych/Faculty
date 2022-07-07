@@ -8,6 +8,8 @@ import com.example.model.entity.Course;
 import com.example.model.entity.User;
 import com.example.model.utils.CourseCatalogueInfo;
 import com.example.model.utils.PaginationQueue;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ import java.util.List;
 import static com.example.model.constants.Query.*;
 
 public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO {
-
+    private static final Logger LOG = LogManager.getLogger(MySQLCourseDAO.class);
 
     private static MySQLCourseDAO instance;
     private static DaoFactory daoFactory;
@@ -47,6 +49,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
+            LOG.error("Unable to delete course", e);
             throw new DAOException(e);
         }
     }
@@ -80,6 +83,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             statement.setString(i, course.getCourseStatus().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to add course", e);
             throw new DAOException(e);
         }
     }
@@ -102,6 +106,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             statement.setInt(6, course.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to update course", e);
             throw new DAOException(e);
         }
     }
@@ -122,6 +127,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
                 themes.add(rs.getString("theme"));
             }
         } catch (SQLException e) {
+            LOG.error("Unable to find themes", e);
             throw new DAOException(e);
         }
         return themes;
@@ -207,6 +213,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             catalogueInfo.setTeachers(teachers);
             catalogueInfo.setStudentsEnrolled(studentsEnrolled);
         } catch (SQLException e) {
+            LOG.error("Unable to find courses by page", e);
             throw new DAOException(e);
         }
         return catalogueInfo;
@@ -246,6 +253,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             }
 
         } catch (SQLException e) {
+            LOG.error("Unable to find number of records", e);
             throw new DAOException(e);
         }
         return numberOfRecords;
@@ -270,6 +278,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             statement.setInt(3, courseId);
             statement.execute();
         } catch (SQLException e) {
+            LOG.error("Unable to start a course", e);
             throw new DAOException(e);
         }
     }
@@ -292,6 +301,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             statement.setString(3, courseId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to assign a course", e);
             throw new DAOException(e);
         }
     }
@@ -326,6 +336,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
             }
 
         } catch (SQLException e) {
+            LOG.error("Unable to check if courses selected", e);
             throw new DAOException(e);
         }
         return courseAlreadySelected;
@@ -427,6 +438,7 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
                     .build();
 
         } catch (SQLException e) {
+            LOG.error("Unable to map to Course", e);
             throw new DAOException(e);
         }
         return course;

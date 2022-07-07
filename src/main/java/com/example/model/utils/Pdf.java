@@ -6,6 +6,9 @@ import com.lowagie.text.pdf.PdfWriter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Used to generate pdf report
+ */
 public class Pdf {
     public static void export(HttpServletResponse response) throws IOException {
         Document document = new Document(PageSize.A4);

@@ -20,15 +20,15 @@ import static com.example.model.constants.Pages.ADD_TEACHER_PAGE;
  * Add teacher command
  */
 public class AddTeacherCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
-    private static final CourseService courseService;
+    private UserService userService;
+    private CourseService courseService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public AddTeacherCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
         courseService = serviceFactory.getCourseService();
     }
+
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {

@@ -5,6 +5,8 @@ import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.db.DataSource;
 import com.example.model.entity.User;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 import static com.example.model.constants.Query.*;
 
 public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
+    private static final Logger LOG = LogManager.getLogger(MySQLUserDAO.class);
+
     private static MySQLUserDAO instance;
     private static DaoFactory daoFactory;
 
@@ -26,10 +30,21 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
         return instance;
     }
 
+    /**
+     * @param login login to find user by
+     * @return user with such login
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     public User findUserByLogin(String login) throws DAOException {
         return findEntityByField(SELECT_USER_BY_LOGIN, login);
     }
 
+    /**
+     * @param user user to add
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     public void addUser(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
@@ -43,20 +58,38 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
             pst.setBoolean(8, user.isUserAccess());
             pst.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to add user", e);
             throw new DAOException(e);
         }
     }
 
+    /**
+     * @param userTypeStudent type of the user
+     * @return student that has to course that he study
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public List<User> getNewStudents(String userTypeStudent) throws DAOException {
         return findEntitiesByField(FIND_NEW_USER, userTypeStudent);
     }
 
+    /**
+     * @param role role of user
+     * @return list of user by role
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public List<User> findByRole(String role) throws DAOException {
         return findEntitiesByField(FIND_BY_ROLE, role);
     }
 
+    /**
+     * @param studentId student id that will be teacher
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public void createTeacher(String studentId) throws DAOException {
         try (Connection con = DataSource.getConnection();
@@ -65,10 +98,17 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
             statement.setString(2, studentId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to create user", e);
             throw new DAOException(e);
         }
     }
 
+    /**
+     * @param studentId student id to enroll
+     * @param courseId course id to enroll
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public void enrollStudentOnCourse(Integer studentId, Integer courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
@@ -77,10 +117,17 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
             pst.setInt(2, courseId);
             pst.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to enroll student on course", e);
             throw new DAOException(e);
         }
     }
 
+    /**
+     * @param studentId id student to leave
+     * @param courseId id course that student leave
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public void leaveCourse(Integer studentId, Integer courseId) throws DAOException {
         try (Connection con = DataSource.getConnection();
@@ -89,10 +136,17 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
             pst.setInt(2, courseId);
             pst.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to leave course", e);
             throw new DAOException(e);
         }
     }
 
+    /**
+     * @param access access to change on
+     * @param studentId student id which access will be changed
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public void updateUserAccess(boolean access, String studentId) throws DAOException {
         try (Connection con = DataSource.getConnection();
@@ -101,15 +155,30 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
             pst.setString(2, studentId);
             pst.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to update user access", e);
             throw new DAOException(e);
         }
     }
 
+    /**
+     * @param courseId id of course that finished
+     * @return user of such course
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public List<User> findAllGraduates(Integer courseId) throws DAOException {
         return findEntitiesByField(FIND_GRADUATES, courseId);
     }
 
+    /**
+     * Used to map object
+     *
+     * @param rs rs of give executed statement
+     * @return  return mapped object
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public User mapToEntity(ResultSet rs) throws DAOException {
         User user;
@@ -140,6 +209,7 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
                     .setUserAccess(rs.getBoolean("user_access"))
                     .build();
         } catch (SQLException e) {
+            LOG.error("Unable to map to entity User", e);
             throw new DAOException(e);
         }
         return user;

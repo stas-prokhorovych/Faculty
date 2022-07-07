@@ -7,6 +7,8 @@ import com.example.model.dao.transaction.ConnectionWrapper;
 import com.example.model.db.DataSource;
 import com.example.model.entity.Course;
 import com.example.model.entity.Journal;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -16,6 +18,8 @@ import java.util.List;
 import static com.example.model.constants.Query.*;
 
 public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements JournalDAO {
+    private static final Logger LOG = LogManager.getLogger(MySQLJournalDAO.class);
+
     private static MySQLJournalDAO instance;
     private static DaoFactory daoFactory;
 
@@ -64,6 +68,7 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
             }
 
         } catch (SQLException e) {
+            LOG.error("Rollback changes cannot end course", e);
             if (connectionWrapper != null) {
                 connectionWrapper.rollbackTransaction();
             }
@@ -115,6 +120,7 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
             }
 
         } catch (SQLException e) {
+            LOG.error("Unable to find journal info", e);
             throw new DAOException(e);
         }
         return journalInfo;
@@ -135,6 +141,7 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
             statement.setString(3, courseId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error("Unable to change course info", e);
             throw new DAOException(e);
         }
     }
@@ -160,6 +167,7 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
                 }
             }
         } catch (SQLException e) {
+            LOG.error("Unable find id student on course", e);
             throw new DAOException(e);
         }
         return id;
@@ -184,6 +192,7 @@ public class MySQLJournalDAO extends MySQLGenericDAO<Journal> implements Journal
             journal.setMarkCode(rs.getString("mark_code"));
             journal.setMarkExplanation(rs.getString("mark_explanation"));
         } catch (SQLException e) {
+            LOG.error("Unable map to entry Journal", e);
             throw new DAOException(e);
         }
         return journal;

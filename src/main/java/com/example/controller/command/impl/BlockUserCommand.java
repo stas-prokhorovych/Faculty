@@ -17,11 +17,10 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Block user command
  */
 public class BlockUserCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
+    private UserService userService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public BlockUserCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
     }
 
