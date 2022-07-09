@@ -22,12 +22,11 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Show course information command
  */
 public class ShowCourseInfoCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
-    private static final UserService userService;
+    private CourseService courseService;
+    private UserService userService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public ShowCourseInfoCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
         userService = serviceFactory.getUserService();
     }

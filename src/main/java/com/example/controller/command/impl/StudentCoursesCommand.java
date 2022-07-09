@@ -19,13 +19,12 @@ import static com.example.model.constants.Pages.STUDENT_COURSES;
 /**
  * Student courses command
  */
-public class StudentCourses implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
-    private static final JournalService journalService;
+public class StudentCoursesCommand implements Command {
+    private CourseService courseService;
+    private JournalService journalService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public StudentCoursesCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
         journalService = serviceFactory.getJournalService();
     }
@@ -43,7 +42,6 @@ public class StudentCourses implements Command {
         request.setAttribute("inProgressCourses", inProgressCourses);
         request.setAttribute("finishedCourses", finishedCourses);
         request.setAttribute("journalInfo", journalInfo);
-
         return STUDENT_COURSES;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
-import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
@@ -17,7 +16,7 @@ import static com.example.model.constants.Prg.REDIRECT;
 /**
  * Enroll on course
  */
-public class EnrollOnCourse implements Command {
+public class EnrollOnCourseCommand implements Command {
     private static final ServiceFactory serviceFactory;
     private static final UserService userService;
 

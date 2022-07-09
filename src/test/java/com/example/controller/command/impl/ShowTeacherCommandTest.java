@@ -14,12 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
-import static com.example.model.constants.Prg.REDIRECT;
+import static com.example.model.constants.Pages.ADD_COURSE_PAGE;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BlockUserCommandTest {
+public class ShowTeacherCommandTest {
     @Mock
     private HttpServletRequest request;
 
@@ -30,17 +29,16 @@ public class BlockUserCommandTest {
     private UserService userService;
 
     @InjectMocks
-    private BlockUserCommand blockUserCommand;
+    private ShowTeachersCommand showTeachersCommand;
 
     @Test
-    public void executeShouldReturnUserCataloguePage() {
-        String expected = REDIRECT + USER_CATALOGUE_PAGE;
+    public void executeMustReturnAddCoursePage() {
         String actual;
         try {
-            actual = blockUserCommand.execute(request, response);
+            actual = showTeachersCommand.execute(request, response);
         } catch (ServletException | IOException | ServiceException e) {
             throw new RuntimeException(e);
         }
-        MatcherAssert.assertThat(actual, is(expected));
+        MatcherAssert.assertThat(actual, is(ADD_COURSE_PAGE));
     }
 }

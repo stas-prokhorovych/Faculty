@@ -18,12 +18,11 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Create teacher command
  */
 public class CreateTeacherCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
-    private static final CourseService courseService;
+    private UserService userService;
+    private CourseService courseService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public CreateTeacherCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
         courseService = serviceFactory.getCourseService();
     }

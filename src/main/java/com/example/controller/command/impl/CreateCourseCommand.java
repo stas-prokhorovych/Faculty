@@ -27,10 +27,10 @@ import static com.example.model.constants.Prg.REDIRECT;
 public class CreateCourseCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CreateCourseCommand.class);
 
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
+    private ServiceFactory serviceFactory;
+    private CourseService courseService;
 
-    static {
+    public CreateCourseCommand() {
         serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
     }
@@ -62,7 +62,7 @@ public class CreateCourseCommand implements Command {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
             LOG.debug("Input errors");
-            return new ShowTeachersCommand().execute(request, response);
+            return ADD_COURSE_PAGE;
         }
 
         request.setAttribute("validName", name);
@@ -94,7 +94,7 @@ public class CreateCourseCommand implements Command {
         } catch (CourseServiceException e) {
             request.setAttribute("dataError", e.getMessage());
             LOG.debug("Data error: ", e);
-            return new ShowTeachersCommand().execute(request, response);
+            return ADD_COURSE_PAGE;
         }
 
         session.setAttribute("successCourseCreation", "Course was creates");

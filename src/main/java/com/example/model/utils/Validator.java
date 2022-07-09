@@ -85,7 +85,7 @@ public class Validator {
      * @return {@code true} if value is fit regex and {@code false} otherwise
      */
     public static boolean isCourseNameValid(final String courseName) {
-        return courseName.matches("[\\w\\s]{3,}");
+        return courseName.matches("[\\w\\s]{2,}");
     }
 
     /**

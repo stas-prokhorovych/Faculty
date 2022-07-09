@@ -18,11 +18,10 @@ import static com.example.model.constants.Prg.REDIRECT;
  */
 public class DeleteCourseCommand implements Command {
 
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
+    private CourseService courseService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public DeleteCourseCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
     }
 

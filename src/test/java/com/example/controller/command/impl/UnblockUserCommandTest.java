@@ -19,7 +19,7 @@ import static com.example.model.constants.Prg.REDIRECT;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BlockUserCommandTest {
+public class UnblockUserCommandTest {
     @Mock
     private HttpServletRequest request;
 
@@ -30,14 +30,14 @@ public class BlockUserCommandTest {
     private UserService userService;
 
     @InjectMocks
-    private BlockUserCommand blockUserCommand;
+    private UnblockUserCommand unblockUserCommand;
 
     @Test
     public void executeShouldReturnUserCataloguePage() {
         String expected = REDIRECT + USER_CATALOGUE_PAGE;
         String actual;
         try {
-            actual = blockUserCommand.execute(request, response);
+            actual = unblockUserCommand.execute(request, response);
         } catch (ServletException | IOException | ServiceException e) {
             throw new RuntimeException(e);
         }

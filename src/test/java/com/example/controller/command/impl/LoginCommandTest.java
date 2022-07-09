@@ -3,6 +3,8 @@ package com.example.controller.command.impl;
 import com.example.model.entity.User;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,8 +22,8 @@ import static com.example.model.constants.Pages.PROFILE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -52,37 +54,43 @@ public class LoginCommandTest {
         assertThat(actual, is(LOGIN_PAGE));
     }
 
+    @Test
+    public void executeShouldReturnLoginPageWhenDataErrors() {
+        when(request.getParameter(anyString())).thenReturn("param");
+        String actual;
+        try {
+            doThrow(new UserServiceException()).when(userService).getUser(anyString(), anyString());
+            actual = loginCommand.execute(request, response);
+        } catch (ServletException | IOException | ServiceException e) {
+            throw new RuntimeException(e);
+        }
+        assertThat(actual, is(LOGIN_PAGE));
+    }
 
-//    @Test
-//    public void executeShouldReturnRedirectPageWhenSuccess() {
-//        User user = new User.Builder()
-//                .setLogin("Login")
-//                .setPassword("password")
-//                .setEmail("stas@gmail.com")
-//                .setRole(User.Role.STUDENT)
-//                .setFirstName("Name")
-//                .setLastName("Surname")
-//                .setPhoneNumber("0977605026")
-//                .setUserAccess(true)
-//                .build();
-//
-//        when(request.getSession()).thenReturn(session);
-//        when(request.getParameter(anyString())).thenReturn("param");
-//
-//
-//        try {
-//            when(userService.getUser(anyString(), anyString())).thenReturn(user);
-//        } catch (ServiceException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        String expected = REDIRECT + PROFILE_PAGE;
-//        String actual;
-//        try {
-//            actual = loginCommand.execute(request, response);
-//        } catch (ServletException | ServiceException | IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        assertEquals(expected, is(actual));
-//    }
+    @Test
+    public void executeShouldReturnRedirectPageWhenSuccess() {
+        User user = new User.Builder()
+                .setLogin("Login")
+                .setPassword("password")
+                .setEmail("stas@gmail.com")
+                .setRole(User.Role.STUDENT)
+                .setFirstName("Name")
+                .setLastName("Surname")
+                .setPhoneNumber("0977605026")
+                .setUserAccess(true)
+                .build();
+
+        when(request.getSession(true)).thenReturn(session);
+        when(request.getParameter(anyString())).thenReturn("param");
+
+        String expected = REDIRECT + PROFILE_PAGE;
+        String actual;
+        try {
+            when(userService.getUser(anyString(), anyString())).thenReturn(user);
+            actual = loginCommand.execute(request, response);
+        } catch (ServletException | ServiceException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        MatcherAssert.assertThat(actual, is(expected));
+    }
 }

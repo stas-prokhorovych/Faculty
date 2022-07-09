@@ -20,11 +20,10 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Show graduates command
  */
 public class ShowGraduatesCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
+    private UserService userService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public ShowGraduatesCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
     }
 

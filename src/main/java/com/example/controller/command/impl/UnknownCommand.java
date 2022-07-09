@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.example.model.constants.Pages.PAGE_NOT_FOUND_PAGE;
 
 /**
- * Uknown command
+ * Unknown command
  */
 public class UnknownCommand implements Command {
     @Override

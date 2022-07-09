@@ -23,14 +23,15 @@ import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
  * Also pagination implemented here
  */
 public class CourseCatalogueCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
-    private static final UserService userService;
+
+    private CourseService courseService;
+    private UserService userService;
+
     private static final int DEFAULT_RECORDS_PER_PAGE = 5;
     private static final int START_PAGE = 1;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public CourseCatalogueCommand(){
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
         userService = serviceFactory.getUserService();
     }

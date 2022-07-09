@@ -68,7 +68,7 @@ class FormValidatorTest {
         assertTrue(result2.containsKey("startDateError"));
         assertTrue(result2.containsKey("endDateError"));
 
-        Map<String, String> result3 = FormValidator.checkAddCourseForm("sd", "cv",
+        Map<String, String> result3 = FormValidator.checkAddCourseForm("s", "cv",
                 "", "");
         assertTrue(result3.containsValue("Course name is not valid"));
         assertTrue(result3.containsValue("Course theme is not valid"));

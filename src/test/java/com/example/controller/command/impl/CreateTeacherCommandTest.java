@@ -1,8 +1,9 @@
 package com.example.controller.command.impl;
 
+import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
-import org.hamcrest.MatcherAssert;
+import com.example.model.service.exception.UserServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,12 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
+import static com.example.model.constants.Pages.HOME_PAGE;
+import static com.example.model.constants.Pages.LOGIN_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BlockUserCommandTest {
+public class CreateTeacherCommandTest {
     @Mock
     private HttpServletRequest request;
 
@@ -29,18 +35,21 @@ public class BlockUserCommandTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private CourseService courseService;
+
     @InjectMocks
-    private BlockUserCommand blockUserCommand;
+    private CreateTeacherCommand createTeacherCommand;
 
     @Test
-    public void executeShouldReturnUserCataloguePage() {
-        String expected = REDIRECT + USER_CATALOGUE_PAGE;
+    public void executeShouldReturnRedirectToHomePage() {
+        when(request.getParameter(anyString())).thenReturn("param");
         String actual;
         try {
-            actual = blockUserCommand.execute(request, response);
+            actual = createTeacherCommand.execute(request, response);
         } catch (ServletException | IOException | ServiceException e) {
             throw new RuntimeException(e);
         }
-        MatcherAssert.assertThat(actual, is(expected));
+        assertThat(actual, is(REDIRECT + HOME_PAGE));
     }
 }

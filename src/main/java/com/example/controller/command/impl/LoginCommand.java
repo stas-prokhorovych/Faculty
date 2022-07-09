@@ -44,12 +44,12 @@ public class LoginCommand implements Command {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+
             LOG.trace("Login page inputs errors");
             return LOGIN_PAGE;
         }
 
         request.setAttribute("validLogin", login);
-
         User user;
         try {
             user = userService.getUser(login, password);

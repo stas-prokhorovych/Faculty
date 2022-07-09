@@ -24,6 +24,7 @@ public class UserAccess {
         guestUrls.add(HOME_PAGE);
         guestUrls.add("/css/styling.css");
         guestUrls.add("/js/captchaCheck.js");
+        guestUrls.add("/images/favicon.ico");
         guestUrls.add("command=UNKNOWN");
         guestUrls.add("command=LOGIN");
         guestUrls.add("command=REGISTER");

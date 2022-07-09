@@ -1,5 +1,6 @@
 package com.example.controller.command.impl;
 
+import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
 import org.hamcrest.MatcherAssert;
@@ -12,14 +13,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
-import static com.example.model.constants.Prg.REDIRECT;
+import static com.example.model.constants.Pages.SHOW_JOURNAL_PAGE;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BlockUserCommandTest {
+public class ShowJournalCommandTest {
     @Mock
     private HttpServletRequest request;
 
@@ -27,20 +29,24 @@ public class BlockUserCommandTest {
     private HttpServletResponse response;
 
     @Mock
-    private UserService userService;
+    private CourseService courseService;
+
+    @Mock
+    private HttpSession session;
 
     @InjectMocks
-    private BlockUserCommand blockUserCommand;
+    private ShowJournalCommand showJournalCommand;
 
     @Test
-    public void executeShouldReturnUserCataloguePage() {
-        String expected = REDIRECT + USER_CATALOGUE_PAGE;
+    public void executeMustReturnAddCoursePage() {
+        when(request.getSession(false)).thenReturn(session);
+
         String actual;
         try {
-            actual = blockUserCommand.execute(request, response);
+            actual = showJournalCommand.execute(request, response);
         } catch (ServletException | IOException | ServiceException e) {
             throw new RuntimeException(e);
         }
-        MatcherAssert.assertThat(actual, is(expected));
+        MatcherAssert.assertThat(actual, is(SHOW_JOURNAL_PAGE));
     }
 }

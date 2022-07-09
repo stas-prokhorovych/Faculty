@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import static com.example.model.constants.Pages.PROFILE_PAGE;
+import static com.example.model.constants.Pages.UPDATE_COURSE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 
 /**
@@ -26,11 +27,10 @@ import static com.example.model.constants.Prg.REDIRECT;
 public class UpdateCourseCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UpdateCourseCommand.class);
 
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
+    private  CourseService courseService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public UpdateCourseCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
     }
 
@@ -53,7 +53,7 @@ public class UpdateCourseCommand implements Command {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
             LOG.trace("Update course input errors");
-            return new ShowCourseInfoCommand().execute(request, response);
+            return UPDATE_COURSE_PAGE;
         }
 
         request.setAttribute("validName", name);
@@ -83,7 +83,7 @@ public class UpdateCourseCommand implements Command {
         } catch (CourseServiceException e) {
             LOG.trace("Update course data errors", e);
             request.setAttribute("dataError", e.getMessage());
-            return new ShowCourseInfoCommand().execute(request, response);
+            return UPDATE_COURSE_PAGE;
         }
 
         return REDIRECT + PROFILE_PAGE;

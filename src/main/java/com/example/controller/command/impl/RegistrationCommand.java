@@ -28,11 +28,10 @@ import static com.example.model.constants.Prg.REDIRECT;
 public class RegistrationCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(RegistrationCommand.class);
 
-    private static final ServiceFactory serviceFactory;
-    private static final UserService userService;
+    private UserService userService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public RegistrationCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
     }
 
@@ -66,6 +65,7 @@ public class RegistrationCommand implements Command {
         try {
             userService.findUserByLogin(login);
         } catch (UserServiceException e) {
+
             LOG.trace("Registration form data errors", e);
             request.setAttribute("dataError", e.getMessage());
             return SIGNUP_PAGE;

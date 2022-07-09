@@ -1,8 +1,7 @@
 package com.example.controller.command.impl;
 
-import com.example.model.service.UserService;
+import com.example.model.service.CourseService;
 import com.example.model.service.exception.ServiceException;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,12 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
+import static com.example.model.constants.Pages.COURSE_CATALOGUE_PAGE;
 import static com.example.model.constants.Prg.REDIRECT;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BlockUserCommandTest {
+public class DeleteCourseCommandTest {
     @Mock
     private HttpServletRequest request;
 
@@ -27,20 +29,22 @@ public class BlockUserCommandTest {
     private HttpServletResponse response;
 
     @Mock
-    private UserService userService;
+    private CourseService courseService;
 
     @InjectMocks
-    private BlockUserCommand blockUserCommand;
+    private DeleteCourseCommand deleteCourseCommand;
 
     @Test
-    public void executeShouldReturnUserCataloguePage() {
-        String expected = REDIRECT + USER_CATALOGUE_PAGE;
-        String actual;
+    public void executeShouldReturnRedirectToCourseCataloguePage() {
+        when(request.getParameter(anyString())).thenReturn("1");
+
+        final String actual;
         try {
-            actual = blockUserCommand.execute(request, response);
+            actual = deleteCourseCommand.execute(request, response);
         } catch (ServletException | IOException | ServiceException e) {
             throw new RuntimeException(e);
         }
-        MatcherAssert.assertThat(actual, is(expected));
+        assertThat(actual, is(REDIRECT + COURSE_CATALOGUE_PAGE));
     }
+
 }

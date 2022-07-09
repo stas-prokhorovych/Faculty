@@ -17,11 +17,10 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Start course command
  */
 public class StartCourseCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final CourseService courseService;
+    private CourseService courseService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public StartCourseCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
     }
 

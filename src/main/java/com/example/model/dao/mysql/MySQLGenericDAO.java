@@ -31,7 +31,16 @@ public abstract class MySQLGenericDAO<T> implements GenericDAO<T> {
 
             for (int i = 1; i <= values.length; i++) {
                 V value = values[i - 1];
-                chooseVariableType(value, statement);
+                switch (value.getClass().getSimpleName()) {
+                    case "Integer":
+                        statement.setInt(i, (Integer) value);
+                        break;
+                    case "String":
+                        statement.setString(i, (String) value);
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
             }
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
