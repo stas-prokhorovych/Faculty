@@ -161,4 +161,8 @@ public interface CourseDAO {
      *                      a data source or a connection with it
      */
     List<Course> findCoursesNoTeacherAssigned(String status) throws DAOException;
+
+    boolean courseAlreadyStart(String status, Integer courseId) throws DAOException;
+
+    boolean checkCourseAlreadyEnded(String courseId) throws DAOException;
 }

@@ -3,6 +3,7 @@ package com.example.controller.command.impl;
 import com.example.controller.command.Command;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -27,7 +28,14 @@ public class UnblockUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String studentId = request.getParameter("id");
-        userService.updateUserAccess(true, studentId);
+
+        try {
+            userService.updateUserAccess(true, studentId);
+        } catch (UserServiceException e) {
+            request.setAttribute("dataError", e.getMessage());
+            return new UserCatalogueCommand().execute(request, response);
+        }
+
         return REDIRECT + USER_CATALOGUE_PAGE;
     }
 }

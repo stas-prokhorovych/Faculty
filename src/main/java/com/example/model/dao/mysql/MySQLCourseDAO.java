@@ -146,6 +146,49 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
         return findEntitiesByField(FIND_NO_TEACHER_COURSES, status);
     }
 
+    @Override
+    public boolean courseAlreadyStart(String status, Integer courseId) throws DAOException {
+        String courseStatusInDB = "";
+
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_COURSE_STATUS_BY_ID, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setInt(1, courseId);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    courseStatusInDB = rs.getString("course_status");
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Course already start", e);
+            throw new DAOException(e);
+        }
+
+        return  status.equals(courseStatusInDB);
+    }
+
+    @Override
+    public boolean checkCourseAlreadyEnded(String courseId) throws DAOException {
+        boolean courseAlreadyEnded = false;
+
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_COURSE_STATUS_BY_ID, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, courseId);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    String status = rs.getString("course_status");
+                    if(status.equals("Finished")) {
+                        courseAlreadyEnded = true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Course already ended", e);
+            throw new DAOException(e);
+        }
+
+        return courseAlreadyEnded;
+    }
+
     /**
      * Used for pagination
      *

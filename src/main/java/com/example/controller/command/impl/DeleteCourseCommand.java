@@ -2,7 +2,9 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -28,7 +30,15 @@ public class DeleteCourseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         String id = request.getParameter("id");
-        courseService.deleteCourse(Integer.parseInt(id));
+
+        try {
+            courseService.deleteCourse(Integer.parseInt(id));
+        } catch (CourseServiceException e) {
+            request.setAttribute("dataError", e.getMessage());
+            return new CourseCatalogueCommand().execute(request, response);
+        }
+
+
         return REDIRECT + COURSE_CATALOGUE_PAGE;
     }
 }

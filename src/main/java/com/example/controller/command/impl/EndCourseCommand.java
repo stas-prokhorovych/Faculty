@@ -2,7 +2,9 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.service.JournalService;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -17,11 +19,10 @@ import static com.example.model.constants.Prg.REDIRECT;
  * Edit course command
  */
 public class EndCourseCommand implements Command {
-    private static final ServiceFactory serviceFactory;
-    private static final JournalService journalService;
+    private JournalService journalService;
 
-    static {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+    public EndCourseCommand() {
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         journalService = serviceFactory.getJournalService();
     }
 
@@ -32,12 +33,23 @@ public class EndCourseCommand implements Command {
         String[] studentIds = request.getParameterValues("student-id");
         String[] studentMarks = request.getParameterValues("mark");
 
+
         if(studentIds == null || studentMarks == null || studentIds.length == 0 || studentMarks.length == 0) {
-            journalService.endCourse(courseId);
+            try {
+                journalService.endCourse(courseId);
+            } catch (CourseServiceException e) {
+                request.setAttribute("dataError", e.getMessage());
+                return new ShowJournalCommand().execute(request, response);
+            }
             return REDIRECT + SHOW_JOURNAL_PAGE;
         }
 
-        journalService.endCourse(courseId, studentIds, studentMarks);
+        try {
+            journalService.endCourse(courseId, studentIds, studentMarks);
+        } catch (CourseServiceException e) {
+            request.setAttribute("dataError", e.getMessage());
+            return new ShowJournalCommand().execute(request, response);
+        }
 
         return REDIRECT + SHOW_JOURNAL_PAGE;
     }

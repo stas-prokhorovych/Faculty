@@ -81,16 +81,6 @@ public class Validator {
     /**
      * Checks {@link String} for match regex
      *
-     * @param courseName a {@link String} value
-     * @return {@code true} if value is fit regex and {@code false} otherwise
-     */
-    public static boolean isCourseNameValid(final String courseName) {
-        return courseName.matches("[\\w\\s]{2,}");
-    }
-
-    /**
-     * Checks {@link String} for match regex
-     *
      * @param courseTheme a {@link String} value
      * @return {@code true} if value is fit regex and {@code false} otherwise
      */

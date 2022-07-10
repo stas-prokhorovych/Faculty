@@ -97,7 +97,7 @@ public class CreateCourseCommand implements Command {
             return ADD_COURSE_PAGE;
         }
 
-        session.setAttribute("successCourseCreation", "Course was creates");
+        session.setAttribute("successCourseCreation", "Course was created");
         session.setAttribute("successHintShow", "0");
         return REDIRECT + ADD_COURSE_PAGE;
     }

@@ -76,4 +76,13 @@ public interface UserDAO {
      *                      a data source or a connection with it
      */
     void updateUserAccess(boolean access, String studentId) throws DAOException;
+
+
+    boolean studentAlreadyEnrolled(Integer studentId, Integer courseId) throws DAOException;
+
+    boolean studentAlreadyLeave(Integer studentId, Integer courseId) throws DAOException;
+
+    User findUserById(String studentId) throws DAOException;
+
+    User findUserByEmail(String email) throws DAOException;
 }

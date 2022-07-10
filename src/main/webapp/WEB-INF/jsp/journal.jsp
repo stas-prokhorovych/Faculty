@@ -8,6 +8,13 @@
 <body>
     <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
+    <c:if test="${dataError != null}">
+        <div class="card-body p-5 text-center">
+            <div id="dataError" class="data-error">${dataError}</div>
+            <br>
+        </div>
+    </c:if>
+
     <h2 class="center"><fmt:message key="journal.open.courses"/></h2>
     <div class="row justify-content-center">
         <div class="row col-md-8">

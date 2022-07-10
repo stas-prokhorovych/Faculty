@@ -1,11 +1,13 @@
 package com.example.model.service.mysql;
 
+import com.example.model.dao.CourseDAO;
 import com.example.model.dao.JournalDAO;
 import com.example.model.dao.exception.DAOException;
 import com.example.model.dao.factory.DaoFactory;
 import com.example.model.entity.Course;
 import com.example.model.entity.Journal;
 import com.example.model.service.JournalService;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.constants.Mark;
 import org.apache.log4j.LogManager;
@@ -18,6 +20,7 @@ public class MySqlJournalService implements JournalService {
     private static final Logger LOG = LogManager.getLogger(MySqlJournalService.class);
 
     private static JournalDAO journalDAO;
+    private static CourseDAO courseDAO;
     private static DaoFactory daoFactory;
     private static MySqlJournalService instance;
 
@@ -25,6 +28,7 @@ public class MySqlJournalService implements JournalService {
         try {
             daoFactory = DaoFactory.getDaoFactory("MYSQL");
             journalDAO = daoFactory.getJournalDAO();
+            courseDAO = daoFactory.getCourseDAO();
         } catch (IllegalArgumentException e) {
             LOG.error("Cannot get journal dao factory", e);
             e.printStackTrace();
@@ -48,6 +52,15 @@ public class MySqlJournalService implements JournalService {
      */
     @Override
     public void endCourse(String courseId, String[] studentIds, String[] studentMarks) throws ServiceException {
+        try {
+            if(courseDAO.checkCourseAlreadyEnded(courseId)) {
+                throw new CourseServiceException("Course already ended");
+            }
+        } catch (DAOException e) {
+            LOG.error("Course already ended", e);
+            throw new ServiceException(e);
+        }
+
         int[] marks = Stream
                 .of(studentMarks)
                 .mapToInt(Integer::parseInt)
@@ -129,6 +142,16 @@ public class MySqlJournalService implements JournalService {
      */
     @Override
     public void endCourse(String courseId) throws ServiceException{
+        try {
+            if(courseDAO.checkCourseAlreadyEnded(courseId)) {
+                throw new CourseServiceException("Course already ended");
+            }
+        } catch (DAOException e) {
+            LOG.error("Course already ended", e);
+            throw new ServiceException(e);
+        }
+
+
         try {
             journalDAO.endCourse(courseId);
         } catch (DAOException e) {

@@ -17,6 +17,8 @@ public final class Query {
     public static final String FIND_GRADUATES = "SELECT * FROM user WHERE id IN (SELECT id_user FROM course_student WHERE id_course = ?)";
     public static final String CREATE_TEACHER = "UPDATE user SET user.role=? WHERE id=?";
     public static final String FIND_BY_ROLE = "SELECT * FROM user WHERE role = ?";
+    public static final String FIND_USER_BY_ID = "SELECT * FROM user WHERE id=?";
+    public static final String FIND_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
 
     // Course queries
     public static final String CREATE_COURSE_WITH_TEACHER = "INSERT INTO course(name, theme, start_date, end_date, id_lecturer,course_status) VALUES(?,?,?,?,?,?)";
@@ -33,6 +35,7 @@ public final class Query {
     public static final String UPDATE_COURSE_INFO_TO_FINISH = "UPDATE course SET course_status=?, end_date=? WHERE id=?";
     public static final String SELECT_STUDENT_COURSES_BY_STATUS = "SELECT * FROM course WHERE course_status=? AND id IN ( SELECT id_course FROM course_student WHERE id_user=?)";
     public static final String FIND_COURSE_BY_NAME = "SELECT * FROM course WHERE name=?";
+    public static final String FIND_COURSE_STATUS_BY_ID = "SELECT course_status FROM course WHERE id=?";
     public static final String FIND_SELECTED_COURSE = "SELECT id FROM course_student WHERE id_user = ? AND id_course = ?";
 
     // Journal queries

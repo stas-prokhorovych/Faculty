@@ -7,11 +7,17 @@ import com.example.model.entity.Course;
 import com.example.model.service.CourseService;
 import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import com.example.model.utils.CourseCatalogueInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.temporal.TemporalAdjusters.next;
 
 public class MySqlCourseService implements CourseService {
     private static final Logger LOG = LogManager.getLogger(MySqlCourseService.class);
@@ -46,6 +52,15 @@ public class MySqlCourseService implements CourseService {
     @Override
     public void deleteCourse(int id) throws ServiceException {
         try {
+            if(courseDAO.findCourseById(String.valueOf(id)) == null) {
+                throw new CourseServiceException("Course already deleted");
+            }
+        } catch (DAOException e) {
+            LOG.error("Course already deleted", e);
+            throw new ServiceException(e);
+        }
+
+        try {
             courseDAO.deleteCourse(id);
         } catch (DAOException e) {
             LOG.error("Cannot delete course", e);
@@ -74,6 +89,9 @@ public class MySqlCourseService implements CourseService {
         }
         if (course.getStartDate().isAfter(course.getEndDate())) {
             throw new CourseServiceException("start date must be before end date");
+        }
+        if (course.getStartDate().isBefore(LocalDateTime.now().with(next(MONDAY)))) {
+            throw new CourseServiceException("start date at least:\n" + LocalDateTime.now().with(next(MONDAY)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         }
 
         try {
@@ -119,6 +137,10 @@ public class MySqlCourseService implements CourseService {
             if (course.getStartDate().isAfter(course.getEndDate())) {
                 throw new CourseServiceException("start date must be before end date");
             }
+            if (course.getStartDate().isBefore(LocalDateTime.now().with(next(MONDAY)))) {
+                throw new CourseServiceException("start date at least:\n" + LocalDateTime.now().with(next(MONDAY)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            }
+
             courseDAO.updateCourse(course);
         } catch (DAOException e) {
             LOG.error("Cannot update course", e);
@@ -209,6 +231,15 @@ public class MySqlCourseService implements CourseService {
      */
     @Override
     public void startCourse(String status, Integer courseId) throws ServiceException {
+        try {
+            if(courseDAO.courseAlreadyStart("In progress", courseId)) {
+                throw new CourseServiceException("Course already started");
+            }
+        } catch (DAOException e) {
+            LOG.error("Cannot check course already started", e);
+            throw new ServiceException(e);
+        }
+
         try {
             courseDAO.startCourse(status, courseId);
         } catch (DAOException e) {

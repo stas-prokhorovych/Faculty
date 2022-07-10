@@ -64,12 +64,6 @@ class ValidatorTest {
     }
 
     @Test
-    void testIsCourseNameValid() {
-        assertTrue(Validator.isCourseNameValid("SQL"));
-        assertTrue(Validator.isCourseNameValid("HTML 5"));
-    }
-
-    @Test
     void testIsCourseThemeValid() {
         assertTrue(Validator.isCourseThemeValid("Computer Science"));
         assertTrue(Validator.isCourseThemeValid("Business"));

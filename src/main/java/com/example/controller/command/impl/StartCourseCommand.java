@@ -2,7 +2,9 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.service.CourseService;
+import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import com.example.model.service.factory.ServiceFactory;
 
 import javax.servlet.ServletException;
@@ -27,7 +29,14 @@ public class StartCourseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
         Integer courseId = Integer.valueOf(request.getParameter("course-id"));
-        courseService.startCourse("In progress", courseId);
+
+        try {
+            courseService.startCourse("In progress", courseId);
+        } catch (CourseServiceException e) {
+            request.setAttribute("dataError", e.getMessage());
+            return new ShowJournalCommand().execute(request, response);
+        }
+
         return REDIRECT + SHOW_JOURNAL_PAGE;
     }
 }

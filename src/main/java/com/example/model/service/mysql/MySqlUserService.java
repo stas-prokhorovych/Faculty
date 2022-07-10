@@ -87,6 +87,15 @@ public class MySqlUserService implements UserService {
     @Override
     public void enrollStudentOnCourse(Integer studentId, Integer courseId) throws ServiceException {
         try {
+            if(userDAO.studentAlreadyEnrolled(studentId, courseId)) {
+                throw new UserServiceException("Already enrolled");
+            }
+        } catch (DAOException e) {
+            LOG.error("Cannot check student already enrolled", e);
+            throw new ServiceException(e);
+        }
+
+        try {
             userDAO.enrollStudentOnCourse(studentId, courseId);
         } catch (DAOException e) {
             LOG.error("Cannot enroll student on course", e);
@@ -127,6 +136,22 @@ public class MySqlUserService implements UserService {
         }
     }
 
+
+    @Override
+    public void findUserByEmail(String email) throws ServiceException {
+        User user;
+        try {
+            user = userDAO.findUserByEmail(email);
+        } catch (DAOException e) {
+            LOG.error("Cannot find user by login", e);
+            throw new ServiceException(e);
+        }
+        if (user != null) {
+            throw new UserServiceException("user with such email already exist");
+        }
+    }
+
+
     /**
      * @param studentId if of student that will leave course
      * @param courseId course that student will leave
@@ -134,6 +159,15 @@ public class MySqlUserService implements UserService {
      */
     @Override
     public void leaveCourse(Integer studentId, Integer courseId) throws ServiceException {
+        try {
+            if(userDAO.studentAlreadyLeave(studentId, courseId)) {
+                throw new UserServiceException("Already left course");
+            }
+        } catch (DAOException e) {
+            LOG.error("Cannot check student already left course", e);
+            throw new ServiceException(e);
+        }
+
         try {
             userDAO.leaveCourse(studentId, courseId);
         } catch (DAOException e) {
@@ -193,6 +227,16 @@ public class MySqlUserService implements UserService {
      */
     @Override
     public void updateUserAccess(boolean access, String studentId) throws ServiceException {
+        try {
+            if(userDAO.findUserById(studentId).isUserAccess() == access) {
+                throw new UserServiceException("Such access already selected");
+            }
+        } catch (DAOException e) {
+            LOG.error("Cannot check this access already selected", e);
+            throw new ServiceException(e);
+        }
+
+
         try {
             userDAO.updateUserAccess(access, studentId);
         } catch (DAOException e) {

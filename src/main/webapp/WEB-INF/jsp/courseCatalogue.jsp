@@ -33,6 +33,13 @@
     <c:set var="recordsPerPageAttr" value="&recordsPerPage=${recordsPerPage}"/>
 </c:if>
 
+        <c:if test="${dataError != null}">
+            <div class="card-body p-5 text-center">
+                <div id="dataError" class="data-error">${dataError}</div>
+                <br>
+            </div>
+        </c:if>
+
     <h3 class="center"><fmt:message key="catalogue.filter"/></h3>
     <div class="row justify-content-center">
     <form action="controller">
@@ -180,7 +187,7 @@
                             </c:forEach>
                         </c:when>
                     </c:choose>
-                        <c:if test="${sessionScope.role == 'Admin'}">
+                        <c:if test="${sessionScope.role == 'Admin' && course.courseStatus eq 'OPENED'}">
                            <td>
                                <form method="post" action="controller?command=DELETE_COURSE">
                                    <input type="number" hidden name="id" value="${course.id}"/>

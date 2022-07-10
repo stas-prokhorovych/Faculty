@@ -40,6 +40,11 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
         return findEntityByField(SELECT_USER_BY_LOGIN, login);
     }
 
+    @Override
+    public User findUserByEmail(String email) throws DAOException {
+        return findEntityByField(FIND_USER_BY_EMAIL, email);
+    }
+
     /**
      * @param user user to add
      * @throws DAOException in case of some exception with
@@ -158,6 +163,49 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
             LOG.error("Unable to update user access", e);
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public boolean studentAlreadyEnrolled(Integer studentId, Integer courseId) throws DAOException {
+        boolean studentAlreadyEnrolled = false;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ID_STUDENT_ON_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setInt(1, studentId);
+            pst.setInt(2, courseId);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    studentAlreadyEnrolled = true;
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Unable to check student already enrolled on course", e);
+            throw new DAOException(e);
+        }
+        return studentAlreadyEnrolled;
+    }
+
+    @Override
+    public boolean studentAlreadyLeave(Integer studentId, Integer courseId) throws DAOException {
+        boolean studentAlreadyLeave = false;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ID_STUDENT_ON_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setInt(1, studentId);
+            pst.setInt(2, courseId);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (!rs.next()) {
+                    studentAlreadyLeave = true;
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Unable to check that course leave", e);
+            throw new DAOException(e);
+        }
+        return studentAlreadyLeave;
+    }
+
+    @Override
+    public User findUserById(String studentId) throws DAOException {
+        return findEntityByField(FIND_USER_BY_ID, studentId);
     }
 
     /**

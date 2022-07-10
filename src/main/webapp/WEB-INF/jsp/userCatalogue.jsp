@@ -9,9 +9,19 @@
 <body>
     <%@include file="/WEB-INF/jspf/navbar.jspf"%>
 
+
+        <c:if test="${dataError != null}">
+            <div class="card-body p-5 text-center">
+                    <div id="dataError" class="data-error">${dataError}</div>
+                    <br>
+            </div>
+        </c:if>
+
+
     <div class="center">
         <h2 class="center"><fmt:message key="user.catalogue.students"/></h2>
         <form method="post" action="controller?command=PDF_REPORT">
+            <input type="text" hidden name="role" value="Student"/>
             <input class="btn btn-info" type="submit" name="delete" value="pdf"/>
         </form>
     </div>
@@ -65,6 +75,7 @@
     <div class="center">
         <h2 class="center"><fmt:message key="user.catalogue.teachers"/></h2>
         <form method="post" action="controller?command=PDF_REPORT">
+            <input type="text" hidden name="role" value="Teacher"/>
             <input class="btn btn-info" type="submit" name="delete" value="pdf"/>
         </form>
     </div>

@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        Map<String, String> inputErrors = FormValidator.checkLoginForm(login, password);
+        Map<String, String> inputErrors = FormValidator.checkLoginForm(request, login, password);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
@@ -60,6 +60,7 @@ public class LoginCommand implements Command {
         }
 
         HttpSession session = request.getSession(true);
+
         session.setAttribute("id", user.getId());
         session.setAttribute("login", user.getLogin());
         session.setAttribute("email", user.getEmail());
@@ -68,6 +69,7 @@ public class LoginCommand implements Command {
         session.setAttribute("surname", user.getLastName());
         session.setAttribute("phone", user.getPhoneNumber());
         session.setAttribute("access", user.isUserAccess());
+
         return REDIRECT + PROFILE_PAGE;
     }
 }

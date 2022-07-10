@@ -45,7 +45,7 @@ public class RegistrationCommand implements Command {
         String lastName = request.getParameter("last-name");
         String phone = request.getParameter("phone");
 
-        Map<String, String> inputErrors = FormValidator.checkSignupForm(login, password, passwordRepeat, email, firstName, lastName, phone);
+        Map<String, String> inputErrors = FormValidator.checkSignupForm(request, login, password, passwordRepeat, email, firstName, lastName, phone);
         if (!inputErrors.isEmpty()) {
             for (Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
@@ -64,8 +64,8 @@ public class RegistrationCommand implements Command {
 
         try {
             userService.findUserByLogin(login);
+            userService.findUserByEmail(email);
         } catch (UserServiceException e) {
-
             LOG.trace("Registration form data errors", e);
             request.setAttribute("dataError", e.getMessage());
             return SIGNUP_PAGE;
