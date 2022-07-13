@@ -45,7 +45,7 @@ public class Validator {
      * @return {@code true} if value is fit regex and {@code false} otherwise
      */
     public static boolean isEmailValid(final String email) {
-        return email.matches("^[a-zA-Z\\d_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z\\d.-]+$");
+        return email.matches("^[a-zA-Z\\d_.]+@[a-zA-Z\\d.-]+$");
     }
 
     /**
@@ -65,7 +65,7 @@ public class Validator {
      * @return {@code true} if value is fit regex and {@code false} otherwise
      */
     public static boolean isLastNameValid(final String lastName) {
-        return lastName.matches("[A-Z][a-z]{1,20}");
+        return lastName.matches("[A-Z][a-z]{3,20}");
     }
 
     /**
@@ -75,7 +75,7 @@ public class Validator {
      * @return {@code true} if value is fit regex and {@code false} otherwise
      */
     public static boolean isPhoneValid(final String phone) {
-        return phone.matches("^\\d{10}$");
+        return phone.matches("^\\+\\d{12}$");
     }
 
     /**

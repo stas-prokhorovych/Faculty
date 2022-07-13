@@ -45,7 +45,7 @@ public class RegistrationCommand implements Command {
         String lastName = request.getParameter("last-name");
         String phone = request.getParameter("phone");
 
-        Map<String, String> inputErrors = FormValidator.checkSignupForm(request, login, password, passwordRepeat, email, firstName, lastName, phone);
+        Map<String, String> inputErrors = FormValidator.checkSignupForm(login, password, passwordRepeat, email, firstName, lastName, phone);
         if (!inputErrors.isEmpty()) {
             for (Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());

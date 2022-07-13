@@ -58,7 +58,7 @@ class ValidatorTest {
 
     @Test
     void testIsPhoneValid() {
-        assertTrue(Validator.isPhoneValid("1234567890"));
+        assertTrue(Validator.isPhoneValid("+380977605026"));
         assertFalse(Validator.isPhoneValid("324"));
         assertFalse(Validator.isPhoneValid("++3402324"));
     }

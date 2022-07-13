@@ -4,6 +4,7 @@ import com.example.model.entity.Journal;
 import com.example.model.service.CourseService;
 import com.example.model.service.JournalService;
 import com.example.model.service.exception.ServiceException;
+import com.example.model.service.exception.UserServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,6 +22,7 @@ import static com.example.model.constants.Prg.REDIRECT;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,6 +35,9 @@ public class EndCourseCommandTest {
 
     @Mock
     private JournalService journalService;
+
+    @Mock
+    private ShowJournalCommand showJournalCommand;
 
     @InjectMocks
     private EndCourseCommand endCourseCommand;

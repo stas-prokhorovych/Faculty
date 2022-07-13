@@ -40,6 +40,12 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
         return findEntityByField(SELECT_USER_BY_LOGIN, login);
     }
 
+    /**
+     * @param email email to find user by
+     * @return user if such email exist or null otherwise
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public User findUserByEmail(String email) throws DAOException {
         return findEntityByField(FIND_USER_BY_EMAIL, email);
@@ -165,6 +171,13 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
         }
     }
 
+    /**
+     * @param studentId id to select
+     * @param courseId course to find
+     * @return true if student already enrolled
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public boolean studentAlreadyEnrolled(Integer studentId, Integer courseId) throws DAOException {
         boolean studentAlreadyEnrolled = false;
@@ -184,6 +197,13 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
         return studentAlreadyEnrolled;
     }
 
+    /**
+     * @param studentId id of student
+     * @param courseId course of student
+     * @return true if student already leave course
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public boolean studentAlreadyLeave(Integer studentId, Integer courseId) throws DAOException {
         boolean studentAlreadyLeave = false;
@@ -203,6 +223,12 @@ public class MySQLUserDAO extends MySQLGenericDAO<User> implements UserDAO {
         return studentAlreadyLeave;
     }
 
+    /**
+     * @param studentId id by whihh find user
+     * @return user if exist or null
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public User findUserById(String studentId) throws DAOException {
         return findEntityByField(FIND_USER_BY_ID, studentId);

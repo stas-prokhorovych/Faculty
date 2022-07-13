@@ -162,7 +162,20 @@ public interface CourseDAO {
      */
     List<Course> findCoursesNoTeacherAssigned(String status) throws DAOException;
 
+    /**
+     * @param status status by which select course
+     * @param courseId id by which select course
+     * @return true if course start false otherwise
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     boolean courseAlreadyStart(String status, Integer courseId) throws DAOException;
 
+    /**
+     * @param courseId id by which select course
+     * @return true if course end false otherwise
+     * @throws DAOException in case of some exception with
+     *                          a data source or a connection with it
+     */
     boolean checkCourseAlreadyEnded(String courseId) throws DAOException;
 }

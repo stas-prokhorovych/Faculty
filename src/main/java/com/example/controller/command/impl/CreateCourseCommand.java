@@ -2,7 +2,9 @@ package com.example.controller.command.impl;
 
 import com.example.controller.command.Command;
 import com.example.model.entity.Course;
+import com.example.model.entity.User;
 import com.example.model.service.CourseService;
+import com.example.model.service.UserService;
 import com.example.model.service.exception.CourseServiceException;
 import com.example.model.service.exception.ServiceException;
 import com.example.model.service.factory.ServiceFactory;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.model.constants.Pages.ADD_COURSE_PAGE;
@@ -27,12 +30,13 @@ import static com.example.model.constants.Prg.REDIRECT;
 public class CreateCourseCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CreateCourseCommand.class);
 
-    private ServiceFactory serviceFactory;
     private CourseService courseService;
+    private UserService userService;
 
     public CreateCourseCommand() {
-        serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
+        ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         courseService = serviceFactory.getCourseService();
+        userService = serviceFactory.getUserService();
     }
 
     @Override
@@ -47,6 +51,7 @@ public class CreateCourseCommand implements Command {
         if(session.getAttribute("successCourseCreation") != null) {
             session.setAttribute("successHintShow", "1");
             LOG.trace("Showing success hint");
+
             return ADD_COURSE_PAGE;
         }
 
@@ -61,6 +66,8 @@ public class CreateCourseCommand implements Command {
             for (Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());
             }
+            List<User> teacherForForm = userService.findByRole("Teacher");
+            request.setAttribute("teacherForForm", teacherForForm);
             LOG.debug("Input errors");
             return ADD_COURSE_PAGE;
         }
@@ -94,6 +101,8 @@ public class CreateCourseCommand implements Command {
         } catch (CourseServiceException e) {
             request.setAttribute("dataError", e.getMessage());
             LOG.debug("Data error: ", e);
+            List<User> teacherForForm = userService.findByRole("Teacher");
+            request.setAttribute("teacherForForm", teacherForForm);
             return ADD_COURSE_PAGE;
         }
 

@@ -75,5 +75,9 @@ public interface UserService {
      */
     void updateUserAccess(boolean access, String studentId) throws ServiceException;
 
+    /**
+     * @param email email by which find user
+     * @throws ServiceException dao layer error or validation error
+     */
     void findUserByEmail(String email) throws ServiceException;
 }

@@ -23,10 +23,12 @@ import static com.example.model.constants.Pages.USER_CATALOGUE_PAGE;
  */
 public class PdfReportCommand implements Command {
     private UserService userService;
+    private Pdf pdf;
 
     public PdfReportCommand() {
         ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("MYSQL");
         userService = serviceFactory.getUserService();
+        pdf = new Pdf();
     }
 
     @Override
@@ -41,10 +43,8 @@ public class PdfReportCommand implements Command {
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
 
         response.setHeader(headerKey, headerValue);
-
         List<User> students = userService.findByRole(role);
-
-        Pdf.export(response, students, role);
+        pdf.export(response, students, role);
 
         return USER_CATALOGUE_PAGE;
     }

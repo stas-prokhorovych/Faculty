@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        Map<String, String> inputErrors = FormValidator.checkLoginForm(request, login, password);
+        Map<String, String> inputErrors = FormValidator.checkLoginForm(login, password);
         if(!inputErrors.isEmpty()) {
             for ( Map.Entry<String, String> entry : inputErrors.entrySet()) {
                 request.setAttribute(entry.getKey(), entry.getValue());

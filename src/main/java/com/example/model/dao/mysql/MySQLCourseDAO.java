@@ -146,6 +146,13 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
         return findEntitiesByField(FIND_NO_TEACHER_COURSES, status);
     }
 
+    /**
+     * @param status status by which select course
+     * @param courseId id by which select course
+     * @return true if course already start false otherwise
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public boolean courseAlreadyStart(String status, Integer courseId) throws DAOException {
         String courseStatusInDB = "";
@@ -166,6 +173,12 @@ public class MySQLCourseDAO extends MySQLGenericDAO<Course> implements CourseDAO
         return  status.equals(courseStatusInDB);
     }
 
+    /**
+     * @param courseId id by which select course
+     * @return true if course already ended false otherwise
+     * @throws DAOException in case of some exception with
+     *                      a data source or a connection with it
+     */
     @Override
     public boolean checkCourseAlreadyEnded(String courseId) throws DAOException {
         boolean courseAlreadyEnded = false;

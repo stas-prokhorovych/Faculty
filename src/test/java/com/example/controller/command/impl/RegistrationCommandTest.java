@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controller.command.impl;
 
 import com.example.controller.command.impl.LoginCommand;
 import com.example.controller.command.impl.RegistrationCommand;
@@ -68,7 +68,6 @@ public class RegistrationCommandTest {
 
         String actual;
         try {
-            doThrow(new UserServiceException()).when(userService).findUserByLogin(anyString());
             actual = registrationCommand.execute(request, response);
         } catch (ServletException | IOException | ServiceException e) {
             throw new RuntimeException(e);
@@ -84,7 +83,7 @@ public class RegistrationCommandTest {
         when(request.getParameter("email")).thenReturn("stas@gmail.com");
         when(request.getParameter("first-name")).thenReturn("Stas");
         when(request.getParameter("last-name")).thenReturn("Prokhorovych");
-        when(request.getParameter("phone")).thenReturn("0678354430");
+        when(request.getParameter("phone")).thenReturn("+380977605026");
 
         when(request.getSession(true)).thenReturn(session);
 

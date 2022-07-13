@@ -1,6 +1,7 @@
 package com.example.controller.command.impl;
 
 import com.example.model.entity.Course;
+import com.example.model.entity.User;
 import com.example.model.service.CourseService;
 import com.example.model.service.UserService;
 import com.example.model.service.exception.CourseServiceException;
@@ -38,6 +39,9 @@ public class CreateCourseCommandTest {
 
     @Mock
     private CourseService courseService;
+
+    @Mock
+    private UserService userService;
 
     @Mock
     private HttpSession session;

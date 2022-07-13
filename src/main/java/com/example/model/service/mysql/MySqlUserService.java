@@ -136,7 +136,10 @@ public class MySqlUserService implements UserService {
         }
     }
 
-
+    /**
+     * @param email email by which find user
+     * @throws ServiceException
+     */
     @Override
     public void findUserByEmail(String email) throws ServiceException {
         User user;
